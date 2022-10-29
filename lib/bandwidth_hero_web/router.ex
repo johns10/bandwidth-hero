@@ -22,6 +22,13 @@ defmodule BandwidthHeroWeb.Router do
     live "/live/modal/:size", PageLive, :modal
     live "/live/slide_over/:origin", PageLive, :slide_over
     live "/live/pagination/:page", PageLive, :pagination
+
+    live "/users", UserLive.Index, :index
+    live "/users/new", UserLive.Index, :new
+    live "/users/:id/edit", UserLive.Index, :edit
+
+    live "/users/:id", UserLive.Show, :show
+    live "/users/:id/show/edit", UserLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
