@@ -1,0 +1,26 @@
+<div>
+  <.form
+    let={f}
+    for={@changeset}
+    id="erp_tag-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <.form_label form={f} field={:label} />
+    <.text_input form={f} field={:label} />
+    <.form_field_error form={f} field={:label} />
+  
+    <.form_label form={f} field={:type} />
+    <.select form={f} field={:type} options={Ecto.Enum.values(BandwidthHero.Tags.ErpTag, :type)} prompt={"Choose a value"} />
+    <.form_field_error form={f} field={:type} />
+  
+    <.form_label form={f} field={:parent_erp_tag_id} label="Parent Tag" />
+    <.select form={f} field={:parent_erp_tag_id} options={@tag_options} prompt={"Choose a value"} />
+    <.form_field_error form={f} field={:type} />
+  
+    <.button color="success" type="submit" class="flex-shrink" phx_disable_with="Saving...">
+      Save
+    </.button>
+  </.form>
+</div>

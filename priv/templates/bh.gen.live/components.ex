@@ -17,8 +17,8 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
 <%= for {k, _} <- schema.attrs do %>          <.td><%%= <%= schema.singular %>.<%= k %> %></.td>
 <% end %>
           <.td>
-            <span><.a type="live_redirect" label={"Show"} to={Routes.<%= schema.route_helper %>_show_path(Endpoint, :show, <%= schema.singular %>)} /></span>
-            <span><.a type="live_patch" label={"Edit"} to={Routes.<%= schema.route_helper %>_index_path(Endpoint, :edit, <%= schema.singular %>)} /></span>
+            <span><.a link_type="live_redirect" label={"Show"} to={Routes.<%= schema.route_helper %>_show_path(Endpoint, :show, <%= schema.singular %>)} /></span>
+            <span><.a link_type="live_patch" label={"Edit"} to={Routes.<%= schema.route_helper %>_index_path(Endpoint, :edit, <%= schema.singular %>)} /></span>
             <span><.a label= "Delete" to="#" phx-click="delete" phx-value-id={<%= schema.singular %>.id} data={[confirm: "Are you sure?"]}  /></span>
           </.td>
         </.tr>

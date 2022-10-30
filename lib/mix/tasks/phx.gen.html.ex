@@ -166,39 +166,39 @@ defmodule Mix.Tasks.Bh.Gen.Html do
       {_, {:references, _}} ->
         {nil, nil, nil}
       {key, :integer} ->
-        {label(key), ~s(<.number_input form={f}, field={#{inspect(key)}} />}), error(key)}
+        {label(key), ~s(<.number_input form={f} field={#{inspect(key)}} />}), error(key)}
       {key, :float} ->
-        {label(key), ~s(<.number_input form={f}, field={#{inspect(key)}}, step: "any" />), error(key)}
+        {label(key), ~s(<.number_input form={f} field={#{inspect(key)}}, step: "any" />), error(key)}
       {key, :decimal} ->
-        {label(key), ~s(<.number_input form={f}, field={#{inspect(key)}}, step: "any" />), error(key)}
+        {label(key), ~s(<.number_input form={f} field={#{inspect(key)}}, step: "any" />), error(key)}
       {key, :boolean} ->
-        {label(key), ~s(<.checkbox form={f}, field={#{inspect(key)}} />), error(key)}
+        {label(key), ~s(<.checkbox form={f} field={#{inspect(key)}} />), error(key)}
       {key, :text} ->
-        {label(key), ~s(<.textarea form={f}, field={#{inspect(key)}} />), error(key)}
+        {label(key), ~s(<.textarea form={f} field={#{inspect(key)}} />), error(key)}
       {key, :date} ->
         {label(key), ~s(<date_select f, #{inspect(key)} />), error(key)}
       {key, :time} ->
         {label(key), ~s(<time_select f, #{inspect(key)} />), error(key)}
       {key, :utc_datetime} ->
-        {label(key), ~s(<.datetime_select form={f}, field={#{inspect(key)}} />), error(key)}
+        {label(key), ~s(<.datetime_select form={f} field={#{inspect(key)}} />), error(key)}
       {key, :naive_datetime} ->
-        {label(key), ~s(<.datetime_select form={f}, field={#{inspect(key)}} />), error(key)}
+        {label(key), ~s(<.datetime_select form={f} field={#{inspect(key)}} />), error(key)}
       {key, {:array, :integer}} ->
-        {label(key), ~s(<.multiple_select form={f}, field={#{inspect(key)}}, ["1": 1, "2": 2] />), error(key)}
+        {label(key), ~s(<.multiple_select form={f} field={#{inspect(key)}}, ["1": 1, "2": 2] />), error(key)}
       {key, {:array, _}} ->
-        {label(key), ~s(<.multiple_select form={f}, field={#{inspect(key)}}, ["Option 1": "option1", "Option 2": "option2"] />), error(key)}
+        {label(key), ~s(<.multiple_select form={f} field={#{inspect(key)}}, ["Option 1": "option1", "Option 2": "option2"] />), error(key)}
       {key, {:enum, _}}  ->
-        {label(key), ~s|<.select form={f}, field={#{inspect(key)}}, Ecto.Enum.values(#{inspect(schema.module)}, #{inspect(key)}), prompt: "Choose a value" />|, error(key)}
+        {label(key), ~s|<.select form={f} field={#{inspect(key)}} values={Ecto.Enum.values(#{inspect(schema.module)}} #{inspect(key)})} prompt={"Choose a value"} />|, error(key)}
       {key, _}  ->
-        {label(key), ~s(<.text_input form={f}, field={#{inspect(key)}} />), error(key)}
+        {label(key), ~s(<.text_input form={f} field={#{inspect(key)}} />), error(key)}
     end)
   end
 
   defp label(key) do
-    ~s(<.form_label form={f}, field={#{inspect(key)}} />)
+    ~s(<.form_label form={f} field={#{inspect(key)}} />)
   end
 
   defp error(field) do
-    ~s(<.form_field_error form={f}, field={#{inspect(field)}} />)
+    ~s(<.form_field_error form={f} field={#{inspect(field)}} />)
   end
 end

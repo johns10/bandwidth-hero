@@ -1,0 +1,20 @@
+<.h1>Listing Erp tag</.h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.ErpTagLive.FormComponent}
+      id={@erp_tag.id || :new}
+      
+      action={@live_action}
+      erp_tag={@erp_tag}
+      return_to={Routes.erp_tag_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<.erp_tag_table erp_tag_collection={@erp_tag_collection} />
+
+<.a link_type="live_patch" to={Routes.erp_tag_index_path(@socket, :new)}>
+  <.button color="success" label="New Erp tag" />
+</.a>

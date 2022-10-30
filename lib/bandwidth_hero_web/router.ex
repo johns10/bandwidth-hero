@@ -26,6 +26,12 @@ defmodule BandwidthHeroWeb.Router do
     live "/live/slide_over/:origin", PageLive, :slide_over
     live "/live/pagination/:page", PageLive, :pagination
 
+    live "/erp_tag", ErpTagLive.Index, :index
+    live "/erp_tag/new", ErpTagLive.Index, :new
+    live "/erp_tag/:id/edit", ErpTagLive.Index, :edit
+
+    live "/erp_tag/:id", ErpTagLive.Show, :show
+    live "/erp_tag/:id/show/edit", ErpTagLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
