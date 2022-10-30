@@ -1,0 +1,40 @@
+<h1>Show Experience</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.experience_show_path(@socket, :show, @experience)} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.ExperienceLive.FormComponent}
+      id={@experience.id}
+      action={@live_action}
+      experience={@experience}
+      return_to={Routes.experience_show_path(@socket, :show, @experience)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Label:</strong>
+    <%= @experience.label %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @experience.description %>
+  </li>
+
+  <li>
+    <strong>From:</strong>
+    <%= @experience.from %>
+  </li>
+
+  <li>
+    <strong>To:</strong>
+    <%= @experience.to %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.experience_show_path(@socket, :edit, @experience), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.experience_index_path(@socket, :index) %></span>

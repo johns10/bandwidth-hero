@@ -176,7 +176,7 @@ defmodule Mix.Tasks.Bh.Gen.Html do
       {key, :text} ->
         {label(key), ~s(<.textarea form={f} field={#{inspect(key)}} />), error(key)}
       {key, :date} ->
-        {label(key), ~s(<date_select f, #{inspect(key)} />), error(key)}
+        {label(key), ~s(<.date_select form={f} field={#{inspect(key)}} />), error(key)}
       {key, :time} ->
         {label(key), ~s(<time_select f, #{inspect(key)} />), error(key)}
       {key, :utc_datetime} ->

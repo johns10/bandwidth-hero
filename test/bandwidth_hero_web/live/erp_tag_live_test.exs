@@ -5,7 +5,7 @@ defmodule BandwidthHeroWeb.ErpTagLiveTest do
   import BandwidthHero.TagsFixtures
 
   @create_attrs %{label: "some label", type: :vendor}
-  @update_attrs %{label: "some updated label", type: :system}
+  @update_attrs %{label: "some updated label", type: :platform}
   @invalid_attrs %{label: nil, type: nil}
 
   defp create_erp_tag(_) do

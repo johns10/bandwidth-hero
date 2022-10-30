@@ -4,7 +4,7 @@ defmodule BandwidthHero.Tags.ErpTag do
 
   schema "erp_tag" do
     field :label, :string
-    field :type, Ecto.Enum, values: [:vendor, :platform, :pillar, :module]
+    field :type, Ecto.Enum, values: [:vendor, :platform, :pillar, :module, :""]
 
     belongs_to :parent_erp_tag, __MODULE__
 

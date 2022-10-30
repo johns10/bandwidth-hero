@@ -34,11 +34,11 @@ defmodule BandwidthHero.TagsTest do
 
     test "update_erp_tag/2 with valid data updates the erp_tag" do
       erp_tag = erp_tag_fixture()
-      update_attrs = %{label: "some updated label", type: :system}
+      update_attrs = %{label: "some updated label", type: :platform}
 
       assert {:ok, %ErpTag{} = erp_tag} = Tags.update_erp_tag(erp_tag, update_attrs)
       assert erp_tag.label == "some updated label"
-      assert erp_tag.type == :system
+      assert erp_tag.type == :platform
     end
 
     test "update_erp_tag/2 with invalid data returns error changeset" do

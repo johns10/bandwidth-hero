@@ -1,0 +1,30 @@
+<div>
+  <.form
+    let={f}
+    for={@changeset}
+    id="experience-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <.form_label form={f} field={:label} />
+    <.text_input form={f} field={:label} />
+    <.form_field_error form={f} field={:label} />
+  
+    <.form_label form={f} field={:description} />
+    <.textarea form={f} field={:description} />
+    <.form_field_error form={f} field={:description} />
+  
+    <.form_label form={f} field={:from} />
+    <.date_select form={f} field={:from} />
+    <.form_field_error form={f} field={:from} />
+  
+    <.form_label form={f} field={:to} />
+    <.date_select form={f} field={:to} />
+    <.form_field_error form={f} field={:to} />
+  
+    <.button color="success" type="submit" class="flex-shrink" phx_disable_with="Saving...">
+      Save
+    </.button>
+  </.form>
+</div>
