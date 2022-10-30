@@ -1,6 +1,4 @@
 <div>
-  <h2><%%= @title %></h2>
-
   <.form
     let={f}
     for={@changeset}
@@ -13,8 +11,8 @@
     <%= input %>
     <%= error %>
   <% end %>
-    <div>
-      <%%= submit "Save", phx_disable_with: "Saving..." %>
-    </div>
+    <.button color="success" type="submit" class="flex-shrink" phx_disable_with="Saving...">
+      Save
+    </.button>
   </.form>
 </div>

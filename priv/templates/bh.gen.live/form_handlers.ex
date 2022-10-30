@@ -2,7 +2,7 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
   use <%= inspect context.web_module %>, :live_component
 
   alias <%= inspect context.module %>
-  alias <%= inspect context.module %>.<%= schema.singular %>
+  alias <%= inspect schema.module %>
 
   @impl true
   def update_socket(%{<%= schema.singular %>: <%= schema.singular %>} = assigns, socket) do
@@ -24,11 +24,7 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"<%= schema.singular %>" => <%= schema.singular %>_params}, socket) do
-    save_<%= schema.singular %>(socket, socket.assigns.action, <%= schema.singular %>_params)
-  end
-
-  def save(socket, :edit, <%= schema.singular %>_params) do
+  def save_redirect(socket, :edit, <%= schema.singular %>_params) do
     case <%= inspect context.alias %>.update_<%= schema.singular %>(socket.assigns.<%= schema.singular %>, <%= schema.singular %>_params) do
       {:ok, _<%= schema.singular %>} ->
         {:noreply,
@@ -41,7 +37,7 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
     end
   end
 
-  def save(socket, :new, <%= schema.singular %>_params) do
+  def save_redirect(socket, :new, <%= schema.singular %>_params) do
     case <%= inspect context.alias %>.create_<%= schema.singular %>(<%= schema.singular %>_params) do
       {:ok, _<%= schema.singular %>} ->
         {:noreply,
@@ -59,7 +55,7 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
       {:ok, _<%= schema.singular %>} ->
         {:noreply,
          socket
-         |> put_flash(:info, "<%= schema.human_singular %> updated successfully")
+         |> put_flash(:info, "<%= schema.human_singular %> updated successfully")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
@@ -69,6 +65,7 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
   def save_no_redirect(socket, :new, <%= schema.singular %>_params) do
     case <%= inspect context.alias %>.create_<%= schema.singular %>(<%= schema.singular %>_params) do
       {:ok, _<%= schema.singular %>} ->
+        changeset = <%= inspect context.alias %>.change_<%= schema.singular %>(%<%= inspect schema.module %>{})
         {:noreply,
          socket
          |> put_flash(:info, "<%= schema.human_singular %> created successfully")

@@ -94,6 +94,7 @@ defmodule Mix.Tasks.Bh.Gen.Live do
 
   alias Mix.Phoenix.{Context}
   alias Mix.Tasks.Phx.Gen
+  alias Mix.Tasks.Bh.Gen.Html
 
   @doc false
   def run(args) do
@@ -104,7 +105,7 @@ defmodule Mix.Tasks.Bh.Gen.Live do
     {context, schema} = Gen.Context.build(args)
     Gen.Context.prompt_for_code_injection(context)
 
-    binding = [context: context, schema: schema, inputs: Gen.Html.inputs(schema)]
+    binding = [context: context, schema: schema, inputs: Html.inputs(schema)]
     paths = Mix.Phoenix.generator_paths()
 
     prompt_for_conflicts(context)
@@ -135,6 +136,8 @@ defmodule Mix.Tasks.Bh.Gen.Live do
     live_subdir = "#{schema.singular}_live"
 
     [
+      {:eex, "components.ex",             Path.join([web_prefix, "live", web_path, live_subdir, "components.ex"])},
+      {:eex, "form_handlers.ex",          Path.join([web_prefix, "live", web_path, live_subdir, "form_handlers.ex"])},
       {:eex, "show.ex",                   Path.join([web_prefix, "live", web_path, live_subdir, "show.ex"])},
       {:eex, "index.ex",                  Path.join([web_prefix, "live", web_path, live_subdir, "index.ex"])},
       {:eex, "form_component.ex",         Path.join([web_prefix, "live", web_path, live_subdir, "form_component.ex"])},

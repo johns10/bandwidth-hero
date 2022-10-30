@@ -3,10 +3,13 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
 
   alias <%= inspect context.module %>
   alias <%= inspect schema.module %>
+  import <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web_namespace, schema.alias) %>Live.Components
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :<%= schema.collection %>, list_<%= schema.plural %>())}
+    {:ok, socket
+    |> assign(:<%= schema.collection %>, list_<%= schema.plural %>())
+    |> assign(:return_to, Routes.<%= schema.route_helper %>_index_path(socket, :index))}
   end
 
   @impl true
@@ -38,6 +41,10 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
     {:ok, _} = <%= inspect context.alias %>.delete_<%= schema.singular %>(<%= schema.singular %>)
 
     {:noreply, assign(socket, :<%= schema.collection %>, list_<%=schema.plural %>())}
+  end
+
+  def handle_event("close_modal", _, socket) do
+    {:noreply, push_patch(socket, to: socket.assigns.return_to)}
   end
 
   defp list_<%= schema.plural %> do
