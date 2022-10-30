@@ -63,6 +63,10 @@ config :bandwidth_hero, BandwidthHeroWeb.Endpoint,
     ]
   ]
 
+
+config :bandwidth_hero, BandwidthHero.Mailer,
+  adapter: Swoosh.Adapters.Local
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
