@@ -39,6 +39,13 @@ defmodule BandwidthHeroWeb.Router do
 
     live "/experience/:id", ExperienceLive.Show, :show
     live "/experience/:id/show/edit", ExperienceLive.Show, :edit
+
+    live "/certificate", CertificateLive.Index, :index
+    live "/certificate/new", CertificateLive.Index, :new
+    live "/certificate/:id/edit", CertificateLive.Index, :edit
+
+    live "/certificate/:id", CertificateLive.Show, :show
+    live "/certificate/:id/show/edit", CertificateLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

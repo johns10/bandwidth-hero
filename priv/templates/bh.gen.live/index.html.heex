@@ -13,8 +13,8 @@
   </.modal>
 <%% end %>
 
-<.<%= schema.singular %>_table <%= schema.collection %>={@<%= schema.collection %>} />
+<.<%= schema.singular %>_table <%= schema.collection %>={@<%= schema.collection %>} class="my-4" />
 
-<.a link_type="live_patch" to={Routes.<%= schema.route_helper %>_index_path(@socket, :new)}>
+<.a link_type="live_patch" to={Routes.<%= schema.route_helper %>_index_path(@socket, :new)} class="my-4">
   <.button color="success" label="New <%= schema.singular %>" />
 </.a>

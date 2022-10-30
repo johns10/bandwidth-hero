@@ -1,0 +1,30 @@
+<h1>Show Certificate</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.certificate_show_path(@socket, :show, @certificate)} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.CertificateLive.FormComponent}
+      id={@certificate.id}
+      action={@live_action}
+      certificate={@certificate}
+      return_to={Routes.certificate_show_path(@socket, :show, @certificate)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Label:</strong>
+    <%= @certificate.label %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @certificate.description %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.certificate_show_path(@socket, :edit, @certificate), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.certificate_index_path(@socket, :index) %></span>

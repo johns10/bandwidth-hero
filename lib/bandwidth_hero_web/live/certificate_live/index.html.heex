@@ -1,0 +1,20 @@
+<.h1>Listing Certificate</.h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.CertificateLive.FormComponent}
+      id={@certificate.id || :new}
+      
+      action={@live_action}
+      certificate={@certificate}
+      return_to={Routes.certificate_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<.certificate_table certificate_collection={@certificate_collection} />
+
+<.a link_type="live_patch" to={Routes.certificate_index_path(@socket, :new)}>
+  <.button color="success" label="New Certificate" />
+</.a>

@@ -1,0 +1,22 @@
+<div>
+  <.form
+    let={f}
+    for={@changeset}
+    id="certificate-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <.form_label form={f} field={:label} />
+    <.text_input form={f} field={:label} />
+    <.form_field_error form={f} field={:label} />
+  
+    <.form_label form={f} field={:description} />
+    <.textarea form={f} field={:description} />
+    <.form_field_error form={f} field={:description} />
+  
+    <.button color="success" type="submit" class="flex-shrink" phx_disable_with="Saving...">
+      Save
+    </.button>
+  </.form>
+</div>
