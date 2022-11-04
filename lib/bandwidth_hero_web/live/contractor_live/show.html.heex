@@ -1,0 +1,29 @@
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.contractor_show_path(@socket, :show, @contractor)} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.ContractorLive.FormComponent}
+      id={@contractor.id}
+      action={@live_action}
+      contractor={@contractor}
+      return_to={@return_to}
+    />
+  </.modal>
+<% end %>
+<.a link_type="live_patch" to={Routes.contractor_index_path(@socket, :index)} class="flex items-center">
+  <Heroicons.arrow_left solid class="w-4 h-4 ml-1 mr-2" />
+  Back
+</.a>
+<div class="flex">
+  <.contractor_card contractor={@contractor} class="m-4 flex-grow" />
+
+  <.live_component 
+    module={BandwidthHeroWeb.ContractorLive.ErpTagsComponent} 
+    contractor={@contractor} 
+    id="erp-tags" 
+    return_to={@return_to}
+    live_action={@live_action}
+    contractor_erp_tag={@contractor_erp_tag}
+    erp_tag_type={@erp_tag_type}
+    class="m-4 flex-grow"
+  />
+</div>

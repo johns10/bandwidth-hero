@@ -188,7 +188,7 @@ defmodule Mix.Tasks.Bh.Gen.Html do
       {key, {:array, _}} ->
         {label(key), ~s(<.multiple_select form={f} field={#{inspect(key)}}, ["Option 1": "option1", "Option 2": "option2"] />), error(key)}
       {key, {:enum, _}}  ->
-        {label(key), ~s|<.select form={f} field={#{inspect(key)}} values={Ecto.Enum.values(#{inspect(schema.module)}} #{inspect(key)})} prompt={"Choose a value"} />|, error(key)}
+        {label(key), ~s|<.select form={f} field={#{inspect(key)}} options={Ecto.Enum.values(#{inspect(schema.module)}, #{inspect(key)})} prompt={"Choose a value"} />|, error(key)}
       {key, _}  ->
         {label(key), ~s(<.text_input form={f} field={#{inspect(key)}} />), error(key)}
     end)

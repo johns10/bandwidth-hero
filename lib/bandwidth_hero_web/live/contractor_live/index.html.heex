@@ -1,0 +1,22 @@
+<.h1>Listing Contractors</.h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.ContractorLive.FormComponent}
+      id={@contractor.id || :new}
+      action={@live_action}
+      contractor={@contractor}
+      return_to={@return_to}
+    />
+  </.modal>
+<% end %>
+
+<.contractor_table 
+  contractors={@contractors} 
+  class="my-4" 
+/>
+
+<.a link_type="live_patch" to={Routes.contractor_index_path(@socket, :new)} class="my-4">
+  <.button color="success" label="New Contractor" />
+</.a>

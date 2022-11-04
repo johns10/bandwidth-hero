@@ -26,4 +26,21 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
     </.table>
     """
   end
+
+  def <%= schema.singular %>_card(assigns) do
+    ~H"""
+    <.card variant="outline">
+      <.card_content category="<%= schema.human_singular %>">
+        <ul>
+        <%= for {k, _} <- schema.attrs do %>
+          <li>
+            <strong><%= Phoenix.Naming.humanize(Atom.to_string(k)) %>:</strong>
+            <%%= @<%= schema.singular %>.<%= k %> %>
+          </li>
+        <% end %>
+        </ul>
+      </.card_content>
+    </.card>
+    """
+  end
 end

@@ -1,0 +1,16 @@
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.contractor_erp_tag_show_path(@socket, :show, @contractor_erp_tag)} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.ContractorErpTagLive.FormComponent}
+      id={@contractor_erp_tag.id}
+      action={@live_action}
+      contractor_erp_tag={@contractor_erp_tag}
+      return_to={Routes.contractor_erp_tag_show_path(@socket, :show, @contractor_erp_tag)}
+    />
+  </.modal>
+<% end %>
+
+<.contractor_erp_tag_card contractor_erp_tag={@contractor_erp_tag} />
+
+<span><%= live_patch "Edit", to: Routes.contractor_erp_tag_show_path(@socket, :edit, @contractor_erp_tag), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.contractor_erp_tag_index_path(@socket, :index) %></span>

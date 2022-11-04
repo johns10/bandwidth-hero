@@ -19,7 +19,7 @@ oracle = Repo.insert! %ErpTag{
 }
 
 cloud_appliations = Repo.insert! %ErpTag{
-  label: "Platform",
+  label: "Cloud Applications",
   type: :platform,
   parent_erp_tag_id: oracle.id
 }

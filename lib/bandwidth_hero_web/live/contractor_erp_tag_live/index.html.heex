@@ -1,0 +1,20 @@
+<.h1>Listing Contractor erp tag</.h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.ContractorErpTagLive.FormComponent}
+      id={@contractor_erp_tag.id || :new}
+      action={@live_action}
+      contractor_erp_tag={@contractor_erp_tag}
+      return_to={Routes.contractor_erp_tag_index_path(@socket, :index)}
+      erp_tag_select_options={@erp_tag_select_options}
+    />
+  </.modal>
+<% end %>
+
+<.contractor_erp_tag_table contractor_erp_tag_collection={@contractor_erp_tag_collection} class="my-4" />
+
+<.a link_type="live_patch" to={Routes.contractor_erp_tag_index_path(@socket, :new)} class="my-4">
+  <.button color="success" label="New Contractor Erp Tag" />
+</.a>
