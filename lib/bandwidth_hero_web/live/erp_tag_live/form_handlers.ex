@@ -8,9 +8,10 @@ defmodule BandwidthHeroWeb.ErpTagLive.FormHandlers do
   def update_socket(%{erp_tag: erp_tag} = assigns, socket) do
     changeset = Tags.change_erp_tag(erp_tag)
 
+    {:ok,
      socket
      |> assign(assigns)
-     |> assign(:changeset, changeset)
+     |> assign(:changeset, changeset)}
   end
 
   @impl true

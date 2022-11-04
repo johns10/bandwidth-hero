@@ -1,4 +1,4 @@
-<.h1>Listing Erp tag</.h1>
+<.h1>Listing Erp tags</.h1>
 
 <%= if @live_action in [:new, :edit] do %>
   <.modal return_to={@return_to} title={@page_title}>
@@ -13,8 +13,8 @@
   </.modal>
 <% end %>
 
-<.erp_tag_table erp_tag_collection={@erp_tag_collection} />
+<.erp_tag_table erp_tags={@erp_tags} class="my-4" />
 
-<.a link_type="live_patch" to={Routes.erp_tag_index_path(@socket, :new)}>
-  <.button color="success" label="New Erp tag" />
+<.a link_type="live_patch" to={Routes.erp_tag_index_path(@socket, :new)} class="my-4">
+  <.button color="success" label="New Erp Tag" />
 </.a>

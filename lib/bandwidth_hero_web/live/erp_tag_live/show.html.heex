@@ -1,5 +1,3 @@
-<h1>Show Erp tag</h1>
-
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.erp_tag_show_path(@socket, :show, @erp_tag)} title={@page_title}>
     <.live_component
@@ -12,19 +10,7 @@
   </.modal>
 <% end %>
 
-<ul>
-
-  <li>
-    <strong>Label:</strong>
-    <%= @erp_tag.label %>
-  </li>
-
-  <li>
-    <strong>Type:</strong>
-    <%= @erp_tag.type %>
-  </li>
-
-</ul>
+<.erp_tag_card erp_tag={@erp_tag} />
 
 <span><%= live_patch "Edit", to: Routes.erp_tag_show_path(@socket, :edit, @erp_tag), class: "button" %></span> |
 <span><%= live_redirect "Back", to: Routes.erp_tag_index_path(@socket, :index) %></span>

@@ -26,7 +26,7 @@ defmodule BandwidthHeroWeb.ErpTagLiveTest do
     test "saves new erp_tag", %{conn: conn} do
       {:ok, index_live, _html} = live(conn, Routes.erp_tag_index_path(conn, :index))
 
-      assert index_live |> element("a", "New Erp tag") |> render_click() =~
+      assert index_live |> element("a", "New Erp Tag") |> render_click() =~
                "New Erp tag"
 
       assert_patch(index_live, Routes.erp_tag_index_path(conn, :new))
