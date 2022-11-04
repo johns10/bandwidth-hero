@@ -28,7 +28,7 @@ defmodule BandwidthHeroWeb.ContractorLive.ErpTagsComponent do
   end
 
   def list_erp_tags() do
-    Tags.list_erp_tag()
+    Tags.list_erp_tags()
   end
 
   def tag_component(assigns) do

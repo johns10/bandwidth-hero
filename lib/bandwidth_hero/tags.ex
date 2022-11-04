@@ -8,7 +8,7 @@ defmodule BandwidthHero.Tags do
 
   alias BandwidthHero.Tags.ErpTag
 
-  def list_erp_tag(opts \\ []) do
+  def list_erp_tags(opts \\ []) do
     filters = Keyword.get(opts, :filters)
     ErpTag
     |> maybe_filter_by_type(filters[:type])

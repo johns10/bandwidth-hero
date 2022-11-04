@@ -2,7 +2,7 @@ defmodule BandwidthHero.Tags.ErpTag do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "erp_tag" do
+  schema "erp_tags" do
     field :label, :string
     field :type, Ecto.Enum, values: [:vendor, :platform, :pillar, :module, :""]
 

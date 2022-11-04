@@ -10,9 +10,9 @@ defmodule BandwidthHero.ExperiencesTest do
 
     @invalid_attrs %{description: nil, from: nil, label: nil, to: nil}
 
-    test "list_experience/0 returns all experience" do
+    test "list_experiences/0 returns all experience" do
       experience = experience_fixture()
-      assert Experiences.list_experience() == [experience]
+      assert Experiences.list_experiences() == [experience]
     end
 
     test "get_experience!/1 returns the experience with given id" do

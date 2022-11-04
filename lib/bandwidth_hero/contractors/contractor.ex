@@ -3,7 +3,7 @@ defmodule BandwidthHero.Contractors.Contractor do
   import Ecto.Changeset
   alias BandwidthHero.ContractorErpTags.ContractorErpTag
 
-  schema "contractor" do
+  schema "contractors" do
     field :availability, Ecto.Enum, values: [:full, :partial, :none]
     field :bandwidth, :integer
     field :contract_type, Ecto.Enum, values: [:corp_to_corp, :contract_w2, :"1099"]

@@ -8,7 +8,7 @@ defmodule BandwidthHeroWeb.ErpTagLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket
-    |> assign(:erp_tag_collection, list_erp_tag())
+    |> assign(:erp_tag_collection, list_erp_tags())
     |> assign(:return_to, Routes.erp_tag_index_path(socket, :index))}
   end
 
@@ -40,14 +40,14 @@ defmodule BandwidthHeroWeb.ErpTagLive.Index do
     erp_tag = Tags.get_erp_tag!(id)
     {:ok, _} = Tags.delete_erp_tag(erp_tag)
 
-    {:noreply, assign(socket, :erp_tag_collection, list_erp_tag())}
+    {:noreply, assign(socket, :erp_tag_collection, list_erp_tags())}
   end
 
   def handle_event("close_modal", _, socket) do
     {:noreply, push_patch(socket, to: socket.assigns.return_to)}
   end
 
-  defp list_erp_tag do
-    Tags.list_erp_tag()
+  defp list_erp_tags do
+    Tags.list_erp_tags()
   end
 end

@@ -12,7 +12,7 @@ defmodule BandwidthHero.TagsTest do
 
     test "list_erp_tag/0 returns all erp_tag" do
       erp_tag = erp_tag_fixture()
-      assert Tags.list_erp_tag() == [erp_tag]
+      assert Tags.list_erp_tags() == [erp_tag]
     end
 
     test "get_erp_tag!/1 returns the erp_tag with given id" do

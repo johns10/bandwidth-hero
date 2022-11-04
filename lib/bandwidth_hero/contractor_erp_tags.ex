@@ -8,17 +8,17 @@ defmodule BandwidthHero.ContractorErpTags do
 
   alias BandwidthHero.ContractorErpTags.ContractorErpTag
 
-  def list_contractor_erp_tag(opts \\ []) do
+  def list_contractor_erp_tags(opts \\ []) do
     filters = Keyword.get(opts, :filters)
     preloads = Keyword.get(opts, :preloads)
     ContractorErpTag
     |> maybe_filter_by_contractor_id(filters[:contractor_id])
-    |> maybe_preload_erp_tag(preloads[:erp_tag])
+    |> maybe_preload_erp_tags(preloads[:erp_tag])
     |> Repo.all()
   end
 
-  defp maybe_preload_erp_tag(query, nil), do: query
-  defp maybe_preload_erp_tag(query, _) do
+  defp maybe_preload_erp_tags(query, nil), do: query
+  defp maybe_preload_erp_tags(query, _) do
     query
     |> preload([t], [:erp_tag])
   end
@@ -31,7 +31,7 @@ defmodule BandwidthHero.ContractorErpTags do
   def get_contractor_erp_tag!(id, opts \\ []) do
     preloads = Keyword.get(opts, :preloads)
     ContractorErpTag
-    |> maybe_preload_erp_tag(preloads[:erp_tag])
+    |> maybe_preload_erp_tags(preloads[:erp_tag])
     |> Repo.get!(id)
   end
 

@@ -8,7 +8,7 @@ defmodule BandwidthHeroWeb.ContractorErpTagLive.FormComponent do
   @impl true
   def update(%{contractor_erp_tag: %{erp_tag: erp_tag}} = assigns, socket) do
     erp_tag_type = Map.get(assigns, :erp_tag_type, nil)
-    erp_tags = Map.get(assigns, :erp_tags, Tags.list_erp_tag())
+    erp_tags = Map.get(assigns, :erp_tags, Tags.list_erp_tags())
     erp_tags =
       if erp_tag_type,
         do: erp_tags |> Enum.filter(& &1.type == erp_tag_type),

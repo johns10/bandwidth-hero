@@ -2,9 +2,7 @@ defmodule BandwidthHeroWeb.ContractorErpTagLive.FormHandlers do
   use BandwidthHeroWeb, :live_component
 
   alias BandwidthHero.ContractorErpTags
-  alias BandwidthHero.ContractorErpTags.ContractorErpTag
 
-  @impl true
   def update_socket(%{contractor_erp_tag: contractor_erp_tag} = assigns, socket) do
     changeset = ContractorErpTags.change_contractor_erp_tag(contractor_erp_tag)
     {:ok,
@@ -13,7 +11,6 @@ defmodule BandwidthHeroWeb.ContractorErpTagLive.FormHandlers do
      |> assign(:changeset, changeset)}
   end
 
-  @impl true
   def validate(params, socket) do
     changeset =
       socket.assigns.contractor_erp_tag

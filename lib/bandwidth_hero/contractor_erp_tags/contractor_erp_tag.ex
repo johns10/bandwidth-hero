@@ -4,7 +4,7 @@ defmodule BandwidthHero.ContractorErpTags.ContractorErpTag do
   alias BandwidthHero.Contractors.Contractor
   alias BandwidthHero.Tags.ErpTag
 
-  schema "contractor_erp_tag" do
+  schema "contractor_erp_tags" do
     field :projects, :integer
     field :years, :integer
     belongs_to :contractor, Contractor

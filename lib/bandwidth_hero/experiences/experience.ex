@@ -2,7 +2,7 @@ defmodule BandwidthHero.Experiences.Experience do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "experience" do
+  schema "experiences" do
     field :description, :string
     field :from, :date
     field :label, :string

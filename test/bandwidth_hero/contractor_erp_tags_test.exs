@@ -20,7 +20,7 @@ defmodule BandwidthHero.ContractorErpTagsTest do
 
     test "list_contractor_erp_tag/0 returns all contractor_erp_tag", context do
       contractor_erp_tag = contractor_erp_tag_fixture(context)
-      assert ContractorErpTags.list_contractor_erp_tag() == [contractor_erp_tag]
+      assert ContractorErpTags.list_contractor_erp_tags() == [contractor_erp_tag]
     end
 
     test "get_contractor_erp_tag!/1 returns the contractor_erp_tag with given id", context do

@@ -7,7 +7,7 @@ defmodule BandwidthHeroWeb.ErpTagLive.FormComponent do
 
   @impl true
   def update(%{erp_tag: erp_tag} = assigns, socket) do
-    tag_options = Tags.list_erp_tag() |> Utils.to_select_options()
+    tag_options = Tags.list_erp_tags() |> Utils.to_select_options()
     {:ok,
     update_socket(assigns, socket)
     |> assign(:tag_options, tag_options)}

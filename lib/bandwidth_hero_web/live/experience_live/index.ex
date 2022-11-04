@@ -8,7 +8,7 @@ defmodule BandwidthHeroWeb.ExperienceLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket
-    |> assign(:experience_collection, list_experience())
+    |> assign(:experience_collection, list_experiences())
     |> assign(:return_to, Routes.experience_index_path(socket, :index))}
   end
 
@@ -40,14 +40,14 @@ defmodule BandwidthHeroWeb.ExperienceLive.Index do
     experience = Experiences.get_experience!(id)
     {:ok, _} = Experiences.delete_experience(experience)
 
-    {:noreply, assign(socket, :experience_collection, list_experience())}
+    {:noreply, assign(socket, :experience_collection, list_experiences())}
   end
 
   def handle_event("close_modal", _, socket) do
     {:noreply, push_patch(socket, to: socket.assigns.return_to)}
   end
 
-  defp list_experience do
-    Experiences.list_experience()
+  defp list_experiences do
+    Experiences.list_experiences()
   end
 end

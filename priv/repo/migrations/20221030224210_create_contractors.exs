@@ -2,7 +2,7 @@ defmodule BandwidthHero.Repo.Migrations.CreateContractors do
   use Ecto.Migration
 
   def change do
-    create table(:contractor) do
+    create table(:contractors) do
       add :name, :string
       add :title, :string
       add :availability, :string
