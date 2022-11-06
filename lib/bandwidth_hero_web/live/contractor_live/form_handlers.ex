@@ -1,10 +1,9 @@
 defmodule BandwidthHeroWeb.ContractorLive.FormHandlers do
-  use BandwidthHeroWeb, :live_component
+  import Phoenix.Component
+  import Phoenix.LiveView
 
   alias BandwidthHero.Contractors
-  alias BandwidthHero.Contractors.Contractor
 
-  @impl true
   def update_socket(%{contractor: contractor} = assigns, socket) do
     changeset = Contractors.change_contractor(contractor)
 
@@ -14,7 +13,6 @@ defmodule BandwidthHeroWeb.ContractorLive.FormHandlers do
      |> assign(:changeset, changeset)}
   end
 
-  @impl true
   def validate(params, socket) do
     changeset =
       socket.assigns.contractor
@@ -66,6 +64,7 @@ defmodule BandwidthHeroWeb.ContractorLive.FormHandlers do
     case Contractors.create_contractor(contractor_params) do
       {:ok, _contractor} ->
         changeset = Contractors.change_contractor(%BandwidthHero.Contractors.Contractor{})
+
         {:noreply,
          socket
          |> put_flash(:info, "Contractor created successfully")

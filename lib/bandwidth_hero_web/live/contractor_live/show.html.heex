@@ -9,17 +9,31 @@
     />
   </.modal>
 <% end %>
-<.a link_type="live_patch" to={Routes.contractor_index_path(@socket, :index)} class="flex items-center">
-  <Heroicons.arrow_left solid class="w-4 h-4 ml-1 mr-2" />
-  Back
+<.a
+  link_type="live_patch"
+  to={Routes.contractor_index_path(@socket, :index)}
+  class="flex items-center"
+>
+  <Heroicons.arrow_left solid class="w-4 h-4 ml-1 mr-2" /> Back
 </.a>
 <div class="flex">
-  <.contractor_card contractor={@contractor} class="m-4 flex-grow" />
-
-  <.live_component 
-    module={BandwidthHeroWeb.ContractorLive.ErpTagsComponent} 
-    contractor={@contractor} 
-    id="erp-tags" 
+  <div class="flex-grow flex-col">
+    <.contractor_card contractor={@contractor} class="m-4" />
+    <.live_component
+      id="availabilities-card"
+      module={BandwidthHeroWeb.AvailabilityLive.CardComponent}
+      contractor={@contractor}
+      availabilities={@contractor.availabilities}
+      availability_id={@availability_id}
+      live_action={@live_action}
+      page_title={@page_title}
+      class="m-4"
+    />
+  </div>
+  <.live_component
+    module={BandwidthHeroWeb.ContractorLive.ErpTagsComponent}
+    contractor={@contractor}
+    id="erp-tags"
     return_to={@return_to}
     live_action={@live_action}
     contractor_erp_tag={@contractor_erp_tag}

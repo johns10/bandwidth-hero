@@ -1,11 +1,10 @@
 defmodule BandwidthHeroWeb.ContractorLive.FormComponent do
   use BandwidthHeroWeb, :live_component
 
-  alias BandwidthHero.Contractors
   import BandwidthHeroWeb.ContractorLive.FormHandlers
 
   @impl true
-  def update(%{contractor: contractor} = assigns, socket) do
+  def update(assigns, socket) do
     update_socket(assigns, socket)
   end
 

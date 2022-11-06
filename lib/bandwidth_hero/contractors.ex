@@ -10,24 +10,37 @@ defmodule BandwidthHero.Contractors do
 
   def list_contractors(opts \\ []) do
     preloads = Keyword.get(opts, :preloads, [])
+
     Contractor
     |> maybe_preload_contractor_erp_tags(preloads[:contractor_erp_tags])
+    |> maybe_preload_availabilities(preloads[:availabilities])
     |> Repo.all()
   end
 
   def get_contractor!(id, opts \\ []) do
     preloads = Keyword.get(opts, :preloads, [])
+
     Contractor
     |> maybe_preload_contractor_erp_tags(preloads[:contractor_erp_tags])
+    |> maybe_preload_availabilities(preloads[:availabilities])
     |> Repo.get!(id)
   end
 
+  defp maybe_preload_availabilities(query, nil), do: query
+
+  defp maybe_preload_availabilities(query, _) do
+    query
+    |> join(:left, [c], a in assoc(c, :availabilities), as: :availabilities)
+    |> preload([c, availabilities: a], availabilities: a)
+  end
+
   defp maybe_preload_contractor_erp_tags(query, nil), do: query
+
   defp maybe_preload_contractor_erp_tags(query, _) do
     query
-    |> join(:left, [c], e in assoc(c, :contractor_erp_tags))
-    |> join(:left, [c, e], t in assoc(e, :erp_tag))
-    |> preload([c, e, t], [contractor_erp_tags: {e, erp_tag: t}])
+    |> join(:left, [c], e in assoc(c, :contractor_erp_tags), as: :cet)
+    |> join(:left, [c, cet: e], t in assoc(e, :erp_tag), as: :et)
+    |> preload([c, cet: e, et: t], contractor_erp_tags: {e, erp_tag: t})
   end
 
   def create_contractor(attrs \\ %{}) do

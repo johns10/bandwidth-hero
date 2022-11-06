@@ -7,9 +7,10 @@ defmodule BandwidthHeroWeb.ContractorLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket
-    |> assign(:contractors, list_contractors())
-    |> assign(:return_to, Routes.contractor_index_path(socket, :index))}
+    {:ok,
+     socket
+     |> assign(:contractors, list_contractors())
+     |> assign(:return_to, Routes.contractor_index_path(socket, :index))}
   end
 
   @impl true
@@ -17,8 +18,9 @@ defmodule BandwidthHeroWeb.ContractorLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit_erp_tag, %{"id" => id, "tag_id" => tag_id}) do
+  defp apply_action(socket, :edit_erp_tag, %{"id" => id}) do
     contractor = Map.get(socket.assigns, :contractor)
+
     socket
     |> assign(:page_title, "Edit Tag")
     |> assign(:contractor, contractor || Contractors.get_contractor!(id))

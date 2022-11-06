@@ -1,0 +1,29 @@
+<div>
+  <.card variant="outline" class={@class}>
+    <.card_content category="Availability">
+      <.availability_table availabilities={@availabilities} contractor={@contractor} class="mb-4" />
+
+      <.a
+        link_type="live_patch"
+        to={Routes.contractor_show_path(@socket, :new_availability, @contractor)}
+      >
+        <.button color="success" label="New Availability" />
+      </.a>
+    </.card_content>
+  </.card>
+  <%= if @live_action in [:new, :edit] do %>
+    <.modal
+      return_to={Routes.contractor_show_path(@socket, :show, @contractor)}
+      title={@page_title}
+    >
+      <.live_component
+        module={BandwidthHeroWeb.AvailabilityLive.FormComponent}
+        id="contractor-availability-form"
+        contractor_id={@contractor.id}
+        action={@live_action}
+        availability={@availability}
+        return_to={@return_to}
+      />
+    </.modal>
+  <% end %>
+</div>

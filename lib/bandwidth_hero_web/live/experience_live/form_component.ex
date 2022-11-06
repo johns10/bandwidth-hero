@@ -1,11 +1,10 @@
 defmodule BandwidthHeroWeb.ExperienceLive.FormComponent do
   use BandwidthHeroWeb, :live_component
 
-  alias BandwidthHero.Experiences
   import BandwidthHeroWeb.ExperienceLive.FormHandlers
 
   @impl true
-  def update(%{experience: experience} = assigns, socket) do
+  def update(assigns, socket) do
     update_socket(assigns, socket)
   end
 

@@ -1,0 +1,19 @@
+<.h1>Listing Availabilities</.h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.AvailabilityLive.FormComponent}
+      id={@availability.id || :new}
+      action={@live_action}
+      availability={@availability}
+      return_to={Routes.availability_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<.availability_table availabilities={@availabilities} class="my-4" />
+
+<.a link_type="live_patch" to={Routes.availability_index_path(@socket, :new)} class="my-4">
+  <.button color="success" label="New Availability" />
+</.a>

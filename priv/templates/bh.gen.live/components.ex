@@ -6,7 +6,7 @@ defmodule <%= inspect context.web_module %>.<%= inspect Module.concat(schema.web
 
   def <%= schema.singular %>_table(assigns) do
     ~H"""
-    <.table class="@class">
+    <.table class={@class}>
       <.tr>
 <%= for {k, _} <- schema.attrs do %>        <.th><%= Phoenix.Naming.humanize(Atom.to_string(k)) %></.th>
 <% end %>

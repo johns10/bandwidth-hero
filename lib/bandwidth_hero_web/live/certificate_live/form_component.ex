@@ -1,11 +1,10 @@
 defmodule BandwidthHeroWeb.CertificateLive.FormComponent do
   use BandwidthHeroWeb, :live_component
 
-  alias BandwidthHero.Certificates
   import BandwidthHeroWeb.CertificateLive.FormHandlers
 
   @impl true
-  def update(%{certificate: certificate} = assigns, socket) do
+  def update(assigns, socket) do
     update_socket(assigns, socket)
   end
 

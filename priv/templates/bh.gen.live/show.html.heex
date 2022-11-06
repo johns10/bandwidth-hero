@@ -10,7 +10,7 @@
   </.modal>
 <%% end %>
 
-<.contractor_card contractor={@contractor} />
+<.<%= schema.singular %>_card <%= schema.singular %>={@<%= schema.singular %>} />
 
 <span><%%= live_patch "Edit", to: Routes.<%= schema.route_helper %>_show_path(@socket, :edit, @<%= schema.singular %>), class: "button" %></span> |
 <span><%%= live_redirect "Back", to: Routes.<%= schema.route_helper %>_index_path(@socket, :index) %></span>

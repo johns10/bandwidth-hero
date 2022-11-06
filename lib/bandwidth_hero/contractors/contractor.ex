@@ -2,6 +2,7 @@ defmodule BandwidthHero.Contractors.Contractor do
   use Ecto.Schema
   import Ecto.Changeset
   alias BandwidthHero.ContractorErpTags.ContractorErpTag
+  alias BandwidthHero.Availabilities.Availability
 
   schema "contractors" do
     field :availability, Ecto.Enum, values: [:full, :partial, :none]
@@ -14,6 +15,7 @@ defmodule BandwidthHero.Contractors.Contractor do
     field :travel, Ecto.Enum, values: [:"100%", :"75%", :"50%", :"25%", :remote]
 
     has_many :contractor_erp_tags, ContractorErpTag
+    has_many :availabilities, Availability
 
     timestamps()
   end
@@ -21,7 +23,25 @@ defmodule BandwidthHero.Contractors.Contractor do
   @doc false
   def changeset(contractor, attrs) do
     contractor
-    |> cast(attrs, [:name, :title, :availability, :bandwidth, :travel, :international_travel, :contract_type, :laptop])
-    |> validate_required([:name, :title, :availability, :bandwidth, :travel, :international_travel, :contract_type, :laptop])
+    |> cast(attrs, [
+      :name,
+      :title,
+      :availability,
+      :bandwidth,
+      :travel,
+      :international_travel,
+      :contract_type,
+      :laptop
+    ])
+    |> validate_required([
+      :name,
+      :title,
+      :availability,
+      :bandwidth,
+      :travel,
+      :international_travel,
+      :contract_type,
+      :laptop
+    ])
   end
 end

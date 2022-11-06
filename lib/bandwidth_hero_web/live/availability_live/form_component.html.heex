@@ -1,0 +1,54 @@
+<div>
+  <.form
+    :let={f}
+    for={@changeset}
+    id="availability-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <%= hidden_input(f, :contractor_id, value: @contractor_id) %>
+    <.form_label form={f} field={:available_from} />
+    <div class="flex items-center">
+      <.checkbox type="checkbox" form={f} field={:now} label="Now" class="mr-2 my-3" />
+      <span class="font-medium text-sm block text-gray-900 dark:text-gray-200 phx-no-feedback mr-2">
+        Now
+      </span>
+      <%= if Ecto.Changeset.get_field(f.source, :now, false) do %>
+        <div class="hidden">
+          <.date_select form={f} field={:available_from} />
+        </div>
+      <% else %>
+        <div>
+          <.date_select form={f} field={:available_from} />
+        </div>
+      <% end %>
+    </div>
+
+    <.form_field_error form={f} field={:available_from} />
+
+    <.form_label form={f} field={:available_to} />
+    <div class="flex items-center">
+      <.checkbox type="checkbox" form={f} field={:indefinite} label="Now" class="mr-2 my-3" />
+      <span class="font-medium text-sm block text-gray-900 dark:text-gray-200 phx-no-feedback mr-2">
+        Indefinite
+      </span>
+      <%= if Ecto.Changeset.get_field(f.source, :indefinite, false) do %>
+        <div class="hidden">
+          <.date_select form={f} field={:available_to} />
+        </div>
+      <% else %>
+        <div>
+          <.date_select form={f} field={:available_to} />
+        </div>
+      <% end %>
+    </div>
+    <.form_field_error form={f} field={:available_to} />
+
+    <.form_field type="number_input" form={f} field={:hours} placeholder="40" />
+
+    <.button color="success" type="submit" class="flex-shrink" phx_disable_with="Saving...">
+      Save
+    </.button>
+  </.form>
+</div>

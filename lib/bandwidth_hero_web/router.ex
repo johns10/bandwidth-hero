@@ -53,8 +53,15 @@ defmodule BandwidthHeroWeb.Router do
 
     live "/contractor/:id", ContractorLive.Show, :show
     live "/contractor/:id/show/edit", ContractorLive.Show, :edit
+
     live "/contractor/:id/erp_tag/new", ContractorLive.Show, :new_erp_tag
     live "/contractor/:id/erp_tag/:erp_tag_id/edit", ContractorLive.Show, :edit_erp_tag
+
+    live "/contractor/:id/availability/new", ContractorLive.Show, :new_availability
+
+    live "/contractor/:id/availability/:availability_id/edit",
+         ContractorLive.Show,
+         :edit_availability
 
     live "/contractor_erp_tag", ContractorErpTagLive.Index, :index
     live "/contractor_erp_tag/new", ContractorErpTagLive.Index, :new
@@ -62,6 +69,13 @@ defmodule BandwidthHeroWeb.Router do
 
     live "/contractor_erp_tag/:id", ContractorErpTagLive.Show, :show
     live "/contractor_erp_tag/:id/show/edit", ContractorErpTagLive.Show, :edit
+
+    live "/availability", AvailabilityLive.Index, :index
+    live "/availability/new", AvailabilityLive.Index, :new
+    live "/availability/:id/edit", AvailabilityLive.Index, :edit
+
+    live "/availability/:id", AvailabilityLive.Show, :show
+    live "/availability/:id/show/edit", AvailabilityLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

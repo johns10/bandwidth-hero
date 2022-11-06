@@ -3,4 +3,4 @@ mix bh.gen.live Contractors Contractor contractors name:string title:string avai
 mix bh.gen.live ContractorErpTags ContractorErpTag contractor_erp_tags years:integer projects:integer contractor_id:references:contractor erp_tag_id:references:erp_tag
 mix bh.gen.live Experiences Experience experience label:string description:text from:date to:date
 mix bh.gen.live Certificates Certificate certificate label:string description:text references:contractor
-mix bh.gen.live Availabilities Availability availability from:date to:date contractor_id:references:contractor
+mix bh.gen.live Availabilities Availability availabilities from:date to:date contractor_id:references:contractors

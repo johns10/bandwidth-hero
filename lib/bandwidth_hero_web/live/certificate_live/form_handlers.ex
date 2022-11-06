@@ -1,10 +1,9 @@
 defmodule BandwidthHeroWeb.CertificateLive.FormHandlers do
-  use BandwidthHeroWeb, :live_component
+  import Phoenix.Component
+  import Phoenix.LiveView
 
   alias BandwidthHero.Certificates
-  alias BandwidthHero.Certificates.Certificate
 
-  @impl true
   def update_socket(%{certificate: certificate} = assigns, socket) do
     changeset = Certificates.change_certificate(certificate)
 
@@ -14,7 +13,6 @@ defmodule BandwidthHeroWeb.CertificateLive.FormHandlers do
      |> assign(:changeset, changeset)}
   end
 
-  @impl true
   def validate(params, socket) do
     changeset =
       socket.assigns.certificate
@@ -66,6 +64,7 @@ defmodule BandwidthHeroWeb.CertificateLive.FormHandlers do
     case Certificates.create_certificate(certificate_params) do
       {:ok, _certificate} ->
         changeset = Certificates.change_certificate(%BandwidthHero.Certificates.Certificate{})
+
         {:noreply,
          socket
          |> put_flash(:info, "Certificate created successfully")

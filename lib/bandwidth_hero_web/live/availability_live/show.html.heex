@@ -1,0 +1,16 @@
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.availability_show_path(@socket, :show, @availability)} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.AvailabilityLive.FormComponent}
+      id={@availability.id}
+      action={@live_action}
+      availability={@availability}
+      return_to={Routes.availability_show_path(@socket, :show, @availability)}
+    />
+  </.modal>
+<% end %>
+
+<.availability_card availability={@availability} />
+
+<span><%= live_patch "Edit", to: Routes.availability_show_path(@socket, :edit, @availability), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.availability_index_path(@socket, :index) %></span>

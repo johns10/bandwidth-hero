@@ -1,10 +1,9 @@
 defmodule BandwidthHeroWeb.ExperienceLive.FormHandlers do
-  use BandwidthHeroWeb, :live_component
+  import Phoenix.Component
+  import Phoenix.LiveView
 
   alias BandwidthHero.Experiences
-  alias BandwidthHero.Experiences.Experience
 
-  @impl true
   def update_socket(%{experience: experience} = assigns, socket) do
     changeset = Experiences.change_experience(experience)
 
@@ -14,7 +13,6 @@ defmodule BandwidthHeroWeb.ExperienceLive.FormHandlers do
      |> assign(:changeset, changeset)}
   end
 
-  @impl true
   def validate(params, socket) do
     changeset =
       socket.assigns.experience
@@ -66,6 +64,7 @@ defmodule BandwidthHeroWeb.ExperienceLive.FormHandlers do
     case Experiences.create_experience(experience_params) do
       {:ok, _experience} ->
         changeset = Experiences.change_experience(%BandwidthHero.Experiences.Experience{})
+
         {:noreply,
          socket
          |> put_flash(:info, "Experience created successfully")

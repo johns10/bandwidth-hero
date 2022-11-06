@@ -1,10 +1,9 @@
 defmodule BandwidthHeroWeb.ErpTagLive.FormHandlers do
-  use BandwidthHeroWeb, :live_component
+  import Phoenix.Component
+  import Phoenix.LiveView
 
   alias BandwidthHero.Tags
-  alias BandwidthHero.Tags.ErpTag
 
-  @impl true
   def update_socket(%{erp_tag: erp_tag} = assigns, socket) do
     changeset = Tags.change_erp_tag(erp_tag)
 
@@ -14,7 +13,6 @@ defmodule BandwidthHeroWeb.ErpTagLive.FormHandlers do
      |> assign(:changeset, changeset)}
   end
 
-  @impl true
   def validate(params, socket) do
     changeset =
       socket.assigns.erp_tag
@@ -66,6 +64,7 @@ defmodule BandwidthHeroWeb.ErpTagLive.FormHandlers do
     case Tags.create_erp_tag(erp_tag_params) do
       {:ok, _erp_tag} ->
         changeset = Tags.change_erp_tag(%BandwidthHero.Tags.ErpTag{})
+
         {:noreply,
          socket
          |> put_flash(:info, "Erp tag created successfully")
