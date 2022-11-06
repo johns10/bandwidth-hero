@@ -1,13 +1,13 @@
 <main class="dark:bg-gray-900">
   <nav class="sticky top-0 flex items-center justify-between w-full h-16 bg-white dark:bg-gray-900">
     <div class="flex ml-3 sm:ml-10">
-      <a
-        target="_blank"
+      <.a
+        link_type="live_redirect"
         class="inline-flex items-center gap-2 p-2 text-gray-500 rounded dark:text-gray-400 dark:hover:text-gray-500 hover:text-gray-400 group"
-        href="/"
+        to="/"
       >
         <span class="hidden font-semibold sm:block">Bandwidth Hero</span>
-      </a>
+      </.a>
     </div>
 
     <div class="flex justify-end gap-3 pr-4">
@@ -64,22 +64,22 @@
       <.color_scheme_switch />
     </div>
   </nav>
-  <.alert
-    color="info"
-    class="mb-5"
-    label={live_flash(@flash, :info)}
-    phx-click="lv:clear-flash"
-    phx-value-key="info"
-  />
-
-  <.alert
-    color="danger"
-    class="mb-5"
-    label={live_flash(@flash, :error)}
-    phx-click="lv:clear-flash"
-    phx-value-key="error"
-  />
   <.container class="h-screen overflow-auto">
+    <.alert
+      color="info"
+      class="mb-5"
+      label={live_flash(@flash, :info)}
+      phx-click="lv:clear-flash"
+      phx-value-key="info"
+    />
+
+    <.alert
+      color="danger"
+      class="mb-5"
+      label={live_flash(@flash, :error)}
+      phx-click="lv:clear-flash"
+      phx-value-key="error"
+    />
     <%= @inner_content %>
   </.container>
 </main>

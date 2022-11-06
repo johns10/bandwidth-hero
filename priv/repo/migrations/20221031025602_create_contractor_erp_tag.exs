@@ -5,7 +5,7 @@ defmodule BandwidthHero.Repo.Migrations.CreateContractorErpTag do
     create table(:contractor_erp_tags) do
       add :years, :integer
       add :projects, :integer
-      add :contractor_id, references(:contractors, on_delete: :nothing)
+      add :contractor_id, references(:contractors, on_delete: :delete_all)
       add :erp_tag_id, references(:erp_tags, on_delete: :nothing)
 
       timestamps()
