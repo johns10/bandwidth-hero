@@ -104,6 +104,9 @@ defmodule BandwidthHeroWeb.Router do
 
       live "/availability/:id", AvailabilityLive.Show, :show
       live "/availability/:id/show/edit", AvailabilityLive.Show, :edit
+
+      live "/profile", ProfileLive.Show, :show
+      live "/profile/new_contractor", ProfileLive.Show, :new_contractor
     end
 
     scope "/" do

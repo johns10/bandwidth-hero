@@ -26,6 +26,16 @@ defmodule BandwidthHero.Contractors do
     |> Repo.get!(id)
   end
 
+  def get_contractor_by_user_id(user_id, opts \\ []) do
+    preloads = Keyword.get(opts, :preloads, [])
+
+    Contractor
+    |> where([c], c.user_id == ^user_id)
+    |> maybe_preload_contractor_erp_tags(preloads[:contractor_erp_tags])
+    |> maybe_preload_availabilities(preloads[:availabilities])
+    |> Repo.one()
+  end
+
   defp maybe_preload_availabilities(query, nil), do: query
 
   defp maybe_preload_availabilities(query, _) do

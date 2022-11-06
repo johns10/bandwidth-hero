@@ -8,14 +8,12 @@
       action={@live_action}
       contractor={@contractor}
       return_to={@return_to}
+      user_id={@current_user.id}
     />
   </.modal>
 <% end %>
 
-<.contractor_table 
-  contractors={@contractors} 
-  class="my-4" 
-/>
+<.contractor_table contractors={@contractors} class="my-4" />
 
 <.a link_type="live_patch" to={Routes.contractor_index_path(@socket, :new)} class="my-4">
   <.button color="success" label="New Contractor" />

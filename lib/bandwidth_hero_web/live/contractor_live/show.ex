@@ -44,6 +44,13 @@ defmodule BandwidthHeroWeb.ContractorLive.Show do
     {:noreply, push_patch(socket, to: socket.assigns.return_to)}
   end
 
+  def handle_event("delete", %{"id" => id}, socket) do
+    contractor = Contractors.get_contractor!(id)
+    {:ok, _} = Contractors.delete_contractor(contractor)
+
+    {:noreply, socket |> push_redirect(to: Routes.profile_show_path(socket, :show))}
+  end
+
   def handle_event("delete-contractor-erp-tag", %{"id" => id}, socket) do
     contractor_erp_tag = ContractorErpTags.get_contractor_erp_tag!(id)
     {:ok, _} = ContractorErpTags.delete_contractor_erp_tag(contractor_erp_tag)

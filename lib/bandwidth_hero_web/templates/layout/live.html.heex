@@ -11,10 +11,10 @@
     </div>
 
     <div class="flex justify-end gap-3 pr-4">
-      <a
-        target="_blank"
+      <.a
         class="inline-flex items-center gap-2 p-2 text-gray-500 rounded dark:text-gray-400 dark:hover:text-gray-500 hover:text-gray-400 group"
-        href="/profile"
+        link_type="live_redirect"
+        to={Routes.profile_show_path(BandwidthHeroWeb.Endpoint, :show)}
       >
         <svg
           class="w-5 h-5 fill-gray-500"
@@ -27,7 +27,7 @@
         <span class="hidden font-semibold sm:block">
           Contractor Profile
         </span>
-      </a>
+      </.a>
 
       <.dropdown>
         <:trigger_element>

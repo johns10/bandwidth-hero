@@ -12,7 +12,11 @@ defmodule BandwidthHero.Repo.Migrations.CreateContractors do
       add :contract_type, :string
       add :laptop, :string
 
+      add :user_id, references(:users, on_delete: :nothing)
+
       timestamps()
     end
+
+    create unique_index(:contractors, [:user_id])
   end
 end

@@ -1,3 +1,5 @@
+<.h1>Contractor</.h1>
+
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.contractor_show_path(@socket, :show, @contractor)} title={@page_title}>
     <.live_component
@@ -6,6 +8,7 @@
       action={@live_action}
       contractor={@contractor}
       return_to={@return_to}
+      user_id={@current_user.id}
     />
   </.modal>
 <% end %>

@@ -31,9 +31,29 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
           <.td><%= contractor.laptop %></.td>
 
           <.td>
-            <span><.a link_type="live_redirect" label={"Show"} to={Routes.contractor_show_path(Endpoint, :show, contractor)} /></span>
-            <span><.a link_type="live_patch" label={"Edit"} to={Routes.contractor_index_path(Endpoint, :edit, contractor)} /></span>
-            <span><.a label= "Delete" to="#" phx-click="delete" phx-value-id={contractor.id} data={[confirm: "Are you sure?"]}  /></span>
+            <span>
+              <.a
+                link_type="live_redirect"
+                label="Show"
+                to={Routes.contractor_show_path(Endpoint, :show, contractor)}
+              />
+            </span>
+            <span>
+              <.a
+                link_type="live_patch"
+                label="Edit"
+                to={Routes.contractor_index_path(Endpoint, :edit, contractor)}
+              />
+            </span>
+            <span>
+              <.a
+                label="Delete"
+                to="#"
+                phx-click="delete"
+                phx-value-id={contractor.id}
+                data={[confirm: "Are you sure?"]}
+              />
+            </span>
           </.td>
         </.tr>
       <% end %>
@@ -50,15 +70,27 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
           <span class="text-sm font-light"><%= @contractor.title %></span>
         </div>
         <div class="flex flex-column">
-          <.a link_type="live_patch" to={Routes.contractor_show_path(Endpoint, :edit, @contractor)} id="edit-contractor">
-            <Heroicons.pencil solid class="w-4 h-4 ml-1" />
+          <.a
+            to="#"
+            id="delete-contractor"
+            phx-click="delete"
+            phx-value-id={@contractor.id}
+            data={[confirm: "Are you sure you want to delete your profile?"]}
+          >
+            <Heroicons.trash solid class="w-4 h-4 m-2" />
+          </.a>
+          <.a
+            link_type="live_patch"
+            to={Routes.contractor_show_path(Endpoint, :edit, @contractor)}
+            id="edit-contractor"
+          >
+            <Heroicons.pencil solid class="w-4 h-4 m-2" />
           </.a>
         </div>
       </div>
 
-      <.card_content >
+      <.card_content>
         <ul>
-
           <li>
             <%= @contractor.availability |> to_string() |> Recase.to_sentence() %> Availability
           </li>
@@ -86,7 +118,6 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
             <strong>Laptop:</strong>
             <%= @contractor.laptop |> to_string() |> Recase.to_sentence() %>
           </li>
-
         </ul>
       </.card_content>
     </.card>

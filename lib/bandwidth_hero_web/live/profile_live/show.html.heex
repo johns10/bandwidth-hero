@@ -1,0 +1,33 @@
+<.h1>Your Profile</.h1>
+
+<%= if @live_action in [:new_contractor] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.ContractorLive.FormComponent}
+      id={:new}
+      action={@contractor_action}
+      contractor={@contractor || %Contractor{}}
+      return_to={@return_to}
+      user_id={@current_user.id}
+    />
+  </.modal>
+<% end %>
+
+<%= if !@contractor do %>
+  <.card variant="outline">
+    <.card_content category="Availability" class="flex-col">
+      <p class="mb-4">
+        You don't have a profile set up.
+        You can only have one, so choose wisely.
+        If you're looking for a project, start here.
+      </p>
+      <.a
+        link_type="live_patch"
+        to={Routes.profile_show_path(@socket, :new_contractor)}
+        class="my-4"
+      >
+        <.button color="success" label="Create Contractor Profile" />
+      </.a>
+    </.card_content>
+  </.card>
+<% end %>

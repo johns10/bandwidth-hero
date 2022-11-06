@@ -3,6 +3,7 @@ defmodule BandwidthHero.Contractors.Contractor do
   import Ecto.Changeset
   alias BandwidthHero.ContractorErpTags.ContractorErpTag
   alias BandwidthHero.Availabilities.Availability
+  alias BandwidthHero.Accounts.User
 
   schema "contractors" do
     field :availability, Ecto.Enum, values: [:full, :partial, :none]
@@ -13,6 +14,8 @@ defmodule BandwidthHero.Contractors.Contractor do
     field :name, :string
     field :title, :string
     field :travel, Ecto.Enum, values: [:"100%", :"75%", :"50%", :"25%", :remote]
+
+    belongs_to :user, User
 
     has_many :contractor_erp_tags, ContractorErpTag
     has_many :availabilities, Availability
@@ -31,7 +34,8 @@ defmodule BandwidthHero.Contractors.Contractor do
       :travel,
       :international_travel,
       :contract_type,
-      :laptop
+      :laptop,
+      :user_id
     ])
     |> validate_required([
       :name,
