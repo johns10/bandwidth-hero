@@ -4,15 +4,21 @@
       <div class="flex flex-col">
         <div class="flex items-center">
           <p class="font-medium text-sm block text-gray-900 dark:text-gray-200">Vendors</p>
-          <.icon_button 
-            to={Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id, erp_tag_type: :vendor)}
-            link_type="live_patch" 
-            color="success" 
-            size="xs" 
-            class="flex-shrink"
-          >
-            <Heroicons.plus class="h-4 w-4" />
-          </.icon_button>
+          <%= if @can_update do %>
+            <.icon_button
+              to={
+                Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id,
+                  erp_tag_type: :vendor
+                )
+              }
+              link_type="live_patch"
+              color="success"
+              size="xs"
+              class="flex-shrink"
+            >
+              <Heroicons.plus class="h-4 w-4" />
+            </.icon_button>
+          <% end %>
         </div>
         <div class="flex flex-row flex-wrap">
           <%= for tag <- @contractor_erp_tags |> Enum.filter(& &1.erp_tag.type == :vendor) do %>
@@ -23,15 +29,21 @@
       <div class="flex flex-col">
         <div class="flex items-center">
           <p class="font-medium text-sm block text-gray-900 dark:text-gray-200">Platforms</p>
-          <.icon_button 
-            to={Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id, erp_tag_type: :platform)}
-            link_type="live_patch" 
-            color="success" 
-            size="xs" 
-            class="flex-shrink"
-          >
-            <Heroicons.plus class="h-4 w-4" />
-          </.icon_button>
+          <%= if @can_update do %>
+            <.icon_button
+              to={
+                Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id,
+                  erp_tag_type: :platform
+                )
+              }
+              link_type="live_patch"
+              color="success"
+              size="xs"
+              class="flex-shrink"
+            >
+              <Heroicons.plus class="h-4 w-4" />
+            </.icon_button>
+          <% end %>
         </div>
         <div class="flex flex-row flex-wrap">
           <%= for tag <- @contractor_erp_tags |> Enum.filter(& &1.erp_tag.type == :platform) do %>
@@ -42,15 +54,21 @@
       <div class="flex flex-col">
         <div class="flex items-center">
           <p class="font-medium text-sm block text-gray-900 dark:text-gray-200">Pillars</p>
-          <.icon_button 
-            to={Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id, erp_tag_type: :pillar)} 
-            link_type="live_patch" 
-            color="success" 
-            size="xs" 
-            class="flex-shrink"
-          >
-            <Heroicons.plus class="h-4 w-4" />
-          </.icon_button>
+          <%= if @can_update do %>
+            <.icon_button
+              to={
+                Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id,
+                  erp_tag_type: :pillar
+                )
+              }
+              link_type="live_patch"
+              color="success"
+              size="xs"
+              class="flex-shrink"
+            >
+              <Heroicons.plus class="h-4 w-4" />
+            </.icon_button>
+          <% end %>
         </div>
         <div class="flex flex-row mb-2 flex-wrap">
           <%= for tag <- @contractor_erp_tags |> Enum.filter(& &1.erp_tag.type == :pillar) do %>
@@ -61,15 +79,21 @@
       <div class="flex flex-col">
         <div class="flex items-center">
           <p class="font-medium text-sm block text-gray-900 dark:text-gray-200">Modules</p>
-          <.icon_button 
-            to={Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id, erp_tag_type: :module)}
-            link_type="live_patch" 
-            color="success" 
-            size="xs" 
-            class="flex-shrink"
-          >
-            <Heroicons.plus class="h-4 w-4" />
-          </.icon_button>
+          <%= if @can_update do %>
+            <.icon_button
+              to={
+                Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id,
+                  erp_tag_type: :module
+                )
+              }
+              link_type="live_patch"
+              color="success"
+              size="xs"
+              class="flex-shrink"
+            >
+              <Heroicons.plus class="h-4 w-4" />
+            </.icon_button>
+          <% end %>
         </div>
         <div class="flex flex-row flex-wrap">
           <%= for tag <- @contractor_erp_tags |> Enum.filter(& &1.erp_tag.type == :module) do %>

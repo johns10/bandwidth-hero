@@ -6,6 +6,7 @@ defmodule BandwidthHeroWeb.ContractorLive.Show do
   alias BandwidthHero.ContractorErpTags
   alias BandwidthHero.ContractorErpTags.ContractorErpTag
   import BandwidthHeroWeb.ContractorLive.Components
+  import BandwidthHeroWeb.ContractorLive.Utils
 
   @impl true
   def mount(_params, _session, socket) do
@@ -36,7 +37,8 @@ defmodule BandwidthHeroWeb.ContractorLive.Show do
      |> assign(:return_to, Routes.contractor_show_path(socket, :show, contractor))
      |> assign(:contractor_erp_tag, contractor_erp_tag)
      |> assign(:erp_tag_type, erp_tag_type)
-     |> assign(:availability_id, availability_id)}
+     |> assign(:availability_id, availability_id)
+     |> assign(:can_update, can_update_contractor?(socket.assigns.current_user, contractor))}
   end
 
   @impl true

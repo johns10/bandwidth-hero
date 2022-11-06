@@ -2,13 +2,14 @@
   <.card variant="outline" class={@class}>
     <.card_content category="Availability">
       <.availability_table availabilities={@availabilities} contractor={@contractor} class="mb-4" />
-
-      <.a
-        link_type="live_patch"
-        to={Routes.contractor_show_path(@socket, :new_availability, @contractor)}
-      >
-        <.button color="success" label="New Availability" />
-      </.a>
+      <%= if @can_update do %>
+        <.a
+          link_type="live_patch"
+          to={Routes.contractor_show_path(@socket, :new_availability, @contractor)}
+        >
+          <.button color="success" label="New Availability" />
+        </.a>
+      <% end %>
     </.card_content>
   </.card>
   <%= if @live_action in [:new, :edit] do %>

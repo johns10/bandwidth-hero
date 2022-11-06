@@ -3,6 +3,7 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
   use PetalComponents
   alias BandwidthHeroWeb.Endpoint
   alias BandwidthHeroWeb.Router.Helpers, as: Routes
+  import BandwidthHeroWeb.ContractorLive.Utils
 
   def contractor_table(assigns) do
     ~H"""
@@ -70,22 +71,24 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
           <span class="text-sm font-light"><%= @contractor.title %></span>
         </div>
         <div class="flex flex-column">
-          <.a
-            to="#"
-            id="delete-contractor"
-            phx-click="delete"
-            phx-value-id={@contractor.id}
-            data={[confirm: "Are you sure you want to delete your profile?"]}
-          >
-            <Heroicons.trash solid class="w-4 h-4 m-2" />
-          </.a>
-          <.a
-            link_type="live_patch"
-            to={Routes.contractor_show_path(Endpoint, :edit, @contractor)}
-            id="edit-contractor"
-          >
-            <Heroicons.pencil solid class="w-4 h-4 m-2" />
-          </.a>
+          <%= if can_update_contractor?(@user, @contractor) do %>
+            <.a
+              to="#"
+              id="delete-contractor"
+              phx-click="delete"
+              phx-value-id={@contractor.id}
+              data={[confirm: "Are you sure you want to delete your profile?"]}
+            >
+              <Heroicons.trash solid class="w-4 h-4 m-2" />
+            </.a>
+            <.a
+              link_type="live_patch"
+              to={Routes.contractor_show_path(Endpoint, :edit, @contractor)}
+              id="edit-contractor"
+            >
+              <Heroicons.pencil solid class="w-4 h-4 m-2" />
+            </.a>
+          <% end %>
         </div>
       </div>
 

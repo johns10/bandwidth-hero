@@ -53,6 +53,7 @@ defmodule BandwidthHero.MixProject do
       {:petal_components, "~> 0.18.0"},
       {:heroicons, "~> 0.5.0"},
       {:recase, "~> 0.5"},
+      {:bodyguard, "~> 2.4"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
