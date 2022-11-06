@@ -26,7 +26,12 @@ defmodule BandwidthHeroWeb.ContractorErpTagLiveTest do
   end
 
   describe "Index" do
-    setup [:create_contractor, :create_erp_tag, :create_contractor_erp_tag]
+    setup [
+      :register_and_log_in_user,
+      :create_contractor,
+      :create_erp_tag,
+      :create_contractor_erp_tag
+    ]
 
     test "lists all contractor_erp_tag", %{conn: conn} do
       {:ok, _index_live, html} = live(conn, Routes.contractor_erp_tag_index_path(conn, :index))
@@ -55,13 +60,19 @@ defmodule BandwidthHeroWeb.ContractorErpTagLiveTest do
       assert html =~ "Contractor erp tag created successfully"
     end
 
-    test "updates contractor_erp_tag in listing", %{conn: conn, contractor_erp_tag: contractor_erp_tag} = context do
+    test "updates contractor_erp_tag in listing",
+         %{conn: conn, contractor_erp_tag: contractor_erp_tag} = context do
       {:ok, index_live, _html} = live(conn, Routes.contractor_erp_tag_index_path(conn, :index))
 
-      assert index_live |> element("#contractor_erp_tag-#{contractor_erp_tag.id} a", "Edit") |> render_click() =~
+      assert index_live
+             |> element("#contractor_erp_tag-#{contractor_erp_tag.id} a", "Edit")
+             |> render_click() =~
                "Edit Contractor erp tag"
 
-      assert_patch(index_live, Routes.contractor_erp_tag_index_path(conn, :edit, contractor_erp_tag))
+      assert_patch(
+        index_live,
+        Routes.contractor_erp_tag_index_path(conn, :edit, contractor_erp_tag)
+      )
 
       assert index_live
              |> form("#contractor_erp_tag-form", contractor_erp_tag: @invalid_attrs)
@@ -76,30 +87,47 @@ defmodule BandwidthHeroWeb.ContractorErpTagLiveTest do
       assert html =~ "Contractor erp tag updated successfully"
     end
 
-    test "deletes contractor_erp_tag in listing", %{conn: conn, contractor_erp_tag: contractor_erp_tag} do
+    test "deletes contractor_erp_tag in listing", %{
+      conn: conn,
+      contractor_erp_tag: contractor_erp_tag
+    } do
       {:ok, index_live, _html} = live(conn, Routes.contractor_erp_tag_index_path(conn, :index))
 
-      assert index_live |> element("#contractor_erp_tag-#{contractor_erp_tag.id} a", "Delete") |> render_click()
+      assert index_live
+             |> element("#contractor_erp_tag-#{contractor_erp_tag.id} a", "Delete")
+             |> render_click()
+
       refute has_element?(index_live, "#contractor_erp_tag-#{contractor_erp_tag.id}")
     end
   end
 
   describe "Show" do
-    setup [:create_contractor, :create_erp_tag, :create_contractor_erp_tag]
+    setup [
+      :register_and_log_in_user,
+      :create_contractor,
+      :create_erp_tag,
+      :create_contractor_erp_tag
+    ]
 
     test "displays contractor_erp_tag", %{conn: conn, contractor_erp_tag: contractor_erp_tag} do
-      {:ok, _show_live, html} = live(conn, Routes.contractor_erp_tag_show_path(conn, :show, contractor_erp_tag))
+      {:ok, _show_live, html} =
+        live(conn, Routes.contractor_erp_tag_show_path(conn, :show, contractor_erp_tag))
 
       assert html =~ "Show Contractor erp tag"
     end
 
-    test "updates contractor_erp_tag within modal", %{conn: conn, contractor_erp_tag: contractor_erp_tag} = context do
-      {:ok, show_live, _html} = live(conn, Routes.contractor_erp_tag_show_path(conn, :show, contractor_erp_tag))
+    test "updates contractor_erp_tag within modal",
+         %{conn: conn, contractor_erp_tag: contractor_erp_tag} = context do
+      {:ok, show_live, _html} =
+        live(conn, Routes.contractor_erp_tag_show_path(conn, :show, contractor_erp_tag))
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Contractor erp tag"
 
-      assert_patch(show_live, Routes.contractor_erp_tag_show_path(conn, :edit, contractor_erp_tag))
+      assert_patch(
+        show_live,
+        Routes.contractor_erp_tag_show_path(conn, :edit, contractor_erp_tag)
+      )
 
       assert show_live
              |> form("#contractor_erp_tag-form", contractor_erp_tag: @invalid_attrs)
@@ -109,7 +137,10 @@ defmodule BandwidthHeroWeb.ContractorErpTagLiveTest do
         show_live
         |> form("#contractor_erp_tag-form", contractor_erp_tag: update_attrs(context))
         |> render_submit(%{contractor_erp_tag: %{"contractor_id" => context.contractor.id}})
-        |> follow_redirect(conn, Routes.contractor_erp_tag_show_path(conn, :show, contractor_erp_tag))
+        |> follow_redirect(
+          conn,
+          Routes.contractor_erp_tag_show_path(conn, :show, contractor_erp_tag)
+        )
 
       assert html =~ "Contractor erp tag updated successfully"
     end

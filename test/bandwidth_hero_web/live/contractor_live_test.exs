@@ -4,9 +4,36 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
   import Phoenix.LiveViewTest
   import BandwidthHero.ContractorFixtures
 
-  @create_attrs %{availability: :full, bandwidth: 42, contract_type: :corp_to_corp, international_travel: :yes, laptop: :use_my_own, name: "some name", title: "some title", travel: :"100%"}
-  @update_attrs %{availability: :partial, bandwidth: 43, contract_type: :contract_w2, international_travel: :no, laptop: :use_provided_laptop, name: "some updated name", title: "some updated title", travel: :"75%"}
-  @invalid_attrs %{availability: nil, bandwidth: nil, contract_type: nil, international_travel: nil, laptop: nil, name: nil, title: nil, travel: nil}
+  @create_attrs %{
+    availability: :full,
+    bandwidth: 42,
+    contract_type: :corp_to_corp,
+    international_travel: :yes,
+    laptop: :use_my_own,
+    name: "some name",
+    title: "some title",
+    travel: :"100%"
+  }
+  @update_attrs %{
+    availability: :partial,
+    bandwidth: 43,
+    contract_type: :contract_w2,
+    international_travel: :no,
+    laptop: :use_provided_laptop,
+    name: "some updated name",
+    title: "some updated title",
+    travel: :"75%"
+  }
+  @invalid_attrs %{
+    availability: nil,
+    bandwidth: nil,
+    contract_type: nil,
+    international_travel: nil,
+    laptop: nil,
+    name: nil,
+    title: nil,
+    travel: nil
+  }
 
   defp create_contractor(_) do
     contractor = contractor_fixture()
@@ -14,7 +41,7 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
   end
 
   describe "Index" do
-    setup [:create_contractor]
+    setup [:register_and_log_in_user, :create_contractor]
 
     test "lists all contractors", %{conn: conn, contractor: contractor} do
       {:ok, _index_live, html} = live(conn, Routes.contractor_index_path(conn, :index))
@@ -76,7 +103,7 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
   end
 
   describe "Show" do
-    setup [:create_contractor]
+    setup [:register_and_log_in_user, :create_contractor]
 
     test "displays contractor", %{conn: conn, contractor: contractor} do
       {:ok, _show_live, html} = live(conn, Routes.contractor_show_path(conn, :show, contractor))

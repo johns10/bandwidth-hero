@@ -1,5 +1,6 @@
 defmodule BandwidthHeroWeb.AvailabilityLive.Index do
   use BandwidthHeroWeb, :live_view
+  on_mount BandwidthHeroWeb.UserLiveAuth
 
   alias BandwidthHero.Availabilities
   alias BandwidthHero.Availabilities.Availability
@@ -7,9 +8,10 @@ defmodule BandwidthHeroWeb.AvailabilityLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket
-    |> assign(:availabilities, list_availabilities())
-    |> assign(:return_to, Routes.availability_index_path(socket, :index))}
+    {:ok,
+     socket
+     |> assign(:availabilities, list_availabilities())
+     |> assign(:return_to, Routes.availability_index_path(socket, :index))}
   end
 
   @impl true

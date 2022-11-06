@@ -14,7 +14,7 @@ defmodule BandwidthHeroWeb.ErpTagLiveTest do
   end
 
   describe "Index" do
-    setup [:create_erp_tag]
+    setup [:register_and_log_in_user, :create_erp_tag]
 
     test "lists all erp_tag", %{conn: conn, erp_tag: erp_tag} do
       {:ok, _index_live, html} = live(conn, Routes.erp_tag_index_path(conn, :index))
@@ -76,7 +76,7 @@ defmodule BandwidthHeroWeb.ErpTagLiveTest do
   end
 
   describe "Show" do
-    setup [:create_erp_tag]
+    setup [:register_and_log_in_user, :create_erp_tag]
 
     test "displays erp_tag", %{conn: conn, erp_tag: erp_tag} do
       {:ok, _show_live, html} = live(conn, Routes.erp_tag_show_path(conn, :show, erp_tag))

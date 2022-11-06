@@ -11,6 +11,15 @@ defmodule BandwidthHeroWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug :set_color_scheme
+  end
+
+  defp set_color_scheme(conn, _opts) do
+    color_scheme = conn.cookies["color-scheme"] || "dark"
+
+    conn
+    |> assign(:color_scheme, color_scheme)
+    |> put_session(:color_scheme, color_scheme)
   end
 
   pipeline :api do
@@ -21,61 +30,6 @@ defmodule BandwidthHeroWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    live "/live", PageLive, :index
-    live "/live/modal/:size", PageLive, :modal
-    live "/live/slide_over/:origin", PageLive, :slide_over
-    live "/live/pagination/:page", PageLive, :pagination
-
-    live "/erp_tag", ErpTagLive.Index, :index
-    live "/erp_tag/new", ErpTagLive.Index, :new
-    live "/erp_tag/:id/edit", ErpTagLive.Index, :edit
-
-    live "/erp_tag/:id", ErpTagLive.Show, :show
-    live "/erp_tag/:id/show/edit", ErpTagLive.Show, :edit
-
-    live "/experience", ExperienceLive.Index, :index
-    live "/experience/new", ExperienceLive.Index, :new
-    live "/experience/:id/edit", ExperienceLive.Index, :edit
-
-    live "/experience/:id", ExperienceLive.Show, :show
-    live "/experience/:id/show/edit", ExperienceLive.Show, :edit
-
-    live "/certificate", CertificateLive.Index, :index
-    live "/certificate/new", CertificateLive.Index, :new
-    live "/certificate/:id/edit", CertificateLive.Index, :edit
-
-    live "/certificate/:id", CertificateLive.Show, :show
-    live "/certificate/:id/show/edit", CertificateLive.Show, :edit
-
-    live "/contractor", ContractorLive.Index, :index
-    live "/contractor/new", ContractorLive.Index, :new
-    live "/contractor/:id/edit", ContractorLive.Index, :edit
-
-    live "/contractor/:id", ContractorLive.Show, :show
-    live "/contractor/:id/show/edit", ContractorLive.Show, :edit
-
-    live "/contractor/:id/erp_tag/new", ContractorLive.Show, :new_erp_tag
-    live "/contractor/:id/erp_tag/:erp_tag_id/edit", ContractorLive.Show, :edit_erp_tag
-
-    live "/contractor/:id/availability/new", ContractorLive.Show, :new_availability
-
-    live "/contractor/:id/availability/:availability_id/edit",
-         ContractorLive.Show,
-         :edit_availability
-
-    live "/contractor_erp_tag", ContractorErpTagLive.Index, :index
-    live "/contractor_erp_tag/new", ContractorErpTagLive.Index, :new
-    live "/contractor_erp_tag/:id/edit", ContractorErpTagLive.Index, :edit
-
-    live "/contractor_erp_tag/:id", ContractorErpTagLive.Show, :show
-    live "/contractor_erp_tag/:id/show/edit", ContractorErpTagLive.Show, :edit
-
-    live "/availability", AvailabilityLive.Index, :index
-    live "/availability/new", AvailabilityLive.Index, :new
-    live "/availability/:id/edit", AvailabilityLive.Index, :edit
-
-    live "/availability/:id", AvailabilityLive.Show, :show
-    live "/availability/:id/show/edit", AvailabilityLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
@@ -92,6 +46,65 @@ defmodule BandwidthHeroWeb.Router do
   # as long as you are also using SSL (which you should anyway).
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
+
+    scope "/", BandwidthHeroWeb do
+      pipe_through :browser
+      live "/live", PageLive, :index
+      live "/live/modal/:size", PageLive, :modal
+      live "/live/slide_over/:origin", PageLive, :slide_over
+      live "/live/pagination/:page", PageLive, :pagination
+
+      live "/erp_tag", ErpTagLive.Index, :index
+      live "/erp_tag/new", ErpTagLive.Index, :new
+      live "/erp_tag/:id/edit", ErpTagLive.Index, :edit
+
+      live "/erp_tag/:id", ErpTagLive.Show, :show
+      live "/erp_tag/:id/show/edit", ErpTagLive.Show, :edit
+
+      live "/experience", ExperienceLive.Index, :index
+      live "/experience/new", ExperienceLive.Index, :new
+      live "/experience/:id/edit", ExperienceLive.Index, :edit
+
+      live "/experience/:id", ExperienceLive.Show, :show
+      live "/experience/:id/show/edit", ExperienceLive.Show, :edit
+
+      live "/certificate", CertificateLive.Index, :index
+      live "/certificate/new", CertificateLive.Index, :new
+      live "/certificate/:id/edit", CertificateLive.Index, :edit
+
+      live "/certificate/:id", CertificateLive.Show, :show
+      live "/certificate/:id/show/edit", CertificateLive.Show, :edit
+
+      live "/contractor", ContractorLive.Index, :index
+      live "/contractor/new", ContractorLive.Index, :new
+      live "/contractor/:id/edit", ContractorLive.Index, :edit
+
+      live "/contractor/:id", ContractorLive.Show, :show
+      live "/contractor/:id/show/edit", ContractorLive.Show, :edit
+
+      live "/contractor/:id/erp_tag/new", ContractorLive.Show, :new_erp_tag
+      live "/contractor/:id/erp_tag/:erp_tag_id/edit", ContractorLive.Show, :edit_erp_tag
+
+      live "/contractor/:id/availability/new", ContractorLive.Show, :new_availability
+
+      live "/contractor/:id/availability/:availability_id/edit",
+           ContractorLive.Show,
+           :edit_availability
+
+      live "/contractor_erp_tag", ContractorErpTagLive.Index, :index
+      live "/contractor_erp_tag/new", ContractorErpTagLive.Index, :new
+      live "/contractor_erp_tag/:id/edit", ContractorErpTagLive.Index, :edit
+
+      live "/contractor_erp_tag/:id", ContractorErpTagLive.Show, :show
+      live "/contractor_erp_tag/:id/show/edit", ContractorErpTagLive.Show, :edit
+
+      live "/availability", AvailabilityLive.Index, :index
+      live "/availability/new", AvailabilityLive.Index, :new
+      live "/availability/:id/edit", AvailabilityLive.Index, :edit
+
+      live "/availability/:id", AvailabilityLive.Show, :show
+      live "/availability/:id/show/edit", AvailabilityLive.Show, :edit
+    end
 
     scope "/" do
       pipe_through :browser

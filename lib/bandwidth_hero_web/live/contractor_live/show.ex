@@ -1,5 +1,6 @@
 defmodule BandwidthHeroWeb.ContractorLive.Show do
   use BandwidthHeroWeb, :live_view
+  on_mount BandwidthHeroWeb.UserLiveAuth
 
   alias BandwidthHero.Contractors
   alias BandwidthHero.ContractorErpTags

@@ -26,7 +26,7 @@ defmodule BandwidthHeroWeb.AvailabilityLiveTest do
   end
 
   describe "Index" do
-    setup [:create_availability]
+    setup [:register_and_log_in_user, :create_availability]
 
     test "lists all availabilities", %{conn: conn} do
       {:ok, _index_live, html} = live(conn, Routes.availability_index_path(conn, :index))
@@ -88,7 +88,7 @@ defmodule BandwidthHeroWeb.AvailabilityLiveTest do
   end
 
   describe "Show" do
-    setup [:create_availability]
+    setup [:register_and_log_in_user, :create_availability]
 
     test "displays availability", %{conn: conn, availability: availability} do
       {:ok, _show_live, html} =

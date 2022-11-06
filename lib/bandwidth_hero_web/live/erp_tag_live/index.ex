@@ -1,5 +1,6 @@
 defmodule BandwidthHeroWeb.ErpTagLive.Index do
   use BandwidthHeroWeb, :live_view
+  on_mount BandwidthHeroWeb.UserLiveAuth
 
   alias BandwidthHero.Tags
   alias BandwidthHero.Tags.ErpTag
@@ -7,9 +8,10 @@ defmodule BandwidthHeroWeb.ErpTagLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket
-    |> assign(:erp_tags, list_erp_tags())
-    |> assign(:return_to, Routes.erp_tag_index_path(socket, :index))}
+    {:ok,
+     socket
+     |> assign(:erp_tags, list_erp_tags())
+     |> assign(:return_to, Routes.erp_tag_index_path(socket, :index))}
   end
 
   @impl true

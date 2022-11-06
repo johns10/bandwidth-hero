@@ -4,9 +4,24 @@ defmodule BandwidthHeroWeb.ExperienceLiveTest do
   import Phoenix.LiveViewTest
   import BandwidthHero.ExperiencesFixtures
 
-  @create_attrs %{description: "some description", from: %{day: 29, month: 10, year: 2022}, label: "some label", to: %{day: 29, month: 10, year: 2022}}
-  @update_attrs %{description: "some updated description", from: %{day: 30, month: 10, year: 2022}, label: "some updated label", to: %{day: 30, month: 10, year: 2022}}
-  @invalid_attrs %{description: nil, from: %{day: 30, month: 2, year: 2022}, label: nil, to: %{day: 30, month: 2, year: 2022}}
+  @create_attrs %{
+    description: "some description",
+    from: %{day: 29, month: 10, year: 2022},
+    label: "some label",
+    to: %{day: 29, month: 10, year: 2022}
+  }
+  @update_attrs %{
+    description: "some updated description",
+    from: %{day: 30, month: 10, year: 2022},
+    label: "some updated label",
+    to: %{day: 30, month: 10, year: 2022}
+  }
+  @invalid_attrs %{
+    description: nil,
+    from: %{day: 30, month: 2, year: 2022},
+    label: nil,
+    to: %{day: 30, month: 2, year: 2022}
+  }
 
   defp create_experience(_) do
     experience = experience_fixture()
@@ -14,7 +29,7 @@ defmodule BandwidthHeroWeb.ExperienceLiveTest do
   end
 
   describe "Index" do
-    setup [:create_experience]
+    setup [:register_and_log_in_user, :create_experience]
 
     test "lists all experience", %{conn: conn, experience: experience} do
       {:ok, _index_live, html} = live(conn, Routes.experience_index_path(conn, :index))
@@ -76,7 +91,7 @@ defmodule BandwidthHeroWeb.ExperienceLiveTest do
   end
 
   describe "Show" do
-    setup [:create_experience]
+    setup [:register_and_log_in_user, :create_experience]
 
     test "displays experience", %{conn: conn, experience: experience} do
       {:ok, _show_live, html} = live(conn, Routes.experience_show_path(conn, :show, experience))

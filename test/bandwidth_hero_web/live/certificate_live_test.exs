@@ -14,7 +14,7 @@ defmodule BandwidthHeroWeb.CertificateLiveTest do
   end
 
   describe "Index" do
-    setup [:create_certificate]
+    setup [:register_and_log_in_user, :create_certificate]
 
     test "lists all certificate", %{conn: conn, certificate: certificate} do
       {:ok, _index_live, html} = live(conn, Routes.certificate_index_path(conn, :index))
@@ -76,7 +76,7 @@ defmodule BandwidthHeroWeb.CertificateLiveTest do
   end
 
   describe "Show" do
-    setup [:create_certificate]
+    setup [:register_and_log_in_user, :create_certificate]
 
     test "displays certificate", %{conn: conn, certificate: certificate} do
       {:ok, _show_live, html} = live(conn, Routes.certificate_show_path(conn, :show, certificate))

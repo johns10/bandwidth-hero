@@ -1,5 +1,6 @@
 defmodule BandwidthHeroWeb.AvailabilityLive.Show do
   use BandwidthHeroWeb, :live_view
+  on_mount BandwidthHeroWeb.UserLiveAuth
 
   alias BandwidthHero.Availabilities
   import BandwidthHeroWeb.AvailabilityLive.Components
@@ -12,6 +13,7 @@ defmodule BandwidthHeroWeb.AvailabilityLive.Show do
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
     availability = Availabilities.get_availability!(id)
+
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))

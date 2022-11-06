@@ -1,5 +1,6 @@
 defmodule BandwidthHeroWeb.ContractorErpTagLive.Index do
   use BandwidthHeroWeb, :live_view
+  on_mount BandwidthHeroWeb.UserLiveAuth
 
   alias BandwidthHero.Tags
   alias BandwidthHero.ContractorErpTags
@@ -8,10 +9,11 @@ defmodule BandwidthHeroWeb.ContractorErpTagLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket
-    |> assign(:contractor_erp_tag_collection, list_contractor_erp_tags())
-    |> assign(:return_to, Routes.contractor_erp_tag_index_path(socket, :index))
-    |> assign(:erp_tag_select_options, Tags.list_erp_tags() |> Enum.map(& {&1.label, &1.id}))}
+    {:ok,
+     socket
+     |> assign(:contractor_erp_tag_collection, list_contractor_erp_tags())
+     |> assign(:return_to, Routes.contractor_erp_tag_index_path(socket, :index))
+     |> assign(:erp_tag_select_options, Tags.list_erp_tags() |> Enum.map(&{&1.label, &1.id}))}
   end
 
   @impl true

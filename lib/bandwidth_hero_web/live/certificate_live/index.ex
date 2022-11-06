@@ -1,5 +1,6 @@
 defmodule BandwidthHeroWeb.CertificateLive.Index do
   use BandwidthHeroWeb, :live_view
+  on_mount BandwidthHeroWeb.UserLiveAuth
 
   alias BandwidthHero.Certificates
   alias BandwidthHero.Certificates.Certificate
@@ -7,9 +8,10 @@ defmodule BandwidthHeroWeb.CertificateLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket
-    |> assign(:certificate_collection, list_certificate())
-    |> assign(:return_to, Routes.certificate_index_path(socket, :index))}
+    {:ok,
+     socket
+     |> assign(:certificate_collection, list_certificate())
+     |> assign(:return_to, Routes.certificate_index_path(socket, :index))}
   end
 
   @impl true

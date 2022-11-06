@@ -1,5 +1,6 @@
 defmodule BandwidthHeroWeb.ExperienceLive.Index do
   use BandwidthHeroWeb, :live_view
+  on_mount BandwidthHeroWeb.UserLiveAuth
 
   alias BandwidthHero.Experiences
   alias BandwidthHero.Experiences.Experience
@@ -7,9 +8,10 @@ defmodule BandwidthHeroWeb.ExperienceLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket
-    |> assign(:experience_collection, list_experiences())
-    |> assign(:return_to, Routes.experience_index_path(socket, :index))}
+    {:ok,
+     socket
+     |> assign(:experience_collection, list_experiences())
+     |> assign(:return_to, Routes.experience_index_path(socket, :index))}
   end
 
   @impl true
