@@ -15,9 +15,7 @@ defmodule BandwidthHeroWeb.ContractorLive.Show do
 
   @impl true
   def handle_params(%{"id" => id} = attrs, _, socket) do
-    contractor =
-      Contractors.get_contractor!(id, preloads: [contractor_erp_tags: true, availabilities: true])
-
+    contractor = get_contractor(id)
     contractor_erp_tag_id = Map.get(attrs, "erp_tag_id", nil)
 
     contractor_erp_tag =
@@ -30,10 +28,18 @@ defmodule BandwidthHeroWeb.ContractorLive.Show do
     erp_tag_type = Map.get(attrs, "erp_tag_type", nil)
     availability_id = Map.get(attrs, "availability_id", nil)
 
+    availability_action =
+      case socket.assigns.live_action do
+        :new_availability -> :new
+        :edit_availability -> :edit
+        _ -> :show
+      end
+
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:contractor, contractor)
+     |> assign(:availability_action, availability_action)
      |> assign(:return_to, Routes.contractor_show_path(socket, :show, contractor))
      |> assign(:contractor_erp_tag, contractor_erp_tag)
      |> assign(:erp_tag_type, erp_tag_type)
@@ -57,12 +63,11 @@ defmodule BandwidthHeroWeb.ContractorLive.Show do
     contractor_erp_tag = ContractorErpTags.get_contractor_erp_tag!(id)
     {:ok, _} = ContractorErpTags.delete_contractor_erp_tag(contractor_erp_tag)
 
-    contractor =
-      Contractors.get_contractor!(socket.assigns.contractor.id,
-        preloads: [contractor_erp_tags: true]
-      )
+    {:noreply, assign(socket, :contractor, get_contractor(id))}
+  end
 
-    {:noreply, assign(socket, :contractor, contractor)}
+  defp get_contractor(id) do
+    Contractors.get_contractor!(id, preloads: [contractor_erp_tags: true, availabilities: true])
   end
 
   defp page_title(:show), do: "Show Contractor"
