@@ -7,4 +7,9 @@ defmodule BandwidthHeroWeb.ContractorLive.Utils do
       {:error, _} -> false
     end
   end
+
+  def commafy(list_of_values, acc \\ "")
+  def commafy([_item | tail], acc), do: acc <> ", " <> commafy(tail, acc)
+  def commafy([item | nil], acc), do: acc <> ", " <> item
+  def commafy([], acc), do: acc
 end

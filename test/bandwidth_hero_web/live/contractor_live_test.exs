@@ -5,20 +5,20 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
   import BandwidthHero.ContractorFixtures
 
   @create_attrs %{
-    contract_type: :corp_to_corp,
+    contract_type: [:corp_to_corp],
     international_travel: :yes,
-    laptop: :use_my_own,
+    laptop: [:use_my_own],
     name: "some name",
     title: "some title",
-    travel: :"100%"
+    travel: [:"100%"]
   }
   @update_attrs %{
-    contract_type: :contract_w2,
+    contract_type: [:contract_w2],
     international_travel: :no,
-    laptop: :use_provided_laptop,
+    laptop: [:use_provided_laptop],
     name: "some updated name",
     title: "some updated title",
-    travel: :"75%"
+    travel: [:"75%"]
   }
   @invalid_attrs %{
     contract_type: nil,

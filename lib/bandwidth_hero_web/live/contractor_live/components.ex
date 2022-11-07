@@ -22,10 +22,10 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
         <.tr id={"contractor-#{contractor.id}"}>
           <.td><%= contractor.name %></.td>
           <.td><%= contractor.title %></.td>
-          <.td><%= contractor.travel %></.td>
+          <.td><%= commafy(contractor.travel) %></.td>
           <.td><%= contractor.international_travel %></.td>
-          <.td><%= contractor.contract_type %></.td>
-          <.td><%= contractor.laptop %></.td>
+          <.td><%= commafy(contractor.contract_type) %></.td>
+          <.td><%= commafy(contractor.laptop) %></.td>
 
           <.td>
             <span>
@@ -92,9 +92,7 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
         <ul>
           <li>
             <strong>Travel:</strong>
-            <%= for value <- @contractor.travel do %>
-              <%= value %>
-            <% end %>
+            <%= commafy(@contractor.travel) %>
           </li>
 
           <li>
@@ -104,16 +102,12 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
 
           <li>
             <strong>Contract type:</strong>
-            <%= for value <- @contractor.contract_type do %>
-              <%= value |> to_string() |> Recase.to_sentence() %>
-            <% end %>
+            <%= commafy(@contractor.contract_type) |> Recase.to_sentence() %>
           </li>
 
           <li>
             <strong>Laptop:</strong>
-            <%= for value <- @contractor.laptop do %>
-              <%= value |> to_string() |> Recase.to_sentence() %>
-            <% end %>
+            <%= commafy(@contractor.laptop) |> Recase.to_sentence() %>
           </li>
         </ul>
       </.card_content>
