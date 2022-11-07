@@ -11,8 +11,6 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
       <.tr>
         <.th>Name</.th>
         <.th>Title</.th>
-        <.th>Availability</.th>
-        <.th>Bandwidth</.th>
         <.th>Travel</.th>
         <.th>International travel</.th>
         <.th>Contract type</.th>
@@ -24,8 +22,6 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
         <.tr id={"contractor-#{contractor.id}"}>
           <.td><%= contractor.name %></.td>
           <.td><%= contractor.title %></.td>
-          <.td><%= contractor.availability %></.td>
-          <.td><%= contractor.bandwidth %></.td>
           <.td><%= contractor.travel %></.td>
           <.td><%= contractor.international_travel %></.td>
           <.td><%= contractor.contract_type %></.td>
@@ -95,16 +91,10 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
       <.card_content>
         <ul>
           <li>
-            <%= @contractor.availability |> to_string() |> Recase.to_sentence() %> Availability
-          </li>
-
-          <li>
-            Can work <%= @contractor.bandwidth %> hours per work
-          </li>
-
-          <li>
             <strong>Travel:</strong>
-            <%= @contractor.travel %>
+            <%= for value <- @contractor.travel do %>
+              <%= value %>
+            <% end %>
           </li>
 
           <li>
@@ -114,12 +104,16 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
 
           <li>
             <strong>Contract type:</strong>
-            <%= @contractor.contract_type |> to_string() |> Recase.to_sentence() %>
+            <%= for value <- @contractor.contract_type do %>
+              <%= value |> to_string() |> Recase.to_sentence() %>
+            <% end %>
           </li>
 
           <li>
             <strong>Laptop:</strong>
-            <%= @contractor.laptop |> to_string() |> Recase.to_sentence() %>
+            <%= for value <- @contractor.laptop do %>
+              <%= value |> to_string() |> Recase.to_sentence() %>
+            <% end %>
           </li>
         </ul>
       </.card_content>

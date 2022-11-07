@@ -7,6 +7,7 @@ defmodule BandwidthHeroWeb.ContractorErpTagLive.FormComponent do
 
   @impl true
   def update(%{contractor_erp_tag: %{erp_tag: erp_tag}} = assigns, socket) do
+    contractor_id = Map.get(assigns, :contractor_id, nil)
     erp_tag_type = Map.get(assigns, :erp_tag_type, nil)
     erp_tag_type = is_binary(erp_tag_type) && String.to_atom(erp_tag_type)
 
@@ -28,6 +29,7 @@ defmodule BandwidthHeroWeb.ContractorErpTagLive.FormComponent do
         else: select_list
 
     assigns
+    |> Map.put(:contractor_id, contractor_id)
     |> Map.put(:erp_tag_select_options, select_list)
     |> update_socket(socket)
   end

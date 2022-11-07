@@ -11,14 +11,12 @@ defmodule BandwidthHero.ContractorFixtures do
     {:ok, contractor} =
       attrs
       |> Enum.into(%{
-        availability: :full,
-        bandwidth: 42,
-        contract_type: :corp_to_corp,
+        contract_type: [:corp_to_corp],
         international_travel: :yes,
-        laptop: :use_my_own,
+        laptop: [:use_my_own],
         name: "some name",
         title: "some title",
-        travel: :"100%"
+        travel: [:"100%"]
       })
       |> BandwidthHero.Contractors.create_contractor()
 

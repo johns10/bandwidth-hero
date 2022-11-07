@@ -5,8 +5,6 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
   import BandwidthHero.ContractorFixtures
 
   @create_attrs %{
-    availability: :full,
-    bandwidth: 42,
     contract_type: :corp_to_corp,
     international_travel: :yes,
     laptop: :use_my_own,
@@ -15,8 +13,6 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
     travel: :"100%"
   }
   @update_attrs %{
-    availability: :partial,
-    bandwidth: 43,
     contract_type: :contract_w2,
     international_travel: :no,
     laptop: :use_provided_laptop,
@@ -25,8 +21,6 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
     travel: :"75%"
   }
   @invalid_attrs %{
-    availability: nil,
-    bandwidth: nil,
     contract_type: nil,
     international_travel: nil,
     laptop: nil,
@@ -35,8 +29,8 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
     travel: nil
   }
 
-  defp create_contractor(_) do
-    contractor = contractor_fixture()
+  defp create_contractor(%{user: user}) do
+    contractor = contractor_fixture(%{user_id: user.id})
     %{contractor: contractor}
   end
 
