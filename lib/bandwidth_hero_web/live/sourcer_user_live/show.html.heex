@@ -1,0 +1,16 @@
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.sourcer_user_show_path(@socket, :show, @sourcer_user)} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.SourcerUserLive.FormComponent}
+      id={@sourcer_user.id}
+      action={@live_action}
+      sourcer_user={@sourcer_user}
+      return_to={Routes.sourcer_user_show_path(@socket, :show, @sourcer_user)}
+    />
+  </.modal>
+<% end %>
+
+<.sourcer_user_card sourcer_user={@sourcer_user} />
+
+<span><%= live_patch "Edit", to: Routes.sourcer_user_show_path(@socket, :edit, @sourcer_user), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.sourcer_user_index_path(@socket, :index) %></span>

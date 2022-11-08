@@ -28,6 +28,11 @@ defmodule BandwidthHeroWeb.Router do
 
   scope "/", BandwidthHeroWeb do
     pipe_through :browser
+
+    live "/", ProfileLive.Show, :show
+    live "/profile", ProfileLive.Show, :show
+    live "/profile/new_contractor", ProfileLive.Show, :new_contractor
+    live "/profile/new_sourcer", ProfileLive.Show, :new_sourcer
   end
 
   # Other scopes may use custom stacks.
@@ -103,9 +108,19 @@ defmodule BandwidthHeroWeb.Router do
       live "/availability/:id", AvailabilityLive.Show, :show
       live "/availability/:id/show/edit", AvailabilityLive.Show, :edit
 
-      live "/", ProfileLive.Show, :show
-      live "/profile", ProfileLive.Show, :show
-      live "/profile/new_contractor", ProfileLive.Show, :new_contractor
+      live "/sourcers", SourcerLive.Index, :index
+      live "/sourcers/new", SourcerLive.Index, :new
+      live "/sourcers/:id/edit", SourcerLive.Index, :edit
+
+      live "/sourcers/:id", SourcerLive.Show, :show
+      live "/sourcers/:id/show/edit", SourcerLive.Show, :edit
+
+      live "/sourcer_users", SourcerUserLive.Index, :index
+      live "/sourcer_users/new", SourcerUserLive.Index, :new
+      live "/sourcer_users/:id/edit", SourcerUserLive.Index, :edit
+
+      live "/sourcer_users/:id", SourcerUserLive.Show, :show
+      live "/sourcer_users/:id/show/edit", SourcerUserLive.Show, :edit
     end
 
     scope "/" do

@@ -4,3 +4,5 @@ mix bh.gen.live ContractorErpTags ContractorErpTag contractor_erp_tags years:int
 mix bh.gen.live Experiences Experience experience label:string description:text from:date to:date
 mix bh.gen.live Certificates Certificate certificate label:string description:text references:contractor
 mix bh.gen.live Availabilities Availability availabilities from:date to:date contractor_id:references:contractors
+mix bh.gen.live Sourcers Sourcer sourcers name:string description:text type:enum:end_customer:recruiter:consulting_firm website:string
+mix bh.gen.live SourcerUsers SourcerUser sourcer_users user_id:references:users sourcer_id:references:sourcers position:string

@@ -2,6 +2,8 @@ defmodule BandwidthHero.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias BandwidthHero.Contractors.Contractor
+  alias BandwidthHero.Sourcers.Sourcer
+  alias BandwidthHero.SourcerUsers.SourcerUser
 
   schema "users" do
     field :email, :string
@@ -9,7 +11,10 @@ defmodule BandwidthHero.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
+    belongs_to :sourcer, Sourcer
     has_one :contractor, Contractor
+    has_many :sourcer_users, SourcerUser
+    has_many :sourcers, through: [:sourcer_users, :sourcer]
 
     timestamps()
   end

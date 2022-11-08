@@ -13,21 +13,55 @@
   </.modal>
 <% end %>
 
-<%= if !@contractor do %>
-  <.card variant="outline">
-    <.card_content category="Availability" class="flex-col">
-      <p class="mb-4">
-        You don't have a profile set up.
-        You can only have one, so choose wisely.
-        If you're looking for a project, start here.
-      </p>
-      <.a
-        link_type="live_patch"
-        to={Routes.profile_show_path(@socket, :new_contractor)}
-        class="my-4"
-      >
-        <.button color="success" label="Create Contractor Profile" />
-      </.a>
-    </.card_content>
-  </.card>
+<%= if @live_action in [:new_sourcer] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.SourcerLive.FormComponent}
+      id={:new}
+      action={:new}
+      sourcer={@sourcer || %Sourcer{}}
+      return_to={@return_to}
+      user={@current_user}
+    />
+  </.modal>
 <% end %>
+
+<p>
+  You don't have a profile set up.
+  You can only have one, so choose wisely.
+</p>
+<div class="flex space-x-4">
+  <%= if !@contractor do %>
+    <.card variant="outline" class="flex-grow">
+      <.card_content heading="Contractors" class="flex-col">
+        <p class="mb-4">
+          If you're looking for a project, start here.
+        </p>
+        <.a
+          link_type="live_patch"
+          to={Routes.profile_show_path(@socket, :new_contractor)}
+          class="my-4"
+        >
+          <.button color="success" label="Create Contractor Profile" />
+        </.a>
+      </.card_content>
+    </.card>
+  <% end %>
+
+  <%= if !@sourcer do %>
+    <.card variant="outline" class="flex-grow">
+      <.card_content heading="Sourcers" class="flex-col">
+        <p class="mb-4">
+          If you're looking for a contractor, start here.
+        </p>
+        <.a
+          link_type="live_patch"
+          to={Routes.profile_show_path(@socket, :new_sourcer)}
+          class="my-4"
+        >
+          <.button color="success" label="Create Sourcer Profile" />
+        </.a>
+      </.card_content>
+    </.card>
+  <% end %>
+</div>

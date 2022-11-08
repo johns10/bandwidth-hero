@@ -4,6 +4,8 @@ defmodule BandwidthHeroWeb.ProfileLive.Show do
 
   alias BandwidthHero.Contractors
   alias BandwidthHero.Contractors.Contractor
+  alias BandwidthHero.Sourcers
+  alias BandwidthHero.Sourcers.Sourcer
 
   @impl true
   def mount(_params, _session, socket) do
@@ -11,17 +13,25 @@ defmodule BandwidthHeroWeb.ProfileLive.Show do
       socket.assigns.current_user.id
       |> Contractors.get_contractor_by_user_id()
 
-    case contractor do
-      %Contractor{} = contractor ->
+    user =
+      socket.assigns.current_user
+      |> BandwidthHero.Repo.preload([:contractor, sourcer_users: :sourcer])
+
+    case user do
+      %{contractor: %Contractor{} = contractor} ->
         {:ok, socket |> push_redirect(to: Routes.contractor_show_path(socket, :show, contractor))}
 
-      nil ->
+      %{sourcer_users: [%{sourcer: %Sourcer{} = sourcer}]} ->
+        {:ok, socket |> push_redirect(to: Routes.sourcer_show_path(socket, :show, sourcer))}
+
+      _ ->
         {:ok,
          socket
          |> assign(:page_title, page_title(socket.assigns.live_action))
          |> assign(:contractor_action, contractor_action(socket))
          |> assign(:live_action, socket.assigns.live_action)
-         |> assign(:contractor, contractor)
+         |> assign(:contractor, nil)
+         |> assign(:sourcer, nil)
          |> assign(:return_to, Routes.profile_show_path(socket, :show))}
     end
   end
@@ -38,6 +48,7 @@ defmodule BandwidthHeroWeb.ProfileLive.Show do
 
   defp page_title(:show), do: "Profile"
   defp page_title(:new_contractor), do: "New Contractor Profile"
+  defp page_title(:new_sourcer), do: "New Sourcer Profile"
 
   def contractor_action(%{assigns: %{live_action: :new_contractor}}), do: :new
   def contractor_action(_), do: :show

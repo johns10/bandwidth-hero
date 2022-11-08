@@ -1,0 +1,20 @@
+<.h1>Listing Sourcers</.h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.SourcerLive.FormComponent}
+      id={@sourcer.id || :new}
+      action={@live_action}
+      sourcer={@sourcer}
+      return_to={Routes.sourcer_index_path(@socket, :index)}
+      user={@current_user}
+    />
+  </.modal>
+<% end %>
+
+<.sourcer_table sourcers={@sourcers} class="my-4" />
+
+<.a link_type="live_patch" to={Routes.sourcer_index_path(@socket, :new)} class="my-4">
+  <.button color="success" label="New Sourcer" />
+</.a>
