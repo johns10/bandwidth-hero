@@ -121,6 +121,13 @@ defmodule BandwidthHeroWeb.Router do
 
       live "/sourcer_users/:id", SourcerUserLive.Show, :show
       live "/sourcer_users/:id/show/edit", SourcerUserLive.Show, :edit
+
+      live "/opportunities", OpportunityLive.Index, :index
+      live "/opportunities/new", OpportunityLive.Index, :new
+      live "/opportunities/:id/edit", OpportunityLive.Index, :edit
+
+      live "/opportunities/:id", OpportunityLive.Show, :show
+      live "/opportunities/:id/show/edit", OpportunityLive.Show, :edit
     end
 
     scope "/" do

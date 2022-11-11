@@ -1,0 +1,16 @@
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.opportunity_show_path(@socket, :show, @opportunity)} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.OpportunityLive.FormComponent}
+      id={@opportunity.id}
+      action={@live_action}
+      opportunity={@opportunity}
+      return_to={Routes.opportunity_show_path(@socket, :show, @opportunity)}
+    />
+  </.modal>
+<% end %>
+
+<.opportunity_card opportunity={@opportunity} />
+
+<span><%= live_patch "Edit", to: Routes.opportunity_show_path(@socket, :edit, @opportunity), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.opportunity_index_path(@socket, :index) %></span>

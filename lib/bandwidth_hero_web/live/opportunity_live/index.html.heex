@@ -1,0 +1,20 @@
+<.h1>Listing Opportunities</.h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.OpportunityLive.FormComponent}
+      id={@opportunity.id || :new}
+      
+      action={@live_action}
+      opportunity={@opportunity}
+      return_to={Routes.opportunity_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<.opportunity_table opportunities={@opportunities} class="my-4" />
+
+<.a link_type="live_patch" to={Routes.opportunity_index_path(@socket, :new)} class="my-4">
+  <.button color="success" label="New Opportunity" />
+</.a>
