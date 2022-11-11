@@ -8,10 +8,12 @@ defmodule BandwidthHero.Repo.Migrations.CreateOpportunities do
       add :from_date, :date
       add :to_date, :date
       add :rate, :decimal
-      add :hours, :integer
-      add :travel, :string
-      add :contract_type, :string
-      add :laptop, :string
+      add :hours_per_week, :integer
+
+      add :travel, {:array, :string}
+      add :contract_type, {:array, :string}
+      add :laptop, {:array, :string}
+
       add :sourcer_id, references(:sourcers, on_delete: :nothing)
 
       timestamps()

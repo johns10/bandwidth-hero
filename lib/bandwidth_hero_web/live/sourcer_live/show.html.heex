@@ -1,17 +1,45 @@
 <%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.sourcer_show_path(@socket, :show, @sourcer)} title={@page_title}>
+  <.modal return_to={@return_to} title={@page_title}>
     <.live_component
       module={BandwidthHeroWeb.SourcerLive.FormComponent}
       id={@sourcer.id}
       action={@live_action}
       sourcer={@sourcer}
-      return_to={Routes.sourcer_show_path(@socket, :show, @sourcer)}
+      return_to={@return_to}
       user={@current_user}
     />
   </.modal>
 <% end %>
 
-<.sourcer_card sourcer={@sourcer} />
+<%= if @live_action in [:new_opportunity, :edit_opportunity] do %>
+  <.modal return_to={@return_to} title={@modal_title}>
+    <.live_component
+      module={BandwidthHeroWeb.OpportunityLive.FormComponent}
+      id={@opportunity.id || :new}
+      action={@opportunity_action}
+      opportunity={@opportunity}
+      return_to={@return_to}
+      sourcer_id={@sourcer.id}
+      user={@current_user}
+    />
+  </.modal>
+<% end %>
+
+<div class="flex flex-col">
+  <.sourcer_card sourcer={@sourcer} class="m-4" />
+
+  <.card variant="outline" class="m-4">
+    <.card_content category="Opportunities">
+      <.opportunity_table opportunities={@sourcer.opportunities} class="" />
+      <.a
+        link_type="live_patch"
+        to={Routes.sourcer_show_path(@socket, :new_opportunity, @sourcer)}
+      >
+        <.button color="success" label="New Opportunity" class="mt-4" />
+      </.a>
+    </.card_content>
+  </.card>
+</div>
 
 <span>
   <%= live_patch("Edit", to: Routes.sourcer_show_path(@socket, :edit, @sourcer), class: "button") %>

@@ -5,6 +5,7 @@ defmodule BandwidthHero.Repo.Migrations.CreateContractors do
     create table(:contractors) do
       add :name, :string
       add :title, :string
+
       add :travel, {:array, :string}
       add :international_travel, :string
       add :contract_type, {:array, :string}

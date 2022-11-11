@@ -4,6 +4,7 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
   alias BandwidthHeroWeb.Endpoint
   alias BandwidthHeroWeb.Router.Helpers, as: Routes
   import BandwidthHeroWeb.ContractorLive.Utils
+  import BandwidthHeroWeb.LiveHelpers
 
   def contractor_table(assigns) do
     ~H"""
@@ -22,10 +23,10 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
         <.tr id={"contractor-#{contractor.id}"}>
           <.td><%= contractor.name %></.td>
           <.td><%= contractor.title %></.td>
-          <.td><%= commafy(contractor.travel) %></.td>
+          <.td><%= show_list(contractor.travel) %></.td>
           <.td><%= contractor.international_travel %></.td>
-          <.td><%= commafy(contractor.contract_type) %></.td>
-          <.td><%= commafy(contractor.laptop) %></.td>
+          <.td><%= show_list(contractor.contract_type) %></.td>
+          <.td><%= show_list(contractor.laptop) %></.td>
 
           <.td>
             <span>
@@ -92,7 +93,7 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
         <ul>
           <li>
             <strong>Travel:</strong>
-            <%= commafy(@contractor.travel) %>
+            <%= show_list(@contractor.travel) %>
           </li>
 
           <li>
@@ -102,12 +103,12 @@ defmodule BandwidthHeroWeb.ContractorLive.Components do
 
           <li>
             <strong>Contract type:</strong>
-            <%= commafy(@contractor.contract_type) |> Recase.to_sentence() %>
+            <%= show_list(@contractor.contract_type) |> Recase.to_sentence() %>
           </li>
 
           <li>
             <strong>Laptop:</strong>
-            <%= commafy(@contractor.laptop) |> Recase.to_sentence() %>
+            <%= show_list(@contractor.laptop) |> Recase.to_sentence() %>
           </li>
         </ul>
       </.card_content>

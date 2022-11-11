@@ -66,6 +66,7 @@ defmodule BandwidthHeroWeb.OpportunityLive.FormHandlers do
     case Opportunities.create_opportunity(opportunity_params) do
       {:ok, _opportunity} ->
         changeset = Opportunities.change_opportunity(%BandwidthHero.Opportunities.Opportunity{})
+
         {:noreply,
          socket
          |> put_flash(:info, "Opportunity created successfully")

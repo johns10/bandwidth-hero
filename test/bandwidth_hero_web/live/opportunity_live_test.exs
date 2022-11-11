@@ -5,32 +5,32 @@ defmodule BandwidthHeroWeb.OpportunityLiveTest do
   import BandwidthHero.OpportunitiesFixtures
 
   @create_attrs %{
-    contract_type: :corp_to_corp,
+    contract_type: [:corp_to_corp],
     description: "some description",
     from_date: %{day: 10, month: 11, year: 2022},
-    hours: 42,
-    laptop: :use_my_own,
+    hours_per_week: 42,
+    laptop: [:use_my_own],
     name: "some name",
     rate: "120.5",
     to_date: %{day: 10, month: 11, year: 2022},
-    travel: :"100%"
+    travel: [:"100%"]
   }
   @update_attrs %{
-    contract_type: :contract_w2,
+    contract_type: [:contract_w2],
     description: "some updated description",
     from_date: %{day: 11, month: 11, year: 2022},
-    hours: 43,
-    laptop: :use_provided_laptop,
+    hours_per_week: 43,
+    laptop: [:use_provided_laptop],
     name: "some updated name",
     rate: "456.7",
     to_date: %{day: 11, month: 11, year: 2022},
-    travel: :"75%"
+    travel: [:"75%"]
   }
   @invalid_attrs %{
     contract_type: nil,
     description: nil,
     from_date: %{day: 30, month: 2, year: 2022},
-    hours: nil,
+    hours_per_week: nil,
     laptop: nil,
     name: nil,
     rate: nil,

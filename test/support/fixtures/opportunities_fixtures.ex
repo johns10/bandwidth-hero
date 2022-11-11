@@ -11,15 +11,15 @@ defmodule BandwidthHero.OpportunitiesFixtures do
     {:ok, opportunity} =
       attrs
       |> Enum.into(%{
-        contract_type: :corp_to_corp,
+        contract_type: [:corp_to_corp],
         description: "some description",
         from_date: ~D[2022-11-10],
-        hours: 42,
-        laptop: :use_my_own,
+        hours_per_week: 42,
+        laptop: [:use_my_own],
         name: "some name",
         rate: "120.5",
         to_date: ~D[2022-11-10],
-        travel: :"100%"
+        travel: [:"100%"]
       })
       |> BandwidthHero.Opportunities.create_opportunity()
 

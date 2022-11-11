@@ -7,7 +7,6 @@
     phx-change="validate"
     phx-submit="save"
   >
-    <%= inspect(@action) %>
     <%= hidden_input(f, :user_id, value: @user_id) %>
 
     <.form_label form={f} field={:name} />
@@ -25,10 +24,7 @@
       form={f}
       layout={:row}
       field={:travel}
-      options={
-        Ecto.Enum.values(BandwidthHero.Contractors.Contractor, :travel)
-        |> Enum.map(&{&1 |> to_string() |> Recase.to_sentence(), &1})
-      }
+      options={enum_to_select_list(BandwidthHero.Contractors.Contractor, :travel)}
       prompt="Choose a value"
     />
     <.form_field_error form={f} field={:travel} />
@@ -37,10 +33,7 @@
     <.select
       form={f}
       field={:international_travel}
-      options={
-        Ecto.Enum.values(BandwidthHero.Contractors.Contractor, :international_travel)
-        |> Enum.map(&{&1 |> to_string() |> Recase.to_sentence(), &1})
-      }
+      options={enum_to_select_list(BandwidthHero.Contractors.Contractor, :international_travel)}
       prompt="Choose a value"
     />
     <.form_field_error form={f} field={:international_travel} />
@@ -50,10 +43,7 @@
       form={f}
       layout={:row}
       field={:contract_type}
-      options={
-        Ecto.Enum.values(BandwidthHero.Contractors.Contractor, :contract_type)
-        |> Enum.map(&{&1 |> to_string() |> Recase.to_sentence(), &1})
-      }
+      options={enum_to_select_list(BandwidthHero.Contractors.Contractor, :contract_type)}
       prompt="Choose a value"
     />
     <.form_field_error form={f} field={:contract_type} />
@@ -63,10 +53,7 @@
       form={f}
       layout={:row}
       field={:laptop}
-      options={
-        Ecto.Enum.values(BandwidthHero.Contractors.Contractor, :laptop)
-        |> Enum.map(&{&1 |> to_string() |> Recase.to_sentence(), &1})
-      }
+      options={enum_to_select_list(BandwidthHero.Contractors.Contractor, :laptop)}
       prompt="Choose a value"
     />
     <.form_field_error form={f} field={:laptop} />

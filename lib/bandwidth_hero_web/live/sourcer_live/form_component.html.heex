@@ -1,28 +1,33 @@
 <div>
   <.form
-    let={f}
+    :let={f}
     for={@changeset}
     id="sourcer-form"
     phx-target={@myself}
     phx-change="validate"
-    phx-submit="save">
-  
+    phx-submit="save"
+  >
     <.form_label form={f} field={:name} />
     <.text_input form={f} field={:name} />
     <.form_field_error form={f} field={:name} />
-  
+
     <.form_label form={f} field={:description} />
     <.textarea form={f} field={:description} />
     <.form_field_error form={f} field={:description} />
-  
+
     <.form_label form={f} field={:type} />
-    <.select form={f} field={:type} options={Ecto.Enum.values(BandwidthHero.Sourcers.Sourcer, :type)} prompt={"Choose a value"} />
+    <.select
+      form={f}
+      field={:type}
+      options={enum_to_select_list(BandwidthHero.Sourcers.Sourcer, :type)}
+      prompt="Choose a value"
+    />
     <.form_field_error form={f} field={:type} />
-  
+
     <.form_label form={f} field={:website} />
     <.text_input form={f} field={:website} />
     <.form_field_error form={f} field={:website} />
-  
+
     <.button color="success" type="submit" class="flex-shrink" phx_disable_with="Saving...">
       Save
     </.button>

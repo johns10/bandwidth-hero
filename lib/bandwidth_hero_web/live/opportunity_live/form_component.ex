@@ -5,7 +5,9 @@ defmodule BandwidthHeroWeb.OpportunityLive.FormComponent do
 
   @impl true
   def update(assigns, socket) do
-    update_socket(assigns, socket)
+    assigns
+    |> Map.put(:sourcer_id, Map.get(assigns, :sourcer_id, nil))
+    |> update_socket(socket)
   end
 
   @impl true

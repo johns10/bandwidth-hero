@@ -2,6 +2,7 @@ defmodule BandwidthHero.Sourcers.Sourcer do
   use Ecto.Schema
   import Ecto.Changeset
   alias BandwidthHero.SourcerUsers.SourcerUser
+  alias BandwidthHero.Opportunities.Opportunity
 
   schema "sourcers" do
     field :description, :string
@@ -11,6 +12,7 @@ defmodule BandwidthHero.Sourcers.Sourcer do
 
     has_many :sourcer_users, SourcerUser
     has_many :users, through: [:sourcer_users, :user]
+    has_many :opportunities, Opportunity
 
     timestamps()
   end

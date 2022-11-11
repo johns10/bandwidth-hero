@@ -53,9 +53,73 @@ defmodule BandwidthHeroWeb.SourcerLive.Components do
     """
   end
 
-  def sourcer_card(assigns) do
+  def opportunity_table(assigns) do
     ~H"""
-    <.card variant="outline">
+    <.table class={@class}>
+      <.tr>
+        <.th>Name</.th>
+        <.th>Description</.th>
+        <.th>From date</.th>
+        <.th>To date</.th>
+        <.th>Rate</.th>
+        <.th>Hours</.th>
+
+        <.th></.th>
+      </.tr>
+      <%= for opportunity <- @opportunities do %>
+        <.tr id={"opportunity-#{opportunity.id}"}>
+          <.td><%= opportunity.name %></.td>
+          <.td><%= opportunity.description %></.td>
+          <.td><%= opportunity.from_date %></.td>
+          <.td><%= opportunity.to_date %></.td>
+          <.td><%= opportunity.rate %></.td>
+          <.td><%= opportunity.hours_per_week %></.td>
+
+          <.td>
+            <span>
+              <.a
+                link_type="live_redirect"
+                label="Show"
+                to={Routes.opportunity_show_path(Endpoint, :show, opportunity)}
+              />
+            </span>
+            <span>
+              <.a
+                link_type="live_patch"
+                label="Edit"
+                to={
+                  Routes.sourcer_show_path(
+                    Endpoint,
+                    :edit_opportunity,
+                    opportunity.sourcer_id,
+                    opportunity
+                  )
+                }
+              />
+            </span>
+            <span>
+              <.a
+                label="Delete"
+                to="#"
+                phx-click="delete_opportunity"
+                phx-value-id={opportunity.id}
+                data={[confirm: "Are you sure?"]}
+              />
+            </span>
+          </.td>
+        </.tr>
+      <% end %>
+    </.table>
+    """
+  end
+
+  def sourcer_card(assigns) do
+    assigns =
+      assigns
+      |> Map.put(:class, Map.get(assigns, :class, ""))
+
+    ~H"""
+    <.card variant="outline" class={@class}>
       <.card_content category="Sourcer">
         <ul>
           <li>

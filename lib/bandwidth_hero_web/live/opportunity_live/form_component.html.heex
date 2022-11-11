@@ -7,6 +7,8 @@
     phx-change="validate"
     phx-submit="save"
   >
+    <%= hidden_input(f, :sourcer_id, value: @sourcer_id) %>
+
     <.form_label form={f} field={:name} />
     <.text_input form={f} field={:name} />
     <.form_field_error form={f} field={:name} />
@@ -27,33 +29,36 @@
     <.number_input form={f} field={:rate} />
     <.form_field_error form={f} field={:rate} />
 
-    <.form_label form={f} field={:hours} />
-    <.number_input form={f} field={:hours} />
-    <.form_field_error form={f} field={:hours} />
+    <.form_label form={f} field={:hours_per_week} />
+    <.number_input form={f} field={:hours_per_week} />
+    <.form_field_error form={f} field={:hours_per_week} />
 
     <.form_label form={f} field={:travel} />
-    <.select
+    <.checkbox_group
       form={f}
+      layout={:row}
       field={:travel}
-      options={Ecto.Enum.values(BandwidthHero.Opportunities.Opportunity, :travel)}
+      options={enum_to_select_list(BandwidthHero.Contractors.Contractor, :travel)}
       prompt="Choose a value"
     />
     <.form_field_error form={f} field={:travel} />
 
     <.form_label form={f} field={:contract_type} />
-    <.select
+    <.checkbox_group
       form={f}
+      layout={:row}
       field={:contract_type}
-      options={Ecto.Enum.values(BandwidthHero.Opportunities.Opportunity, :contract_type)}
+      options={enum_to_select_list(BandwidthHero.Contractors.Contractor, :contract_type)}
       prompt="Choose a value"
     />
     <.form_field_error form={f} field={:contract_type} />
 
     <.form_label form={f} field={:laptop} />
-    <.select
+    <.checkbox_group
       form={f}
+      layout={:row}
       field={:laptop}
-      options={Ecto.Enum.values(BandwidthHero.Opportunities.Opportunity, :laptop)}
+      options={enum_to_select_list(BandwidthHero.Contractors.Contractor, :laptop)}
       prompt="Choose a value"
     />
     <.form_field_error form={f} field={:laptop} />

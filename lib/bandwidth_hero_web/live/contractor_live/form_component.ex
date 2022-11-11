@@ -2,6 +2,7 @@ defmodule BandwidthHeroWeb.ContractorLive.FormComponent do
   use BandwidthHeroWeb, :live_component
 
   import BandwidthHeroWeb.ContractorLive.FormHandlers
+  import BandwidthHeroWeb.LiveHelpers
 
   @impl true
   def update(assigns, socket) do
