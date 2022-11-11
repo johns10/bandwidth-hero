@@ -1,0 +1,16 @@
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.opportunity_erp_tag_show_path(@socket, :show, @opportunity_erp_tag)} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.OpportunityErpTagLive.FormComponent}
+      id={@opportunity_erp_tag.id}
+      action={@live_action}
+      opportunity_erp_tag={@opportunity_erp_tag}
+      return_to={Routes.opportunity_erp_tag_show_path(@socket, :show, @opportunity_erp_tag)}
+    />
+  </.modal>
+<% end %>
+
+<.opportunity_erp_tag_card opportunity_erp_tag={@opportunity_erp_tag} />
+
+<span><%= live_patch "Edit", to: Routes.opportunity_erp_tag_show_path(@socket, :edit, @opportunity_erp_tag), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.opportunity_erp_tag_index_path(@socket, :index) %></span>

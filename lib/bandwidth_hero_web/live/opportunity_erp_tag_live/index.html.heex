@@ -1,0 +1,20 @@
+<.h1>Listing Opportunity erp tags</.h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.OpportunityErpTagLive.FormComponent}
+      id={@opportunity_erp_tag.id || :new}
+      
+      action={@live_action}
+      opportunity_erp_tag={@opportunity_erp_tag}
+      return_to={Routes.opportunity_erp_tag_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<.opportunity_erp_tag_table opportunity_erp_tags={@opportunity_erp_tags} class="my-4" />
+
+<.a link_type="live_patch" to={Routes.opportunity_erp_tag_index_path(@socket, :new)} class="my-4">
+  <.button color="success" label="New Opportunity erp tag" />
+</.a>

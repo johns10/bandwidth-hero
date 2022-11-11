@@ -9,3 +9,4 @@ mix bh.gen.live Sourcers Sourcer sourcers name:string description:text type:enum
 mix bh.gen.live SourcerUsers SourcerUser sourcer_users user_id:references:users sourcer_id:references:sourcers position:string
 
 mix bh.gen.live Opportunities Opportunity opportunities name:string description:text sourcer_id:references:sourcers from_date:date to_date:date rate:decimal hours:integer travel:enum:100%:75%:50%:25%:none contract_type:enum:corp_to_corp:contract_w2:1099 laptop:enum:use_my_own:use_provided_laptop
+mix bh.gen.live OpportunityErpTags OpportunityErpTag opportunity_erp_tags years:integer projects:integer opportunity_id:references:opportunities erp_tag_id:references:erp_tags

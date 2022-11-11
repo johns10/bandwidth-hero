@@ -131,6 +131,13 @@ defmodule BandwidthHeroWeb.Router do
 
       live "/opportunities/:id", OpportunityLive.Show, :show
       live "/opportunities/:id/show/edit", OpportunityLive.Show, :edit
+
+      live "/opportunity_erp_tags", OpportunityErpTagLive.Index, :index
+      live "/opportunity_erp_tags/new", OpportunityErpTagLive.Index, :new
+      live "/opportunity_erp_tags/:id/edit", OpportunityErpTagLive.Index, :edit
+
+      live "/opportunity_erp_tags/:id", OpportunityErpTagLive.Show, :show
+      live "/opportunity_erp_tags/:id/show/edit", OpportunityErpTagLive.Show, :edit
     end
 
     scope "/" do
