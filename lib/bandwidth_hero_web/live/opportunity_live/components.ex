@@ -65,8 +65,27 @@ defmodule BandwidthHeroWeb.OpportunityLive.Components do
   end
 
   def opportunity_card(assigns) do
+    assigns =
+      assigns
+      |> Map.put(:assigns, Map.get(assigns, :class, ""))
+
     ~H"""
-    <.card variant="outline">
+    <.card variant="outline" class={@class}>
+      <div class="bg-white py-2 px-4 flex text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-300">
+        <div class="flex-grow flex flex-col">
+          <span class="text-2xl font-bold"><%= @opportunity.name %></span>
+          <span class="text-sm font-light"><%= @opportunity.description %></span>
+        </div>
+        <div class="flex flex-column">
+          <.a
+            link_type="live_patch"
+            to={Routes.opportunity_show_path(Endpoint, :edit, @opportunity)}
+            id="edit-opportunity"
+          >
+            <Heroicons.pencil solid class="w-4 h-4 m-2" />
+          </.a>
+        </div>
+      </div>
       <.card_content category="Opportunity">
         <ul>
           <li>

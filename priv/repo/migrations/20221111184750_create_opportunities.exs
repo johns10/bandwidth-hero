@@ -9,6 +9,9 @@ defmodule BandwidthHero.Repo.Migrations.CreateOpportunities do
       add :to_date, :date
       add :rate, :decimal
       add :hours_per_week, :integer
+      add :vendor_id, :string
+      add :pillar_id, :string
+      add :platform_id, :string
 
       add :travel, {:array, :string}
       add :contract_type, {:array, :string}

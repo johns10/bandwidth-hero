@@ -5,10 +5,11 @@
     <.live_component
       module={BandwidthHeroWeb.OpportunityErpTagLive.FormComponent}
       id={@opportunity_erp_tag.id || :new}
-      
       action={@live_action}
       opportunity_erp_tag={@opportunity_erp_tag}
-      return_to={Routes.opportunity_erp_tag_index_path(@socket, :index)}
+      return_to={@return_to}
+      opportunity_id={@opportunity_id}
+      select_options={@select_options}
     />
   </.modal>
 <% end %>

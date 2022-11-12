@@ -8,96 +8,54 @@ defmodule BandwidthHero.Opportunities do
 
   alias BandwidthHero.Opportunities.Opportunity
 
-  @doc """
-  Returns the list of opportunities.
+  def list_opportunities(opts \\ []) do
+    preloads = Keyword.get(opts, :preloads, [])
 
-  ## Examples
-
-      iex> list_opportunities()
-      [%Opportunity{}, ...]
-
-  """
-  def list_opportunities do
-    Repo.all(Opportunity)
+    Opportunity
+    |> maybe_preload_opportunity_erp_tags(preloads[:opportunity_erp_tags])
+    |> Repo.all()
   end
 
-  @doc """
-  Gets a single opportunity.
+  def get_opportunity!(id, opts \\ []) do
+    preloads = Keyword.get(opts, :preloads, [])
 
-  Raises `Ecto.NoResultsError` if the Opportunity does not exist.
+    Opportunity
+    |> maybe_preload_opportunity_erp_tags(preloads[:opportunity_erp_tags])
+    |> Repo.get!(id)
+  end
 
-  ## Examples
+  def get_opportunity(id, opts \\ []) do
+    preloads = Keyword.get(opts, :preloads, [])
 
-      iex> get_opportunity!(123)
-      %Opportunity{}
+    Opportunity
+    |> maybe_preload_opportunity_erp_tags(preloads[:opportunity_erp_tags])
+    |> Repo.get(id)
+  end
 
-      iex> get_opportunity!(456)
-      ** (Ecto.NoResultsError)
+  defp maybe_preload_opportunity_erp_tags(query, nil), do: query
 
-  """
-  def get_opportunity!(id), do: Repo.get!(Opportunity, id)
+  defp maybe_preload_opportunity_erp_tags(query, _) do
+    query
+    |> join(:left, [o], e in assoc(o, :opportunity_erp_tags), as: :opportunity_erp_tags)
+    |> preload([c, opportunity_erp_tags: e], opportunity_erp_tags: e)
+  end
 
-  @doc """
-  Creates a opportunity.
-
-  ## Examples
-
-      iex> create_opportunity(%{field: value})
-      {:ok, %Opportunity{}}
-
-      iex> create_opportunity(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_opportunity(attrs \\ %{}) do
     %Opportunity{}
     |> Opportunity.changeset(attrs)
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a opportunity.
-
-  ## Examples
-
-      iex> update_opportunity(opportunity, %{field: new_value})
-      {:ok, %Opportunity{}}
-
-      iex> update_opportunity(opportunity, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def update_opportunity(%Opportunity{} = opportunity, attrs) do
     opportunity
     |> Opportunity.changeset(attrs)
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a opportunity.
-
-  ## Examples
-
-      iex> delete_opportunity(opportunity)
-      {:ok, %Opportunity{}}
-
-      iex> delete_opportunity(opportunity)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_opportunity(%Opportunity{} = opportunity) do
     Repo.delete(opportunity)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking opportunity changes.
-
-  ## Examples
-
-      iex> change_opportunity(opportunity)
-      %Ecto.Changeset{data: %Opportunity{}}
-
-  """
   def change_opportunity(%Opportunity{} = opportunity, attrs \\ %{}) do
     Opportunity.changeset(opportunity, attrs)
   end

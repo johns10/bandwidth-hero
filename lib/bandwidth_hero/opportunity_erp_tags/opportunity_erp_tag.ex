@@ -14,7 +14,7 @@ defmodule BandwidthHero.OpportunityErpTags.OpportunityErpTag do
   @doc false
   def changeset(opportunity_erp_tag, attrs) do
     opportunity_erp_tag
-    |> cast(attrs, [:years, :projects])
-    |> validate_required([:years, :projects])
+    |> cast(attrs, [:opportunity_id, :erp_tag_id, :years, :projects])
+    |> validate_required([:opportunity_id, :erp_tag_id])
   end
 end

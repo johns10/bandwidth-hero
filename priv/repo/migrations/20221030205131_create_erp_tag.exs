@@ -5,6 +5,7 @@ defmodule BandwidthHero.Repo.Migrations.CreateErpTag do
     create table(:erp_tags) do
       add :label, :string
       add :type, :string
+      add :parent_id, :string
 
       timestamps()
     end

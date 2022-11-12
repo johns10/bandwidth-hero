@@ -4,13 +4,19 @@ defmodule BandwidthHeroWeb.OpportunityErpTagLive.Index do
 
   alias BandwidthHero.OpportunityErpTags
   alias BandwidthHero.OpportunityErpTags.OpportunityErpTag
+  alias BandwidthHero.Tags
   import BandwidthHeroWeb.OpportunityErpTagLive.Components
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket
-    |> assign(:opportunity_erp_tags, list_opportunity_erp_tags())
-    |> assign(:return_to, Routes.opportunity_erp_tag_index_path(socket, :index))}
+    select_options = Tags.list_erp_tags() |> Enum.map(&{&1.label, &1.id})
+
+    {:ok,
+     socket
+     |> assign(:opportunity_erp_tags, list_opportunity_erp_tags())
+     |> assign(:opportunity_id, nil)
+     |> assign(:select_options, select_options)
+     |> assign(:return_to, Routes.opportunity_erp_tag_index_path(socket, :index))}
   end
 
   @impl true

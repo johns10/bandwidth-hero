@@ -1,16 +1,60 @@
 <%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.opportunity_show_path(@socket, :show, @opportunity)} title={@page_title}>
+  <.modal return_to={@return_to} title={@page_title}>
     <.live_component
       module={BandwidthHeroWeb.OpportunityLive.FormComponent}
       id={@opportunity.id}
       action={@live_action}
       opportunity={@opportunity}
-      return_to={Routes.opportunity_show_path(@socket, :show, @opportunity)}
+      return_to={@return_to}
     />
   </.modal>
 <% end %>
 
-<.opportunity_card opportunity={@opportunity} />
+<%= if @live_action in [:new_opportunity_erp_tag] do %>
+  <.modal return_to={@return_to} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.OpportunityErpTagLive.FormComponent}
+      id={:new}
+      action={@opportunity_erp_tag_action}
+      opportunity_erp_tag={%OpportunityErpTag{}}
+      return_to={@return_to}
+      select_options={@erp_tag_select_options}
+      opportunity_id={@opportunity.id}
+    />
+  </.modal>
+<% end %>
+<div class="flex items-start">
+  <.opportunity_card opportunity={@opportunity} class="m-4" />
 
-<span><%= live_patch "Edit", to: Routes.opportunity_show_path(@socket, :edit, @opportunity), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.opportunity_index_path(@socket, :index) %></span>
+  <.card variant="outline" class="m-4">
+    <.card_content category="Required Skills">
+      <.live_component
+        module={BandwidthHeroWeb.OpportunityLive.RequiredSkillsComponent}
+        id={:required_skills}
+        opportunity={@opportunity}
+      />
+      <p class="font-medium text-sm block text-gray-900 dark:text-gray-200 pb-2">Modules</p>
+      <%= if @opportunity.pillar_id do %>
+        <%= for erp_tag <- @erp_tags do %>
+          <.live_component
+            module={BandwidthHeroWeb.OpportunityErpTagLive.InlineFormComponent}
+            id={"opportunity-erp-tag-form-#{erp_tag.id}"}
+            opportunity_id={@opportunity.id}
+            opportunity_erp_tag={find_opportunity_erp_tag(@opportunity, erp_tag.id)}
+            erp_tag={erp_tag}
+          />
+        <% end %>
+      <% else %>
+        Pick a Vendor, Platform and Pillar to select Modules.
+      <% end %>
+    </.card_content>
+  </.card>
+</div>
+
+<span>
+  <%= live_patch("Edit",
+    to: Routes.opportunity_show_path(@socket, :edit, @opportunity),
+    class: "button"
+  ) %>
+</span>
+| <span><%= live_redirect("Back", to: Routes.opportunity_index_path(@socket, :index)) %></span>

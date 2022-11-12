@@ -1,0 +1,29 @@
+<div>
+  <.form
+    :let={f}
+    for={@changeset}
+    id="opportunity-category-form"
+    phx-target={@myself}
+    phx-change="validate"
+  >
+    <.form_label form={f} field={:vendor_id} />
+    <.select form={f} field={:vendor_id} options={Fields.vendor_select_options()} />
+    <.form_field_error form={f} field={:vendor_id} />
+
+    <.form_label form={f} field={:platform_id} />
+    <.select
+      form={f}
+      field={:platform_id}
+      options={Fields.platform_select_options(@opportunity.vendor_id)}
+    />
+    <.form_field_error form={f} field={:platform_id} />
+
+    <.form_label form={f} field={:pillar_id} />
+    <.select
+      form={f}
+      field={:pillar_id}
+      options={Fields.pillar_select_options(@opportunity.platform_id)}
+    />
+    <.form_field_error form={f} field={:pillar_id} />
+  </.form>
+</div>

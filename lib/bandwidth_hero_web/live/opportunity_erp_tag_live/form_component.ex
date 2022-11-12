@@ -1,11 +1,10 @@
 defmodule BandwidthHeroWeb.OpportunityErpTagLive.FormComponent do
   use BandwidthHeroWeb, :live_component
 
-  alias BandwidthHero.OpportunityErpTags
   import BandwidthHeroWeb.OpportunityErpTagLive.FormHandlers
 
   @impl true
-  def update(%{opportunity_erp_tag: opportunity_erp_tag} = assigns, socket) do
+  def update(assigns, socket) do
     update_socket(assigns, socket)
   end
 
