@@ -66,6 +66,12 @@ defmodule BandwidthHeroWeb.ContractorLive.Show do
     {:noreply, assign(socket, :contractor, get_contractor(id))}
   end
 
+  @impl true
+  def handle_info(%{event: event, payload: %ContractorErpTag{}}, socket)
+      when event in ["create", "delete", "update"] do
+    {:noreply, assign(socket, :contractor, get_contractor(socket.assigns.contractor.id))}
+  end
+
   defp get_contractor(id) do
     Contractors.get_contractor!(id, preloads: [contractor_erp_tags: true, availabilities: true])
   end

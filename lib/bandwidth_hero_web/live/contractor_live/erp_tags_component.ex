@@ -1,16 +1,19 @@
 defmodule BandwidthHeroWeb.ContractorLive.ErpTagsComponent do
   use BandwidthHeroWeb, :live_component
+  use Phoenix.Component
 
   alias BandwidthHero.ContractorErpTags
+  alias BandwidthHero.ContractorErpTags.ContractorErpTag
   alias BandwidthHero.Tags
   alias BandwidthHeroWeb.Endpoint
+  alias BandwidthHero.Fields
 
   @impl true
   def update(
         %{contractor: %{contractor_erp_tags: contractor_erp_tags} = contractor} = assigns,
         socket
       ) do
-    all_tags = list_erp_tags()
+    erp_tags = list_erp_tags()
     selected_tag_ids = contractor_erp_tags |> Enum.map(& &1.erp_tag.id)
 
     {:ok,
@@ -18,49 +21,40 @@ defmodule BandwidthHeroWeb.ContractorLive.ErpTagsComponent do
      |> assign(:return_to, Routes.contractor_index_path(socket, :index))
      |> assign(:contractor, contractor)
      |> assign(:contractor_erp_tags, contractor_erp_tags)
-     |> assign(:unselected_erp_tags, all_tags |> Enum.filter(&(&1.id not in selected_tag_ids)))
+     |> assign(:erp_tags, erp_tags)
      |> assign(assigns)}
-  end
-
-  @impl true
-  def handle_event("delete-contractor-erp-tag", %{"id" => id}, socket) do
-    contractor_erp_tag = ContractorErpTags.get_contractor_erp_tag!(id)
-    {:ok, _} = ContractorErpTags.delete_contractor_erp_tag(contractor_erp_tag)
-
-    {:noreply, assign(socket, :tags, list_erp_tags())}
   end
 
   def list_erp_tags() do
     Tags.list_erp_tags()
   end
 
-  def tag_component(assigns) do
-    ~H"""
-    <div class="text-xs inline-flex items-center font-bold leading-sm uppercase mr-2 my-2 px-2 py-1 bg-black dark:bg-gray-400 text-black rounded-full flex-shrink">
-      <.a to="#" phx-click="delete-contractor-erp-tag" phx-value-id={@tag.id}>
-        <Heroicons.x_mark solid class="w-4 h-4 mr-1 text-red-800" />
-      </.a>
-      <div>
-        <%= @tag.erp_tag.label %> <%= @tag.years %>y <%= @tag.projects %>p
-      </div>
-      <.a
-        link_type="live_patch"
-        to={
-          Routes.contractor_show_path(Endpoint, :edit_erp_tag, @contractor.id, @tag.id,
-            erp_tag_type: @tag.erp_tag.type
-          )
-        }
-      >
-        <Heroicons.pencil solid class="w-4 h-4 ml-1 text-black" />
-      </.a>
-    </div>
-    """
+  def find_contractor_erp_tag(%{contractor_erp_tags: contractor_erp_tags}, erp_tag_id) do
+    contractor_erp_tag =
+      contractor_erp_tags
+      |> Enum.find(&(&1.erp_tag_id == erp_tag_id))
+
+    contractor_erp_tag || %ContractorErpTag{}
   end
 
-  def to_select_options(tags, existing_tag_ids, type) do
-    tags
-    |> Enum.filter(&(&1.type == type))
-    |> Enum.filter(&(&1.id not in existing_tag_ids))
-    |> Enum.map(&{&1.label, &1.id})
+  def category(assigns) do
+    ~H"""
+    <div class="flex flex-col p-1" x-data="{expanded: true}">
+      <div class="flex items-center">
+        <.a @click="expanded = ! expanded" to="#">
+          <div x-show="expanded">
+            <Heroicons.chevron_down solid class="w-4 h-4 m-2" />
+          </div>
+          <div x-show="!expanded">
+            <Heroicons.chevron_right solid class="w-4 h-4 m-2" />
+          </div>
+        </.a>
+        <%= @label %>
+      </div>
+      <div x-show="expanded" x-collapse.duration.1000ms class="ml-4">
+        <%= render_slot(@inner_block) %>
+      </div>
+    </div>
+    """
   end
 end

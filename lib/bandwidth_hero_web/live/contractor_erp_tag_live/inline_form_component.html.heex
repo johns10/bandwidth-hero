@@ -1,0 +1,49 @@
+<div>
+  <.form
+    :let={f}
+    for={@changeset}
+    id="contractor_erp_tag-form"
+    phx-target={@myself}
+    phx-change="save"
+  >
+    <%= hidden_input(f, :contractor_id, value: @contractor_id) %>
+    <%= hidden_input(f, :erp_tag_id, value: @erp_tag.id) %>
+
+    <div class="flex">
+      <div class="flex w-64 mr-4">
+        <.checkbox
+          form={f}
+          field={:exists}
+          class="!mb-0 mr-2"
+          value={if @contractor_erp_tag.id, do: true, else: false}
+        />
+        <.form_label form={f} field={:exists} label={@erp_tag.label} />
+      </div>
+      <div class="mr-4 pb-0 w-20">
+        <.number_input
+          form={f}
+          field={:years}
+          phx_debounce="blur"
+          class="!p-1"
+          placeholder={if @contractor_erp_tag.id, do: "Years", else: ""}
+          id={"contractor_erp_tag_#{@erp_tag.id}-form_years"}
+          disabled={if @contractor_erp_tag.id, do: false, else: true}
+        />
+        <.form_field_error form={f} field={:years} />
+      </div>
+
+      <div class="w-20">
+        <.number_input
+          form={f}
+          field={:projects}
+          phx_debounce="blur"
+          class="!p-1"
+          placeholder={if @contractor_erp_tag.id, do: "Projects", else: ""}
+          id={"contractor_erp_tag_#{@erp_tag.id}-form_projects"}
+          disabled={if @contractor_erp_tag.id, do: false, else: true}
+        />
+        <.form_field_error form={f} field={:projects} />
+      </div>
+    </div>
+  </.form>
+</div>

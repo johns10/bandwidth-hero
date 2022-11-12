@@ -1,121 +1,29 @@
 <div class={@class}>
   <.card variant="outline">
     <.card_content category="Skills">
-      <div class="flex flex-col">
-        <div class="flex items-center">
-          <p class="font-medium text-sm block text-gray-900 dark:text-gray-200">Vendors</p>
-          <%= if @can_update do %>
-            <.icon_button
-              to={
-                Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id,
-                  erp_tag_type: :vendor
-                )
-              }
-              link_type="live_patch"
-              color="success"
-              size="xs"
-              class="flex-shrink"
-            >
-              <Heroicons.plus class="h-4 w-4" />
-            </.icon_button>
-          <% end %>
-        </div>
-        <div class="flex flex-row flex-wrap">
-          <%= for tag <- @contractor_erp_tags |> Enum.filter(& &1.erp_tag.type == :vendor) do %>
-            <.tag_component contractor={@contractor} tag={tag} />
-          <% end %>
-        </div>
-      </div>
-      <div class="flex flex-col">
-        <div class="flex items-center">
-          <p class="font-medium text-sm block text-gray-900 dark:text-gray-200">Platforms</p>
-          <%= if @can_update do %>
-            <.icon_button
-              to={
-                Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id,
-                  erp_tag_type: :platform
-                )
-              }
-              link_type="live_patch"
-              color="success"
-              size="xs"
-              class="flex-shrink"
-            >
-              <Heroicons.plus class="h-4 w-4" />
-            </.icon_button>
-          <% end %>
-        </div>
-        <div class="flex flex-row flex-wrap">
-          <%= for tag <- @contractor_erp_tags |> Enum.filter(& &1.erp_tag.type == :platform) do %>
-            <.tag_component contractor={@contractor} tag={tag} />
-          <% end %>
-        </div>
-      </div>
-      <div class="flex flex-col">
-        <div class="flex items-center">
-          <p class="font-medium text-sm block text-gray-900 dark:text-gray-200">Pillars</p>
-          <%= if @can_update do %>
-            <.icon_button
-              to={
-                Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id,
-                  erp_tag_type: :pillar
-                )
-              }
-              link_type="live_patch"
-              color="success"
-              size="xs"
-              class="flex-shrink"
-            >
-              <Heroicons.plus class="h-4 w-4" />
-            </.icon_button>
-          <% end %>
-        </div>
-        <div class="flex flex-row mb-2 flex-wrap">
-          <%= for tag <- @contractor_erp_tags |> Enum.filter(& &1.erp_tag.type == :pillar) do %>
-            <.tag_component contractor={@contractor} tag={tag} />
-          <% end %>
-        </div>
-      </div>
-      <div class="flex flex-col">
-        <div class="flex items-center">
-          <p class="font-medium text-sm block text-gray-900 dark:text-gray-200">Modules</p>
-          <%= if @can_update do %>
-            <.icon_button
-              to={
-                Routes.contractor_show_path(Endpoint, :new_erp_tag, @contractor.id,
-                  erp_tag_type: :module
-                )
-              }
-              link_type="live_patch"
-              color="success"
-              size="xs"
-              class="flex-shrink"
-            >
-              <Heroicons.plus class="h-4 w-4" />
-            </.icon_button>
-          <% end %>
-        </div>
-        <div class="flex flex-row flex-wrap">
-          <%= for tag <- @contractor_erp_tags |> Enum.filter(& &1.erp_tag.type == :module) do %>
-            <.tag_component contractor={@contractor} tag={tag} />
-          <% end %>
-        </div>
+      <div class="flex" id="vendors">
+        <%= for vendor <- Fields.vendor() do %>
+          <.category label={vendor.label}>
+            <%= for platform <- Fields.platform() |> Enum.filter(& &1.parent_id == vendor.id) do %>
+              <.category label={platform.label}>
+                <%= for pillar <- Fields.pillar() |> Enum.filter(& &1.parent_id == platform.id) do %>
+                  <.category label={pillar.label}>
+                    <%= for erp_tag <- @erp_tags |> Enum.filter(&(&1.parent_id == pillar.id)) do %>
+                      <.live_component
+                        module={BandwidthHeroWeb.ContractorErpTagLive.InlineFormComponent}
+                        id={"contractor-erp-tag-form-#{erp_tag.id}"}
+                        contractor_id={@contractor.id}
+                        contractor_erp_tag={find_contractor_erp_tag(@contractor, erp_tag.id)}
+                        erp_tag={erp_tag}
+                      />
+                    <% end %>
+                  </.category>
+                <% end %>
+              </.category>
+            <% end %>
+          </.category>
+        <% end %>
       </div>
     </.card_content>
   </.card>
-
-  <%= if @live_action in [:edit_erp_tag, :new_erp_tag] do %>
-    <.modal return_to={@return_to} title="New Erp Tag">
-      <.live_component
-        module={BandwidthHeroWeb.ContractorErpTagLive.FormComponent}
-        id={@contractor.id || :new}
-        action={@live_action}
-        contractor_id={@contractor.id}
-        contractor_erp_tag={@contractor_erp_tag}
-        erp_tags={@unselected_erp_tags}
-        erp_tag_type={@erp_tag_type}
-        return_to={Routes.contractor_show_path(@socket, :show, @contractor)}
-      />
-    </.modal>
-  <% end %>
 </div>

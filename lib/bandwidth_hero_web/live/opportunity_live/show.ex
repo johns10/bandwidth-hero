@@ -42,9 +42,7 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
   end
 
   def handle_info(%{event: event, payload: %OpportunityErpTag{}}, socket)
-      when event in ["create", "delete"] do
-    IO.puts("updating")
-    IO.inspect(get_opportunity!(socket.assigns.opportunity.id))
+      when event in ["create", "delete", "update"] do
     {:noreply, assign(socket, :opportunity, get_opportunity!(socket.assigns.opportunity.id))}
   end
 
