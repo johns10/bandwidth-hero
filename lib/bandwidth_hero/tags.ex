@@ -12,15 +12,8 @@ defmodule BandwidthHero.Tags do
     filters = Keyword.get(opts, :filters)
 
     ErpTag
-    |> maybe_filter_by_type(filters[:type])
     |> maybe_filter_by_parent_id(filters[:parent_id])
     |> Repo.all()
-  end
-
-  defp maybe_filter_by_type(query, nil), do: query
-
-  defp maybe_filter_by_type(query, type) do
-    where(query, [c], c.type == ^type)
   end
 
   defp maybe_filter_by_parent_id(query, nil), do: query

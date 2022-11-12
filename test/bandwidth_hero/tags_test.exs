@@ -8,7 +8,7 @@ defmodule BandwidthHero.TagsTest do
 
     import BandwidthHero.TagsFixtures
 
-    @invalid_attrs %{label: nil, type: nil}
+    @invalid_attrs %{label: nil}
 
     test "list_erp_tag/0 returns all erp_tag" do
       erp_tag = erp_tag_fixture()
@@ -21,11 +21,10 @@ defmodule BandwidthHero.TagsTest do
     end
 
     test "create_erp_tag/1 with valid data creates a erp_tag" do
-      valid_attrs = %{label: "some label", type: :vendor}
+      valid_attrs = %{label: "some label"}
 
       assert {:ok, %ErpTag{} = erp_tag} = Tags.create_erp_tag(valid_attrs)
       assert erp_tag.label == "some label"
-      assert erp_tag.type == :vendor
     end
 
     test "create_erp_tag/1 with invalid data returns error changeset" do
@@ -34,11 +33,10 @@ defmodule BandwidthHero.TagsTest do
 
     test "update_erp_tag/2 with valid data updates the erp_tag" do
       erp_tag = erp_tag_fixture()
-      update_attrs = %{label: "some updated label", type: :platform}
+      update_attrs = %{label: "some updated label"}
 
       assert {:ok, %ErpTag{} = erp_tag} = Tags.update_erp_tag(erp_tag, update_attrs)
       assert erp_tag.label == "some updated label"
-      assert erp_tag.type == :platform
     end
 
     test "update_erp_tag/2 with invalid data returns error changeset" do

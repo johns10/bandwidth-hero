@@ -16,12 +16,31 @@ defmodule BandwidthHeroWeb.ErpTagLive.Components do
       <%= for erp_tag <- @erp_tags do %>
         <.tr id={"erp_tag-#{erp_tag.id}"}>
           <.td><%= erp_tag.label %></.td>
-          <.td><%= erp_tag.type %></.td>
 
           <.td>
-            <span><.a link_type="live_redirect" label={"Show"} to={Routes.erp_tag_show_path(Endpoint, :show, erp_tag)} /></span>
-            <span><.a link_type="live_patch" label={"Edit"} to={Routes.erp_tag_index_path(Endpoint, :edit, erp_tag)} /></span>
-            <span><.a label= "Delete" to="#" phx-click="delete" phx-value-id={erp_tag.id} data={[confirm: "Are you sure?"]}  /></span>
+            <span>
+              <.a
+                link_type="live_redirect"
+                label="Show"
+                to={Routes.erp_tag_show_path(Endpoint, :show, erp_tag)}
+              />
+            </span>
+            <span>
+              <.a
+                link_type="live_patch"
+                label="Edit"
+                to={Routes.erp_tag_index_path(Endpoint, :edit, erp_tag)}
+              />
+            </span>
+            <span>
+              <.a
+                label="Delete"
+                to="#"
+                phx-click="delete"
+                phx-value-id={erp_tag.id}
+                data={[confirm: "Are you sure?"]}
+              />
+            </span>
           </.td>
         </.tr>
       <% end %>
@@ -34,17 +53,10 @@ defmodule BandwidthHeroWeb.ErpTagLive.Components do
     <.card variant="outline">
       <.card_content category="Erp tag">
         <ul>
-        
           <li>
             <strong>Label:</strong>
             <%= @erp_tag.label %>
           </li>
-        
-          <li>
-            <strong>Type:</strong>
-            <%= @erp_tag.type %>
-          </li>
-        
         </ul>
       </.card_content>
     </.card>

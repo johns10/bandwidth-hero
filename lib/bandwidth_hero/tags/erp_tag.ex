@@ -5,7 +5,6 @@ defmodule BandwidthHero.Tags.ErpTag do
 
   schema "erp_tags" do
     field :label, :string
-    field :type, Ecto.Enum, values: [:vendor, :platform, :pillar, :module, :""]
     field :parent_id, Ecto.Enum, values: Fields.pillar_enum()
 
     belongs_to :parent_erp_tag, __MODULE__
@@ -16,7 +15,7 @@ defmodule BandwidthHero.Tags.ErpTag do
   @doc false
   def changeset(erp_tag, attrs) do
     erp_tag
-    |> cast(attrs, [:label, :type, :parent_id])
-    |> validate_required([:label, :type])
+    |> cast(attrs, [:label, :parent_id])
+    |> validate_required([:label])
   end
 end
