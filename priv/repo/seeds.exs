@@ -13,26 +13,6 @@
 alias BandwidthHero.Repo
 alias BandwidthHero.Tags.ErpTag
 
-oracle =
-  Repo.insert!(%ErpTag{
-    label: "Oracle",
-    type: :vendor
-  })
-
-cloud_appliations =
-  Repo.insert!(%ErpTag{
-    label: "Cloud Applications",
-    type: :platform,
-    parent_erp_tag_id: oracle.id
-  })
-
-hcm =
-  Repo.insert!(%ErpTag{
-    label: "HCM",
-    type: :pillar,
-    parent_erp_tag_id: cloud_appliations.id
-  })
-
 hcm_module_names = [
   "Learning",
   "Career Development",
@@ -58,7 +38,6 @@ Enum.map(hcm_module_names, fn name ->
   Repo.insert!(%ErpTag{
     label: name,
     type: :module,
-    parent_id: :hcm,
-    parent_erp_tag_id: hcm.id
+    parent_id: :hcm
   })
 end)

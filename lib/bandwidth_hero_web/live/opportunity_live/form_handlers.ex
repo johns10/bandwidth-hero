@@ -1,10 +1,9 @@
 defmodule BandwidthHeroWeb.OpportunityLive.FormHandlers do
-  use BandwidthHeroWeb, :live_component
+  import Phoenix.Component
+  import Phoenix.LiveView
 
   alias BandwidthHero.Opportunities
-  alias BandwidthHero.Opportunities.Opportunity
 
-  @impl true
   def update_socket(%{opportunity: opportunity} = assigns, socket) do
     changeset = Opportunities.change_opportunity(opportunity)
 
@@ -14,7 +13,6 @@ defmodule BandwidthHeroWeb.OpportunityLive.FormHandlers do
      |> assign(:changeset, changeset)}
   end
 
-  @impl true
   def validate(params, socket) do
     changeset =
       socket.assigns.opportunity

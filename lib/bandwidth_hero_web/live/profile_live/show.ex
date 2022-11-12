@@ -2,17 +2,11 @@ defmodule BandwidthHeroWeb.ProfileLive.Show do
   use BandwidthHeroWeb, :live_view
   on_mount BandwidthHeroWeb.UserLiveAuth
 
-  alias BandwidthHero.Contractors
   alias BandwidthHero.Contractors.Contractor
-  alias BandwidthHero.Sourcers
   alias BandwidthHero.Sourcers.Sourcer
 
   @impl true
   def mount(_params, _session, socket) do
-    contractor =
-      socket.assigns.current_user.id
-      |> Contractors.get_contractor_by_user_id()
-
     user =
       socket.assigns.current_user
       |> BandwidthHero.Repo.preload([:contractor, sourcer_users: :sourcer])

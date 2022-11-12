@@ -1,10 +1,9 @@
 defmodule BandwidthHeroWeb.SourcerUserLive.FormHandlers do
-  use BandwidthHeroWeb, :live_component
+  import Phoenix.Component
+  import Phoenix.LiveView
 
   alias BandwidthHero.SourcerUsers
-  alias BandwidthHero.SourcerUsers.SourcerUser
 
-  @impl true
   def update_socket(%{sourcer_user: sourcer_user} = assigns, socket) do
     changeset = SourcerUsers.change_sourcer_user(sourcer_user)
 
@@ -14,7 +13,6 @@ defmodule BandwidthHeroWeb.SourcerUserLive.FormHandlers do
      |> assign(:changeset, changeset)}
   end
 
-  @impl true
   def validate(params, socket) do
     changeset =
       socket.assigns.sourcer_user
@@ -66,6 +64,7 @@ defmodule BandwidthHeroWeb.SourcerUserLive.FormHandlers do
     case SourcerUsers.create_sourcer_user(sourcer_user_params) do
       {:ok, _sourcer_user} ->
         changeset = SourcerUsers.change_sourcer_user(%BandwidthHero.SourcerUsers.SourcerUser{})
+
         {:noreply,
          socket
          |> put_flash(:info, "Sourcer user created successfully")

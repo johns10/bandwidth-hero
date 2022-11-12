@@ -11,10 +11,6 @@
     <.text_input form={f} field={:label} />
     <.form_field_error form={f} field={:label} />
 
-    <.form_label form={f} field={:parent_erp_tag_id} label="Parent Tag" />
-    <.select form={f} field={:parent_erp_tag_id} options={@tag_options} prompt="Choose a value" />
-    <.form_field_error form={f} field={:type} />
-
     <.button color="success" type="submit" class="flex-shrink" phx_disable_with="Saving...">
       Save
     </.button>

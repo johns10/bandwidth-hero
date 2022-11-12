@@ -8,9 +8,5 @@ defmodule BandwidthHero.Repo.Migrations.CreateErpTag do
 
       timestamps()
     end
-
-    alter table(:erp_tags) do
-      add :parent_erp_tag_id, references(:erp_tags, on_delete: :nilify_all)
-    end
   end
 end

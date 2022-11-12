@@ -2,10 +2,8 @@ defmodule BandwidthHeroWeb.ContractorLive.ErpTagsComponent do
   use BandwidthHeroWeb, :live_component
   use Phoenix.Component
 
-  alias BandwidthHero.ContractorErpTags
   alias BandwidthHero.ContractorErpTags.ContractorErpTag
   alias BandwidthHero.Tags
-  alias BandwidthHeroWeb.Endpoint
   alias BandwidthHero.Fields
 
   @impl true
@@ -14,7 +12,6 @@ defmodule BandwidthHeroWeb.ContractorLive.ErpTagsComponent do
         socket
       ) do
     erp_tags = list_erp_tags()
-    selected_tag_ids = contractor_erp_tags |> Enum.map(& &1.erp_tag.id)
 
     {:ok,
      socket

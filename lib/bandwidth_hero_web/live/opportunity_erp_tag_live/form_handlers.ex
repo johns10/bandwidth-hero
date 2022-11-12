@@ -1,10 +1,8 @@
 defmodule BandwidthHeroWeb.OpportunityErpTagLive.FormHandlers do
-  use BandwidthHeroWeb, :live_component
-
+  import Phoenix.Component
+  import Phoenix.LiveView
   alias BandwidthHero.OpportunityErpTags
-  alias BandwidthHero.OpportunityErpTags.OpportunityErpTag
 
-  @impl true
   def update_socket(%{opportunity_erp_tag: opportunity_erp_tag} = assigns, socket) do
     changeset = OpportunityErpTags.change_opportunity_erp_tag(opportunity_erp_tag)
 
@@ -14,7 +12,6 @@ defmodule BandwidthHeroWeb.OpportunityErpTagLive.FormHandlers do
      |> assign(:changeset, changeset)}
   end
 
-  @impl true
   def validate(params, socket) do
     changeset =
       socket.assigns.opportunity_erp_tag
@@ -25,7 +22,10 @@ defmodule BandwidthHeroWeb.OpportunityErpTagLive.FormHandlers do
   end
 
   def save_redirect(socket, :edit, opportunity_erp_tag_params) do
-    case OpportunityErpTags.update_opportunity_erp_tag(socket.assigns.opportunity_erp_tag, opportunity_erp_tag_params) do
+    case OpportunityErpTags.update_opportunity_erp_tag(
+           socket.assigns.opportunity_erp_tag,
+           opportunity_erp_tag_params
+         ) do
       {:ok, _opportunity_erp_tag} ->
         {:noreply,
          socket
@@ -51,7 +51,10 @@ defmodule BandwidthHeroWeb.OpportunityErpTagLive.FormHandlers do
   end
 
   def save_no_redirect(socket, :edit, opportunity_erp_tag_params) do
-    case OpportunityErpTags.update_opportunity_erp_tag(socket.assigns.opportunity_erp_tag, opportunity_erp_tag_params) do
+    case OpportunityErpTags.update_opportunity_erp_tag(
+           socket.assigns.opportunity_erp_tag,
+           opportunity_erp_tag_params
+         ) do
       {:ok, _opportunity_erp_tag} ->
         {:noreply,
          socket
@@ -65,7 +68,11 @@ defmodule BandwidthHeroWeb.OpportunityErpTagLive.FormHandlers do
   def save_no_redirect(socket, :new, opportunity_erp_tag_params) do
     case OpportunityErpTags.create_opportunity_erp_tag(opportunity_erp_tag_params) do
       {:ok, _opportunity_erp_tag} ->
-        changeset = OpportunityErpTags.change_opportunity_erp_tag(%BandwidthHero.OpportunityErpTags.OpportunityErpTag{})
+        changeset =
+          OpportunityErpTags.change_opportunity_erp_tag(
+            %BandwidthHero.OpportunityErpTags.OpportunityErpTag{}
+          )
+
         {:noreply,
          socket
          |> put_flash(:info, "Opportunity erp tag created successfully")

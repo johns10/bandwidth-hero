@@ -1,11 +1,10 @@
 defmodule BandwidthHeroWeb.SourcerUserLive.FormComponent do
   use BandwidthHeroWeb, :live_component
 
-  alias BandwidthHero.SourcerUsers
   import BandwidthHeroWeb.SourcerUserLive.FormHandlers
 
   @impl true
-  def update(%{sourcer_user: sourcer_user} = assigns, socket) do
+  def update(assigns, socket) do
     update_socket(assigns, socket)
   end
 
