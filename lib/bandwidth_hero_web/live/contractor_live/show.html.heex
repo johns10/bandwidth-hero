@@ -20,7 +20,7 @@
   <Heroicons.arrow_left solid class="w-4 h-4 ml-1 mr-2" /> Back
 </.a>
 <div class="flex">
-  <div class="flex-grow flex-col">
+  <div class="w-1/2 flex-col">
     <.contractor_card contractor={@contractor} user={@current_user} class="m-4" />
     <.live_component
       id="availabilities-card"
@@ -42,7 +42,7 @@
     live_action={@live_action}
     contractor_erp_tag={@contractor_erp_tag}
     erp_tag_type={@erp_tag_type}
-    class="m-4 flex-shrink"
+    class="m-4 w-1/2"
     can_update={@can_update}
   />
 </div>
