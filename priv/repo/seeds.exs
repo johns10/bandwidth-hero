@@ -10,34 +10,4 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias BandwidthHero.Repo
-alias BandwidthHero.Tags.ErpTag
-
-hcm_module_names = [
-  "Learning",
-  "Career Development",
-  "Goal Management",
-  "Performance Management",
-  "Talent Review and Succession Planning",
-  "Dynamic Skills",
-  "Profile Management",
-  "Core Human Resources",
-  "Benefits",
-  "Digital Assistant",
-  "HR Help Desk",
-  "Journeys",
-  "Workforce Compensation",
-  "Time and Labor",
-  "Health and Safety",
-  "Absence Management",
-  "Payroll",
-  "Recruiting"
-]
-
-Enum.map(hcm_module_names, fn name ->
-  Repo.insert!(%ErpTag{
-    label: name,
-    type: :module,
-    parent_id: :hcm
-  })
-end)
+BandwidthHero.TestDataset.seed()
