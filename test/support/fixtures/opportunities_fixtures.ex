@@ -14,7 +14,7 @@ defmodule BandwidthHero.OpportunitiesFixtures do
         contract_type: [:corp_to_corp],
         description: "some description",
         from_date: ~D[2022-11-10],
-        hours_per_week: 42,
+        hours_per_week: 40,
         laptop: [:use_my_own],
         name: "some name",
         rate: "120.5",

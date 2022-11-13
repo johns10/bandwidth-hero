@@ -13,8 +13,11 @@ defmodule BandwidthHero.Tags do
 
     ErpTag
     |> maybe_filter_by_parent_id(filters[:parent_id])
+    |> maybe_filter_by_label(filters[:label])
     |> Repo.all()
   end
+
+  def get_erp_tag!(id), do: Repo.get!(ErpTag, id)
 
   defp maybe_filter_by_parent_id(query, nil), do: query
 
@@ -22,7 +25,11 @@ defmodule BandwidthHero.Tags do
     where(query, [c], c.parent_id == ^parent_id)
   end
 
-  def get_erp_tag!(id), do: Repo.get!(ErpTag, id)
+  defp maybe_filter_by_label(query, nil), do: query
+
+  defp maybe_filter_by_label(query, label) do
+    where(query, [c], c.label == ^label)
+  end
 
   def create_erp_tag(attrs \\ %{}) do
     %ErpTag{}
