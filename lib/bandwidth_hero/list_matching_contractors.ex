@@ -6,6 +6,16 @@ defmodule BandwidthHero.ListMatchingContractors do
   alias BandwidthHero.ListMatchingContractors.AvailabilityScore
   alias BandwidthHero.ListMatchingContractors.SkillScore
 
+  def execute(%Opportunity{} = opportunity) do
+    execute_query(opportunity)
+    |> calculate_score(opportunity)
+  end
+
+  def execute_query(%Opportunity{} = opportunity) do
+    query(opportunity)
+    |> Repo.all()
+  end
+
   def query(%{opportunity_erp_tags: opportunity_erp_tags, from_date: from, to_date: to}) do
     opportunity_erp_tags_ids = Enum.map(opportunity_erp_tags, & &1.erp_tag_id)
 
@@ -19,11 +29,6 @@ defmodule BandwidthHero.ListMatchingContractors do
     |> where([av: av], not (av.available_to > ^to and av.available_from >= ^to))
     |> where([av: av], av.hours > 0)
     |> preload([av: av, cet: e, et: t], availabilities: av, contractor_erp_tags: {e, erp_tag: t})
-  end
-
-  def execute(%Opportunity{} = opportunity) do
-    query(opportunity)
-    |> Repo.all()
   end
 
   def calculate_score(contractors, opportunity) do

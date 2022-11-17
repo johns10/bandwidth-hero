@@ -22,8 +22,8 @@ defmodule BandwidthHero.ListMatchingContractors.SkillScore do
     items
     |> Enum.reduce(%{total_projects: 0, total_years: 0}, fn opportunity_erp_tag, acc ->
       acc
-      |> Map.put(:total_projects, acc.total_projects + opportunity_erp_tag.projects)
-      |> Map.put(:total_years, acc.total_years + opportunity_erp_tag.years)
+      |> Map.put(:total_projects, acc.total_projects + (opportunity_erp_tag.projects || 0))
+      |> Map.put(:total_years, acc.total_years + (opportunity_erp_tag.years || 0))
     end)
   end
 

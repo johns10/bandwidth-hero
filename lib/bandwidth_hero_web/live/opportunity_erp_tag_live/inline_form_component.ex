@@ -50,6 +50,16 @@ defmodule BandwidthHeroWeb.OpportunityErpTagLive.InlineFormComponent do
   end
 
   def handle_existence(%{"exists" => "true"} = params, %{assigns: %{action: :edit}} = socket) do
-    save_no_redirect(socket, :edit, params)
+    case OpportunityErpTags.update_opportunity_erp_tag(socket.assigns.opportunity_erp_tag, params) do
+      {:ok, opportunity_erp_tag} ->
+        send(self(), %{event: "update", payload: opportunity_erp_tag})
+
+        {:noreply,
+         socket
+         |> put_flash(:info, "Opportunity erp tag updated successfully")}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, :changeset, changeset)}
+    end
   end
 end

@@ -64,6 +64,39 @@ defmodule BandwidthHeroWeb.OpportunityLive.Components do
     """
   end
 
+  def matched_contractor_table(assigns) do
+    ~H"""
+    <.table class={@class}>
+      <.tr>
+        <.th>Name</.th>
+        <.th>Title</.th>
+        <.th>Availability Score</.th>
+        <.th>Skill Score</.th>
+
+        <.th></.th>
+      </.tr>
+      <%= for match <- @matched_contractors do %>
+        <.tr id={"contractor-#{match.contractor.id}"}>
+          <.td><%= match.contractor.name %></.td>
+          <.td><%= match.contractor.title %></.td>
+          <.td><%= (match.availability_score * 100) |> floor() %>%</.td>
+          <.td><%= (match.skill_score * 100) |> floor() %>%</.td>
+
+          <.td>
+            <span>
+              <.a
+                link_type="live_redirect"
+                label="Show"
+                to={Routes.contractor_show_path(Endpoint, :show, match.contractor)}
+              />
+            </span>
+          </.td>
+        </.tr>
+      <% end %>
+    </.table>
+    """
+  end
+
   def opportunity_card(assigns) do
     assigns =
       assigns

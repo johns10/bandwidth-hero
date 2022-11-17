@@ -2,6 +2,7 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
   use BandwidthHeroWeb, :live_view
   on_mount BandwidthHeroWeb.UserLiveAuth
 
+  alias BandwidthHero.ListMatchingContractors
   alias BandwidthHero.Opportunities
   alias BandwidthHero.Opportunities.Opportunity
   alias BandwidthHero.OpportunityErpTags.OpportunityErpTag
@@ -23,12 +24,15 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
 
     erp_tags = Tags.list_erp_tags(filters: [parent_id: opportunity.pillar_id])
 
+    matched_contractors = ListMatchingContractors.execute(opportunity)
+
     socket
     |> assign(:opportunity, opportunity)
     |> assign(:page_title, page_title(socket.assigns.live_action))
     |> assign(:erp_tags, erp_tags)
     |> assign(:opportunity_erp_tag_action, :show)
     |> assign(:return_to, Routes.opportunity_show_path(socket, :show, opportunity))
+    |> assign(:matched_contractors, matched_contractors)
   end
 
   @impl true
@@ -38,12 +42,34 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
 
   @impl true
   def handle_info(%{event: "update", payload: %Opportunity{} = opportunity}, socket) do
-    {:noreply, assign(socket, :opportunity, opportunity)}
+    {:noreply,
+     socket
+     |> assign(:opportunity, opportunity)
+     |> schedule_get_matched_contractors()}
+  end
+
+  def handle_info(:get_matched_contractors, %{assigns: %{opportunity: opportunity}} = socket) do
+    {:noreply,
+     socket |> assign(:matched_contractors, ListMatchingContractors.execute(opportunity))}
   end
 
   def handle_info(%{event: event, payload: %OpportunityErpTag{}}, socket)
       when event in ["create", "delete", "update"] do
-    {:noreply, assign(socket, :opportunity, get_opportunity!(socket.assigns.opportunity.id))}
+    opportunity = socket.assigns.opportunity
+
+    {:noreply,
+     socket
+     |> assign(:opportunity, get_opportunity!(opportunity.id))
+     |> schedule_get_matched_contractors()}
+  end
+
+  defp schedule_get_matched_contractors(%{assigns: %{timer: timer}} = socket) do
+    Process.cancel_timer(timer)
+    assign(socket, :timer, Process.send_after(self(), :get_matched_contractors, 1000))
+  end
+
+  defp schedule_get_matched_contractors(socket) do
+    assign(socket, :timer, Process.send_after(self(), :get_matched_contractors, 1000))
   end
 
   defp get_opportunity!(id) do

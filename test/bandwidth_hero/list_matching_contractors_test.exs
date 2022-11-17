@@ -40,7 +40,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
     end
 
     test "returns in result", context do
-      assert [context.contractor] == ListMatchingContractors.execute(context.opportunity)
+      assert [context.contractor] == ListMatchingContractors.execute_query(context.opportunity)
     end
   end
 
@@ -65,7 +65,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
     end
 
     test "does not return", context do
-      assert [] == ListMatchingContractors.execute(context.opportunity)
+      assert [] == ListMatchingContractors.execute_query(context.opportunity)
     end
   end
 
@@ -90,7 +90,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
     end
 
     test "does not return", context do
-      assert [] == ListMatchingContractors.execute(context.opportunity)
+      assert [] == ListMatchingContractors.execute_query(context.opportunity)
     end
   end
 
@@ -115,7 +115,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
     end
 
     test "returns in result", context do
-      assert [] == ListMatchingContractors.execute(context.opportunity)
+      assert [] == ListMatchingContractors.execute_query(context.opportunity)
     end
   end
 
@@ -140,7 +140,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
     end
 
     test "returns in result", context do
-      assert [context.contractor] == ListMatchingContractors.execute(context.opportunity)
+      assert [context.contractor] == ListMatchingContractors.execute_query(context.opportunity)
     end
   end
 
@@ -165,7 +165,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
     end
 
     test "returns in result", context do
-      assert [context.contractor] == ListMatchingContractors.execute(context.opportunity)
+      assert [context.contractor] == ListMatchingContractors.execute_query(context.opportunity)
     end
   end
 
@@ -190,7 +190,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
     end
 
     test "returns in result", context do
-      assert [context.contractor] == ListMatchingContractors.execute(context.opportunity)
+      assert [context.contractor] == ListMatchingContractors.execute_query(context.opportunity)
     end
   end
 
@@ -219,7 +219,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
     end
 
     test "only returns matching availability in result", context do
-      [contractor] = ListMatchingContractors.execute(context.opportunity)
+      [contractor] = ListMatchingContractors.execute_query(context.opportunity)
       assert Enum.count(contractor.availabilities) == 1
     end
   end
@@ -245,7 +245,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
     end
 
     test "returns in result", context do
-      assert [] == ListMatchingContractors.execute(context.opportunity)
+      assert [] == ListMatchingContractors.execute_query(context.opportunity)
     end
   end
 
@@ -273,7 +273,7 @@ defmodule BandwidthHero.ListMatchingContractorsTest do
       contractor: %{id: contractor_id},
       opportunity: opportunity
     } do
-      assert [contractor] = ListMatchingContractors.execute(opportunity)
+      assert [contractor] = ListMatchingContractors.execute_query(opportunity)
       assert contractor.id == contractor_id
 
       [contractor_erp_tag] = contractor.contractor_erp_tags

@@ -13,7 +13,7 @@ defmodule BandwidthHero.Tags.ErpTag do
   @doc false
   def changeset(erp_tag, attrs) do
     erp_tag
-    |> cast(attrs, [:label])
-    |> validate_required([:label])
+    |> cast(attrs, [:label, :parent_id])
+    |> validate_required([:label, :parent_id])
   end
 end

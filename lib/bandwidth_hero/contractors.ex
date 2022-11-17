@@ -11,7 +11,7 @@ defmodule BandwidthHero.Contractors do
   @behaviour Bodyguard.Policy
 
   def authorize(:update_contractor, %{id: id}, %{user_id: id}), do: :ok
-  def authorize(:update_contractor, _user, _contractor), do: :done
+  def authorize(:update_contractor, _user, _contractor), do: :error
 
   def list_contractors(opts \\ []) do
     preloads = Keyword.get(opts, :preloads, [])

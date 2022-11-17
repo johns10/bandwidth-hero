@@ -1,3 +1,4 @@
+<.h1>Opportunity</.h1>
 <%= if @live_action in [:edit] do %>
   <.modal return_to={@return_to} title={@page_title}>
     <.live_component
@@ -50,6 +51,9 @@
     </.card_content>
   </.card>
 </div>
+
+<.h2>Matching Contractors</.h2>
+<.matched_contractor_table matched_contractors={@matched_contractors} class="m-4" />
 
 <span>
   <%= live_patch("Edit",
