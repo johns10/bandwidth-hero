@@ -21,7 +21,7 @@ defmodule BandwidthHero.TagsTest do
     end
 
     test "create_erp_tag/1 with valid data creates a erp_tag" do
-      valid_attrs = %{label: "some label"}
+      valid_attrs = %{label: "some label", parent_id: :hcm}
 
       assert {:ok, %ErpTag{} = erp_tag} = Tags.create_erp_tag(valid_attrs)
       assert erp_tag.label == "some label"

@@ -5,7 +5,7 @@ defmodule BandwidthHero.Repo.Migrations.CreateSourcerUsers do
     create table(:sourcer_users) do
       add :position, :string
       add :user_id, references(:users, on_delete: :nothing)
-      add :sourcer_id, references(:sourcers, on_delete: :nothing)
+      add :sourcer_id, references(:sourcers, on_delete: :delete_all)
 
       timestamps()
     end

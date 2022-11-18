@@ -170,4 +170,42 @@ defmodule BandwidthHeroWeb.OpportunityLive.Components do
     </.card>
     """
   end
+
+  def required_skills_card(assigns) do
+    assigns = Map.put(assigns, :class, Map.get(assigns, :class, ""))
+
+    ~H"""
+    <.card variant="outline" class={@class}>
+      <.card_content category="Required Skills">
+        <ul>
+          <li>
+            <strong>Vendor:</strong>
+            <%= @opportunity.vendor_id |> to_string |> Recase.to_sentence() %>
+          </li>
+
+          <li>
+            <strong>Platform:</strong>
+            <%= @opportunity.platform_id |> to_string |> Recase.to_sentence() %>
+          </li>
+
+          <li>
+            <strong>Pillar:</strong>
+            <%= @opportunity.pillar_id |> to_string |> Recase.to_sentence() %>
+          </li>
+
+          <p class="font-medium text-sm block text-gray-900 dark:text-gray-200 py-2">Modules</p>
+          <%= if @opportunity.pillar_id do %>
+            <%= for opportunity_erp_tag <- @opportunity.opportunity_erp_tags do %>
+              <li>
+                <%= opportunity_erp_tag.erp_tag.label %> (<%= opportunity_erp_tag.years %> years, <%= opportunity_erp_tag.projects %> projects)
+              </li>
+            <% end %>
+          <% else %>
+            Pick a Vendor, Platform and Pillar to select Modules.
+          <% end %>
+        </ul>
+      </.card_content>
+    </.card>
+    """
+  end
 end

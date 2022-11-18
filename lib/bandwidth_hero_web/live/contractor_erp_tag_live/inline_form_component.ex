@@ -49,6 +49,8 @@ defmodule BandwidthHeroWeb.ContractorErpTagLive.InlineFormComponent do
     end
   end
 
+  def handle_existence(%{"exists" => "false"}, socket), do: {:noreply, socket}
+
   def handle_existence(%{"exists" => "true"} = params, %{assigns: %{action: :edit}} = socket) do
     save_no_redirect(socket, :edit, params)
   end

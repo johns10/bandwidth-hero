@@ -4,8 +4,8 @@ defmodule BandwidthHeroWeb.ErpTagLiveTest do
   import Phoenix.LiveViewTest
   import BandwidthHero.TagsFixtures
 
-  @create_attrs %{label: "some label"}
-  @update_attrs %{label: "some updated label"}
+  @create_attrs %{label: "some label", parent_id: "hcm"}
+  @update_attrs %{label: "some updated label", parent_id: "hcm"}
   @invalid_attrs %{label: nil}
 
   defp create_erp_tag(_) do

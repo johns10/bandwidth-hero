@@ -8,6 +8,18 @@ defmodule BandwidthHero.Sourcers do
 
   alias BandwidthHero.Sourcers.Sourcer
 
+  @behaviour Bodyguard.Policy
+
+  def authorize(:update_sourcer, %{sourcer_users: sourcer_users}, %{id: sourcer_id})
+      when is_list(sourcer_users) do
+    if sourcer_id in Enum.map(sourcer_users, & &1.sourcer_id), do: :ok, else: :error
+  end
+
+  def authorize(:update_sourcer, user, %{id: sourcer_id}) do
+    %{sourcer_users: sourcer_users} = Repo.preload(user, :sourcer_users)
+    if sourcer_id in Enum.map(sourcer_users, & &1.sourcer_id), do: :ok, else: :error
+  end
+
   def list_sourcers(opts \\ []) do
     preloads = Keyword.get(opts, :preloads, [])
 

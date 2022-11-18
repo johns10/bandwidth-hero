@@ -6,6 +6,7 @@ defmodule BandwidthHeroWeb.SourcerLive.Show do
   alias BandwidthHero.Sourcers.Sourcer
   alias BandwidthHero.Opportunities
   alias BandwidthHero.Opportunities.Opportunity
+  alias BandwidthHeroWeb.SourcerLive.Utils
   import BandwidthHeroWeb.SourcerLive.Components
 
   @impl true
@@ -25,6 +26,8 @@ defmodule BandwidthHeroWeb.SourcerLive.Show do
     socket
     |> assign(:page_title, page_title(socket.assigns.live_action))
     |> maybe_get_sourcer(params)
+    |> can_update_sourcer?()
+    |> guard_action(action)
   end
 
   defp apply_action(socket, :new_opportunity, params) do
@@ -33,6 +36,7 @@ defmodule BandwidthHeroWeb.SourcerLive.Show do
     |> assign(:opportunity, %Opportunity{})
     |> assign(:opportunity_action, :new)
     |> maybe_get_sourcer(params)
+    |> can_update_sourcer?()
   end
 
   defp apply_action(socket, :edit_opportunity, %{"opportunity_id" => opportunity_id} = params) do
@@ -41,6 +45,7 @@ defmodule BandwidthHeroWeb.SourcerLive.Show do
     |> assign(:opportunity, Opportunities.get_opportunity!(opportunity_id))
     |> assign(:opportunity_action, :edit)
     |> maybe_get_sourcer(params)
+    |> can_update_sourcer?()
   end
 
   @impl true
@@ -65,6 +70,16 @@ defmodule BandwidthHeroWeb.SourcerLive.Show do
     |> assign(:sourcer, sourcer)
     |> assign(:return_to, Routes.sourcer_show_path(socket, :show, sourcer))
   end
+
+  def can_update_sourcer?(%{assigns: %{current_user: user, sourcer: sourcer}} = socket) do
+    assign(socket, :can_update?, Utils.can_update_sourcer?(user, sourcer))
+  end
+
+  def guard_action(%{assigns: %{return_to: return_to, can_update?: false}} = socket, action)
+      when action in [:edit, :new_opportunity, :edit_opportunity],
+      do: push_patch(socket, to: return_to)
+
+  def guard_action(socket, _), do: socket
 
   defp page_title(:show), do: "Show Sourcer"
   defp page_title(:edit), do: "Edit Sourcer"

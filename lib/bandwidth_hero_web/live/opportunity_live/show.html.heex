@@ -27,33 +27,39 @@
 <div class="flex items-start">
   <.opportunity_card opportunity={@opportunity} class="m-4" />
 
-  <.card variant="outline" class="m-4">
-    <.card_content category="Required Skills">
-      <.live_component
-        module={BandwidthHeroWeb.OpportunityLive.CategoryFormComponent}
-        id={:category_form}
-        opportunity={@opportunity}
-      />
-      <p class="font-medium text-sm block text-gray-900 dark:text-gray-200 pb-2">Modules</p>
-      <%= if @opportunity.pillar_id do %>
-        <%= for erp_tag <- @erp_tags do %>
-          <.live_component
-            module={BandwidthHeroWeb.OpportunityErpTagLive.InlineFormComponent}
-            id={"opportunity-erp-tag-form-#{erp_tag.id}"}
-            opportunity_id={@opportunity.id}
-            opportunity_erp_tag={find_opportunity_erp_tag(@opportunity, erp_tag.id)}
-            erp_tag={erp_tag}
-          />
+  <%= if @can_update? do %>
+    <.card variant="outline" class="m-4">
+      <.card_content category="Required Skills">
+        <.live_component
+          module={BandwidthHeroWeb.OpportunityLive.CategoryFormComponent}
+          id={:category_form}
+          opportunity={@opportunity}
+        />
+        <p class="font-medium text-sm block text-gray-900 dark:text-gray-200 pb-2">Modules</p>
+        <%= if @opportunity.pillar_id do %>
+          <%= for erp_tag <- @erp_tags do %>
+            <.live_component
+              module={BandwidthHeroWeb.OpportunityErpTagLive.InlineFormComponent}
+              id={"opportunity-erp-tag-form-#{erp_tag.id}"}
+              opportunity_id={@opportunity.id}
+              opportunity_erp_tag={find_opportunity_erp_tag(@opportunity, erp_tag.id)}
+              erp_tag={erp_tag}
+            />
+          <% end %>
+        <% else %>
+          Pick a Vendor, Platform and Pillar to select Modules.
         <% end %>
-      <% else %>
-        Pick a Vendor, Platform and Pillar to select Modules.
-      <% end %>
-    </.card_content>
-  </.card>
+      </.card_content>
+    </.card>
+  <% else %>
+    <.required_skills_card user={@current_user} opportunity={@opportunity} class="m-4" />
+  <% end %>
 </div>
 
-<.h2>Matching Contractors</.h2>
-<.matched_contractor_table matched_contractors={@matched_contractors} class="m-4" />
+<%= if @can_update? do %>
+  <.h2>Matching Contractors</.h2>
+  <.matched_contractor_table matched_contractors={@matched_contractors} class="m-4" />
+<% end %>
 
 <span>
   <%= live_patch("Edit",

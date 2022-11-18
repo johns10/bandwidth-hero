@@ -3,6 +3,7 @@ defmodule BandwidthHeroWeb.SourcerLiveTest do
 
   import Phoenix.LiveViewTest
   import BandwidthHero.SourcersFixtures
+  import BandwidthHero.SourcerUsersFixtures
 
   @create_attrs %{
     description: "some description",
@@ -23,8 +24,13 @@ defmodule BandwidthHeroWeb.SourcerLiveTest do
     %{sourcer: sourcer}
   end
 
+  defp create_sourcer_user(%{user: user, sourcer: sourcer}) do
+    sourcer_user = sourcer_user_fixture(%{user_id: user.id, sourcer_id: sourcer.id})
+    %{sourcer_user: sourcer_user}
+  end
+
   describe "Index" do
-    setup [:register_and_log_in_user, :create_sourcer]
+    setup [:register_and_log_in_user, :create_sourcer, :create_sourcer_user]
 
     test "lists all sourcers", %{conn: conn, sourcer: sourcer} do
       {:ok, _index_live, html} = live(conn, Routes.sourcer_index_path(conn, :index))
@@ -86,7 +92,7 @@ defmodule BandwidthHeroWeb.SourcerLiveTest do
   end
 
   describe "Show" do
-    setup [:register_and_log_in_user, :create_sourcer]
+    setup [:register_and_log_in_user, :create_sourcer, :create_sourcer_user]
 
     test "displays sourcer", %{conn: conn, sourcer: sourcer} do
       {:ok, _show_live, html} = live(conn, Routes.sourcer_show_path(conn, :show, sourcer))

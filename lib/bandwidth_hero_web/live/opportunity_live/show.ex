@@ -7,6 +7,7 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
   alias BandwidthHero.Opportunities.Opportunity
   alias BandwidthHero.OpportunityErpTags.OpportunityErpTag
   alias BandwidthHero.Tags
+  alias BandwidthHeroWeb.OpportunityLive.Utils
   import BandwidthHeroWeb.OpportunityLive.Components
 
   @impl true
@@ -20,10 +21,9 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
   end
 
   defp apply_action(socket, action, %{"id" => id}) when action in [:show, :edit] do
+    user = socket.assigns.current_user
     opportunity = get_opportunity!(id)
-
     erp_tags = Tags.list_erp_tags(filters: [parent_id: opportunity.pillar_id])
-
     matched_contractors = ListMatchingContractors.execute(opportunity)
 
     socket
@@ -33,6 +33,7 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
     |> assign(:opportunity_erp_tag_action, :show)
     |> assign(:return_to, Routes.opportunity_show_path(socket, :show, opportunity))
     |> assign(:matched_contractors, matched_contractors)
+    |> assign(:can_update?, Utils.can_update_opportunity?(user, opportunity))
   end
 
   @impl true

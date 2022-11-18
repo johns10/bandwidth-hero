@@ -1,12 +1,14 @@
 defmodule BandwidthHero.OpportunityErpTags.OpportunityErpTag do
   use Ecto.Schema
   import Ecto.Changeset
+  alias BandwidthHero.Opportunities.Opportunity
+  alias BandwidthHero.Tags.ErpTag
 
   schema "opportunity_erp_tags" do
     field :projects, :integer
     field :years, :integer
-    field :opportunity_id, :id
-    field :erp_tag_id, :id
+    belongs_to :opportunity, Opportunity
+    belongs_to :erp_tag, ErpTag
 
     timestamps()
   end

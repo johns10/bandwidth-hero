@@ -11,7 +11,8 @@ defmodule BandwidthHero.TagsFixtures do
     {:ok, erp_tag} =
       attrs
       |> Enum.into(%{
-        label: "some label"
+        label: "some label",
+        parent_id: :hcm
       })
       |> BandwidthHero.Tags.create_erp_tag()
 

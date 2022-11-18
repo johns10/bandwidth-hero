@@ -8,6 +8,18 @@ defmodule BandwidthHero.Opportunities do
 
   alias BandwidthHero.Opportunities.Opportunity
 
+  @behaviour Bodyguard.Policy
+
+  def authorize(:update_opportunity, %{sourcer_users: sourcer_users}, %{sourcer_id: sourcer_id})
+      when is_list(sourcer_users) do
+    if sourcer_id in Enum.map(sourcer_users, & &1.sourcer_id), do: :ok, else: :error
+  end
+
+  def authorize(:update_opportunity, user, %{sourcer_id: sourcer_id}) do
+    %{sourcer_users: sourcer_users} = Repo.preload(user, :sourcer_users)
+    if sourcer_id in Enum.map(sourcer_users, & &1.sourcer_id), do: :ok, else: :error
+  end
+
   def list_opportunities(opts \\ []) do
     preloads = Keyword.get(opts, :preloads, [])
 
@@ -37,7 +49,8 @@ defmodule BandwidthHero.Opportunities do
   defp maybe_preload_opportunity_erp_tags(query, _) do
     query
     |> join(:left, [o], e in assoc(o, :opportunity_erp_tags), as: :opportunity_erp_tags)
-    |> preload([c, opportunity_erp_tags: e], opportunity_erp_tags: e)
+    |> join(:left, [opportunity_erp_tags: e], t in assoc(e, :erp_tag), as: :erp_tag)
+    |> preload([c, opportunity_erp_tags: e, erp_tag: t], opportunity_erp_tags: {e, erp_tag: t})
   end
 
   def create_opportunity(attrs \\ %{}) do

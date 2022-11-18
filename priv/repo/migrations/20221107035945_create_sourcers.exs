@@ -10,11 +10,5 @@ defmodule BandwidthHero.Repo.Migrations.CreateSourcers do
 
       timestamps()
     end
-
-    alter table(:users) do
-      add :sourcer_id, references(:sourcers, on_delete: :nothing)
-    end
-
-    create index(:users, [:sourcer_id])
   end
 end

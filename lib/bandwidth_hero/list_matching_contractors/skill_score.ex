@@ -28,7 +28,13 @@ defmodule BandwidthHero.ListMatchingContractors.SkillScore do
   end
 
   def score_skill_metric(contractor, baseline) do
-    (contractor.total_projects + contractor.total_years) /
-      (baseline.total_projects + baseline.total_years)
+    calculate_score(
+      contractor.total_projects + contractor.total_years,
+      baseline.total_projects + baseline.total_years
+    )
   end
+
+  def calculate_score(0, 0), do: 0.0
+  def calculate_score(_, 0), do: 1.0
+  def calculate_score(numerator, denominator), do: numerator / denominator
 end

@@ -3,6 +3,7 @@ defmodule BandwidthHeroWeb.SourcerLive.Components do
   use PetalComponents
   alias BandwidthHeroWeb.Endpoint
   alias BandwidthHeroWeb.Router.Helpers, as: Routes
+  import BandwidthHeroWeb.SourcerLive.Utils
 
   def sourcer_table(assigns) do
     ~H"""
@@ -120,13 +121,33 @@ defmodule BandwidthHeroWeb.SourcerLive.Components do
 
     ~H"""
     <.card variant="outline" class={@class}>
+      <div class="bg-white py-2 px-4 flex text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-300">
+        <div class="flex-grow flex flex-col">
+          <span class="text-2xl font-bold"><%= @sourcer.name %></span>
+        </div>
+        <div class="flex flex-column">
+          <%= if can_update_sourcer?(@user, @sourcer) do %>
+            <.a
+              to="#"
+              id="delete-sourcer"
+              phx-click="delete"
+              phx-value-id={@sourcer.id}
+              data={[confirm: "Are you sure you want to delete your profile?"]}
+            >
+              <Heroicons.trash solid class="w-4 h-4 m-2" />
+            </.a>
+            <.a
+              link_type="live_patch"
+              to={Routes.sourcer_show_path(Endpoint, :edit, @sourcer)}
+              id="edit-sourcer"
+            >
+              <Heroicons.pencil solid class="w-4 h-4 m-2" />
+            </.a>
+          <% end %>
+        </div>
+      </div>
       <.card_content category="Sourcer">
         <ul>
-          <li>
-            <strong>Name:</strong>
-            <%= @sourcer.name %>
-          </li>
-
           <li>
             <strong>Description:</strong>
             <%= @sourcer.description %>
