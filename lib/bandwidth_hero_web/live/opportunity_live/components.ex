@@ -90,6 +90,38 @@ defmodule BandwidthHeroWeb.OpportunityLive.Components do
                 to={Routes.contractor_show_path(Endpoint, :show, match.contractor)}
               />
             </span>
+            <%= if contractor_opportunity = contractor_contractor_opportunity(match.contractor) do %>
+              <span>
+                <.a
+                  link_type="live_redirect"
+                  label="Edit Contact"
+                  to={
+                    Routes.opportunity_show_path(
+                      Endpoint,
+                      :edit_contractor_opportunity,
+                      @opportunity,
+                      contractor_opportunity,
+                      %{contractor_id: match.contractor.id}
+                    )
+                  }
+                />
+              </span>
+            <% else %>
+              <span>
+                <.a
+                  link_type="live_redirect"
+                  label="Contact"
+                  to={
+                    Routes.opportunity_show_path(
+                      Endpoint,
+                      :new_contractor_opportunity,
+                      @opportunity,
+                      %{contractor_id: match.contractor.id}
+                    )
+                  }
+                />
+              </span>
+            <% end %>
           </.td>
         </.tr>
       <% end %>
@@ -208,4 +240,9 @@ defmodule BandwidthHeroWeb.OpportunityLive.Components do
     </.card>
     """
   end
+
+  def contractor_contractor_opportunity(%{contractor_opportunities: []}), do: nil
+
+  def contractor_contractor_opportunity(%{contractor_opportunities: [contractor_opportunity]}),
+    do: contractor_opportunity
 end

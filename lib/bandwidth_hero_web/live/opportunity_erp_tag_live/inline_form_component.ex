@@ -62,4 +62,9 @@ defmodule BandwidthHeroWeb.OpportunityErpTagLive.InlineFormComponent do
         {:noreply, assign(socket, :changeset, changeset)}
     end
   end
+
+  def handle_existence(%{"exists" => exists}, %{assigns: %{action: action}} = socket) do
+    IO.puts("Handling existence with exists #{exists} and action #{action}")
+    {:noreply, socket}
+  end
 end

@@ -11,19 +11,20 @@
   </.modal>
 <% end %>
 
-<%= if @live_action in [:new_opportunity_erp_tag] do %>
+<%= if @live_action in [:new_contractor_opportunity, :edit_contractor_opportunity] do %>
   <.modal return_to={@return_to} title={@page_title}>
     <.live_component
-      module={BandwidthHeroWeb.OpportunityErpTagLive.FormComponent}
-      id={:new}
-      action={@opportunity_erp_tag_action}
-      opportunity_erp_tag={%OpportunityErpTag{}}
+      module={BandwidthHeroWeb.ContractorOpportunityLive.FormComponent}
+      id={:new_contractor_opportunity}
       return_to={@return_to}
-      select_options={@erp_tag_select_options}
+      action={@contractor_opportunity_action}
       opportunity_id={@opportunity.id}
+      contractor_id={@contractor_id}
+      contractor_opportunity={@contractor_opportunity}
     />
   </.modal>
 <% end %>
+
 <div class="flex items-start">
   <.opportunity_card opportunity={@opportunity} class="m-4" />
 
@@ -58,7 +59,11 @@
 
 <%= if @can_update? do %>
   <.h2>Matching Contractors</.h2>
-  <.matched_contractor_table matched_contractors={@matched_contractors} class="m-4" />
+  <.matched_contractor_table
+    matched_contractors={@matched_contractors}
+    opportunity={@opportunity}
+    class="m-4"
+  />
 <% end %>
 
 <span>

@@ -14,7 +14,7 @@ defmodule BandwidthHero.ContractorOpportunities.ContractorOpportunity do
   @doc false
   def changeset(contractor_opportunity, attrs) do
     contractor_opportunity
-    |> cast(attrs, [:subject, :message])
+    |> cast(attrs, [:subject, :message, :opportunity_id, :contractor_id])
     |> validate_required([:subject, :message])
   end
 end

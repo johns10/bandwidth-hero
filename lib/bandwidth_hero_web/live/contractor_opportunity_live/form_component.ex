@@ -1,16 +1,22 @@
 defmodule BandwidthHeroWeb.ContractorOpportunityLive.FormComponent do
   use BandwidthHeroWeb, :live_component
 
-  alias BandwidthHero.ContractorOpportunities
   import BandwidthHeroWeb.ContractorOpportunityLive.FormHandlers
 
   @impl true
-  def update(%{contractor_opportunity: contractor_opportunity} = assigns, socket) do
-    update_socket(assigns, socket)
+  def update(assigns, socket) do
+    assigns
+    |> Map.put(:contractor_id, Map.get(assigns, :contractor_id, nil))
+    |> Map.put(:opportunity_id, Map.get(assigns, :opportunity_id, nil))
+    |> update_socket(socket)
   end
 
   @impl true
-  def handle_event("validate", %{"contractor_opportunity" => contractor_opportunity_params}, socket) do
+  def handle_event(
+        "validate",
+        %{"contractor_opportunity" => contractor_opportunity_params},
+        socket
+      ) do
     validate(contractor_opportunity_params, socket)
   end
 

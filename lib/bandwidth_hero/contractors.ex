@@ -19,6 +19,7 @@ defmodule BandwidthHero.Contractors do
     Contractor
     |> maybe_preload_contractor_erp_tags(preloads[:contractor_erp_tags])
     |> maybe_preload_availabilities(preloads[:availabilities])
+    |> maybe_preload_contractor_opportunities(preloads[:contractor_opportunities])
     |> Repo.all()
   end
 
@@ -28,6 +29,7 @@ defmodule BandwidthHero.Contractors do
     Contractor
     |> maybe_preload_contractor_erp_tags(preloads[:contractor_erp_tags])
     |> maybe_preload_availabilities(preloads[:availabilities])
+    |> maybe_preload_contractor_opportunities(preloads[:contractor_opportunities])
     |> Repo.get!(id)
   end
 
@@ -38,6 +40,7 @@ defmodule BandwidthHero.Contractors do
     |> where([c], c.user_id == ^user_id)
     |> maybe_preload_contractor_erp_tags(preloads[:contractor_erp_tags])
     |> maybe_preload_availabilities(preloads[:availabilities])
+    |> maybe_preload_contractor_opportunities(preloads[:contractor_opportunities])
     |> Repo.one()
   end
 
@@ -56,6 +59,14 @@ defmodule BandwidthHero.Contractors do
     |> join(:left, [c], e in assoc(c, :contractor_erp_tags), as: :cet)
     |> join(:left, [c, cet: e], t in assoc(e, :erp_tag), as: :et)
     |> preload([c, cet: e, et: t], contractor_erp_tags: {e, erp_tag: t})
+  end
+
+  defp maybe_preload_contractor_opportunities(query, nil), do: query
+
+  defp maybe_preload_contractor_opportunities(query, _) do
+    query
+    |> join(:left, [c], co in assoc(c, :contractor_opportunities), as: :contractor_opportunities)
+    |> preload([c, contractor_opportunities: co], contractor_opportunities: co)
   end
 
   def create_contractor(attrs \\ %{}) do

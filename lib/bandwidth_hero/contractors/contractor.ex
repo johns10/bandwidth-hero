@@ -1,9 +1,11 @@
 defmodule BandwidthHero.Contractors.Contractor do
   use Ecto.Schema
   import Ecto.Changeset
+  alias BandwidthHero.ContractorOpportunities
   alias BandwidthHero.ContractorErpTags.ContractorErpTag
   alias BandwidthHero.Availabilities.Availability
   alias BandwidthHero.Accounts.User
+  alias BandwidthHero.ContractorOpportunities.ContractorOpportunity
 
   schema "contractors" do
     field :contract_type, {:array, Ecto.Enum}, values: [:corp_to_corp, :contract_w2, :"1099"]
@@ -17,6 +19,7 @@ defmodule BandwidthHero.Contractors.Contractor do
 
     has_many :contractor_erp_tags, ContractorErpTag
     has_many :availabilities, Availability
+    has_many :contractor_opportunities, ContractorOpportunity
 
     timestamps()
   end

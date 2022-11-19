@@ -2,10 +2,12 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
   use BandwidthHeroWeb, :live_view
   on_mount BandwidthHeroWeb.UserLiveAuth
 
+  alias BandwidthHero.ContractorOpportunities
   alias BandwidthHero.ListMatchingContractors
   alias BandwidthHero.Opportunities
   alias BandwidthHero.Opportunities.Opportunity
   alias BandwidthHero.OpportunityErpTags.OpportunityErpTag
+  alias BandwidthHero.ContractorOpportunities.ContractorOpportunity
   alias BandwidthHero.Tags
   alias BandwidthHeroWeb.OpportunityLive.Utils
   import BandwidthHeroWeb.OpportunityLive.Components
@@ -20,17 +22,26 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, action, %{"id" => id}) when action in [:show, :edit] do
+  defp apply_action(socket, action, %{"id" => id} = params)
+       when action in [:show, :edit, :new_contractor_opportunity, :edit_contractor_opportunity] do
+    live_action = socket.assigns.live_action
     user = socket.assigns.current_user
-    opportunity = get_opportunity!(id)
+
+    contractor_id = Map.get(params, "contractor_id", nil)
+    contractor_opportunity_id = Map.get(params, "contractor_opportunity_id", nil)
+
+    opportunity = maybe_get_opportunity!(socket, id)
     erp_tags = Tags.list_erp_tags(filters: [parent_id: opportunity.pillar_id])
     matched_contractors = ListMatchingContractors.execute(opportunity)
 
     socket
+    |> assign(:contractor_id, contractor_id)
+    |> assign(:contractor_opportunity_id, contractor_opportunity_id)
     |> assign(:opportunity, opportunity)
-    |> assign(:page_title, page_title(socket.assigns.live_action))
+    |> assign(:page_title, page_title(live_action))
     |> assign(:erp_tags, erp_tags)
-    |> assign(:opportunity_erp_tag_action, :show)
+    |> assign(:contractor_opportunity_action, contractor_opportunity_action(live_action))
+    |> handle_contractor_opportunity()
     |> assign(:return_to, Routes.opportunity_show_path(socket, :show, opportunity))
     |> assign(:matched_contractors, matched_contractors)
     |> assign(:can_update?, Utils.can_update_opportunity?(user, opportunity))
@@ -73,6 +84,11 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
     assign(socket, :timer, Process.send_after(self(), :get_matched_contractors, 1000))
   end
 
+  defp maybe_get_opportunity!(%{assigns: %{opportunity: %Opportunity{} = opportunity}}, _),
+    do: opportunity
+
+  defp maybe_get_opportunity!(_socket, id), do: get_opportunity!(id)
+
   defp get_opportunity!(id) do
     Opportunities.get_opportunity!(id, preloads: [opportunity_erp_tags: true])
   end
@@ -85,6 +101,24 @@ defmodule BandwidthHeroWeb.OpportunityLive.Show do
     opportunity_erp_tag || %OpportunityErpTag{}
   end
 
+  defp handle_contractor_opportunity(
+         %{
+           assigns: %{contractor_opportunity_id: id, live_action: :edit_contractor_opportunity}
+         } = socket
+       ) do
+    contractor_opportunity = ContractorOpportunities.get_contractor_opportunity!(id)
+
+    assign(socket, :contractor_opportunity, contractor_opportunity)
+  end
+
+  defp handle_contractor_opportunity(socket),
+    do: assign(socket, :contractor_opportunity, %ContractorOpportunity{})
+
+  defp contractor_opportunity_action(:edit_contractor_opportunity), do: :edit
+  defp contractor_opportunity_action(:new_contractor_opportunity), do: :new
+  defp contractor_opportunity_action(_), do: :show
+
   defp page_title(:show), do: "Show Opportunity"
   defp page_title(:edit), do: "Edit Opportunity"
+  defp page_title(_), do: "Show Opportunity"
 end

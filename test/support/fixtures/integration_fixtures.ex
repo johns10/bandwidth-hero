@@ -34,7 +34,7 @@ defmodule BandwidthHero.IntegrationFixtures do
     end)
 
     Contractors.get_contractor!(contractor.id,
-      preloads: [availabilities: true, contractor_erp_tags: true]
+      preloads: [availabilities: true, contractor_erp_tags: true, contractor_opportunities: true]
     )
   end
 
