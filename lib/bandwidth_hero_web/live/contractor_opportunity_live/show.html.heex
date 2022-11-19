@@ -1,0 +1,16 @@
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.contractor_opportunity_show_path(@socket, :show, @contractor_opportunity)} title={@page_title}>
+    <.live_component
+      module={BandwidthHeroWeb.ContractorOpportunityLive.FormComponent}
+      id={@contractor_opportunity.id}
+      action={@live_action}
+      contractor_opportunity={@contractor_opportunity}
+      return_to={Routes.contractor_opportunity_show_path(@socket, :show, @contractor_opportunity)}
+    />
+  </.modal>
+<% end %>
+
+<.contractor_opportunity_card contractor_opportunity={@contractor_opportunity} />
+
+<span><%= live_patch "Edit", to: Routes.contractor_opportunity_show_path(@socket, :edit, @contractor_opportunity), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.contractor_opportunity_index_path(@socket, :index) %></span>

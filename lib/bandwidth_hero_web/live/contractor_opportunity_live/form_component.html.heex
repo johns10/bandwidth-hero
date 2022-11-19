@@ -1,0 +1,22 @@
+<div>
+  <.form
+    let={f}
+    for={@changeset}
+    id="contractor_opportunity-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <.form_label form={f} field={:subject} />
+    <.text_input form={f} field={:subject} />
+    <.form_field_error form={f} field={:subject} />
+  
+    <.form_label form={f} field={:message} />
+    <.textarea form={f} field={:message} />
+    <.form_field_error form={f} field={:message} />
+  
+    <.button color="success" type="submit" class="flex-shrink" phx_disable_with="Saving...">
+      Save
+    </.button>
+  </.form>
+</div>
