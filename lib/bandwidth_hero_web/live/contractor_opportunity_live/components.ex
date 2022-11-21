@@ -49,9 +49,45 @@ defmodule BandwidthHeroWeb.ContractorOpportunityLive.Components do
     """
   end
 
+  def contractor_contractor_opportunity_table(assigns) do
+    ~H"""
+    <.table class={@class}>
+      <.tr>
+        <.th>Subject</.th>
+        <.th>Decision</.th>
+
+        <.th></.th>
+      </.tr>
+      <%= for contractor_opportunity <- @contractor_opportunities do %>
+        <.tr id={"contractor_opportunity-#{contractor_opportunity.id}"}>
+          <.td><%= contractor_opportunity.subject %></.td>
+          <.td><%= contractor_opportunity.contractor_decision %></.td>
+
+          <.td>
+            <span>
+              <.a
+                link_type="live_redirect"
+                label="Show"
+                to={Routes.contractor_opportunity_show_path(Endpoint, :show, contractor_opportunity)}
+              />
+            </span>
+            <span>
+              <.a
+                link_type="live_patch"
+                label="Edit"
+                to={Routes.contractor_opportunity_index_path(Endpoint, :edit, contractor_opportunity)}
+              />
+            </span>
+          </.td>
+        </.tr>
+      <% end %>
+    </.table>
+    """
+  end
+
   def contractor_opportunity_card(assigns) do
     ~H"""
-    <.card variant="outline">
+    <.card variant="outline" class={@class}>
       <.card_content category="Contractor opportunity">
         <ul>
           <li>
@@ -62,6 +98,11 @@ defmodule BandwidthHeroWeb.ContractorOpportunityLive.Components do
           <li>
             <strong>Message:</strong>
             <%= @contractor_opportunity.message %>
+          </li>
+
+          <li>
+            <strong>Decision:</strong>
+            <%= @contractor_opportunity.contractor_decision %>
           </li>
         </ul>
       </.card_content>

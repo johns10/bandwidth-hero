@@ -1,7 +1,6 @@
 defmodule BandwidthHero.Contractors.Contractor do
   use Ecto.Schema
   import Ecto.Changeset
-  alias BandwidthHero.ContractorOpportunities
   alias BandwidthHero.ContractorErpTags.ContractorErpTag
   alias BandwidthHero.Availabilities.Availability
   alias BandwidthHero.Accounts.User

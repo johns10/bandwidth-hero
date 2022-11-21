@@ -4,7 +4,6 @@ defmodule BandwidthHeroWeb.ContractorErpTagLive.FormComponent do
   alias BandwidthHero.Tags
   alias BandwidthHero.Tags.ErpTag
   import BandwidthHeroWeb.ContractorErpTagLive.FormHandlers
-
   @impl true
   def update(%{contractor_erp_tag: %{erp_tag: erp_tag}} = assigns, socket) do
     contractor_id = Map.get(assigns, :contractor_id, nil)

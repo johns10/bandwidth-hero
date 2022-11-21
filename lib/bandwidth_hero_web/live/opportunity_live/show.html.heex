@@ -26,7 +26,7 @@
 <% end %>
 
 <div class="flex items-start">
-  <.opportunity_card opportunity={@opportunity} class="m-4" />
+  <.opportunity_card opportunity={@opportunity} class="m-4" mode={:edit} />
 
   <%= if @can_update? do %>
     <.card variant="outline" class="m-4">

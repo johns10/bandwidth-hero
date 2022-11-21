@@ -94,6 +94,10 @@ defmodule BandwidthHeroWeb.Router do
            ContractorLive.Show,
            :edit_availability
 
+      live "/contractor/:contractor_id/opportunities",
+           ContractorOpportunityLive.ContractorIndex,
+           :index
+
       live "/contractor_erp_tag", ContractorErpTagLive.Index, :index
       live "/contractor_erp_tag/new", ContractorErpTagLive.Index, :new
       live "/contractor_erp_tag/:id/edit", ContractorErpTagLive.Index, :edit

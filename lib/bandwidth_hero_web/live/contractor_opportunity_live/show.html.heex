@@ -1,5 +1,8 @@
 <%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.contractor_opportunity_show_path(@socket, :show, @contractor_opportunity)} title={@page_title}>
+  <.modal
+    return_to={Routes.contractor_opportunity_show_path(@socket, :show, @contractor_opportunity)}
+    title={@page_title}
+  >
     <.live_component
       module={BandwidthHeroWeb.ContractorOpportunityLive.FormComponent}
       id={@contractor_opportunity.id}
@@ -10,7 +13,29 @@
   </.modal>
 <% end %>
 
-<.contractor_opportunity_card contractor_opportunity={@contractor_opportunity} />
+<div class="flex">
+  <.a to="#" phx-click="accept_opportunity" class="mx-4">
+    <.button color="success" label="Accept Opportunity" />
+  </.a>
+  <.a to="#" phx_click="reject_opportunity" class="mx-4">
+    <.button color="danger" label="Reject Opportunity" />
+  </.a>
+</div>
 
-<span><%= live_patch "Edit", to: Routes.contractor_opportunity_show_path(@socket, :edit, @contractor_opportunity), class: "button" %></span> |
+<.contractor_opportunity_card contractor_opportunity={@contractor_opportunity} class="m-4" />
+<div class="flex">
+  <%= if @opportunity do %>
+    <.opportunity_card opportunity={@opportunity} class="m-4 flex-grow" mode={:show} />
+
+    <.required_skills_card user={@current_user} opportunity={@opportunity} class="m-4 flex-grow" />
+  <% end %>
+</div>
+
+<span>
+  <%= live_patch("Edit",
+    to: Routes.contractor_opportunity_show_path(@socket, :edit, @contractor_opportunity),
+    class: "button"
+  ) %>
+</span>
+|
 <span><%= live_redirect "Back", to: Routes.contractor_opportunity_index_path(@socket, :index) %></span>

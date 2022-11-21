@@ -7,6 +7,7 @@ defmodule BandwidthHero.Repo.Migrations.CreateContractorOpportunities do
       add :message, :text
       add :opportunity_id, references(:opportunities, on_delete: :nothing)
       add :contractor_id, references(:contractors, on_delete: :nothing)
+      add :contractor_decision, :string
 
       timestamps()
     end

@@ -8,97 +8,60 @@ defmodule BandwidthHero.ContractorOpportunities do
 
   alias BandwidthHero.ContractorOpportunities.ContractorOpportunity
 
-  @doc """
-  Returns the list of contractor_opportunities.
+  def list_contractor_opportunities(opts \\ []) do
+    filters = Keyword.get(opts, :filters)
+    preloads = Keyword.get(opts, :preloads)
 
-  ## Examples
-
-      iex> list_contractor_opportunities()
-      [%ContractorOpportunity{}, ...]
-
-  """
-  def list_contractor_opportunities do
-    Repo.all(ContractorOpportunity)
+    ContractorOpportunity
+    |> maybe_filter_by_contractor_id(filters[:contractor_id])
+    |> maybe_preload_opportunity(preloads[:opportunity])
+    |> Repo.all()
   end
 
-  @doc """
-  Gets a single contractor_opportunity.
+  def get_contractor_opportunity!(id, opts \\ []) do
+    filters = Keyword.get(opts, :filters)
+    preloads = Keyword.get(opts, :preloads)
 
-  Raises `Ecto.NoResultsError` if the Contractor opportunity does not exist.
+    ContractorOpportunity
+    |> maybe_filter_by_contractor_id(filters[:contractor_id])
+    |> maybe_preload_opportunity(preloads[:opportunity])
+    |> Repo.get!(id)
+  end
 
-  ## Examples
+  defp maybe_filter_by_contractor_id(query, nil), do: query
 
-      iex> get_contractor_opportunity!(123)
-      %ContractorOpportunity{}
+  defp maybe_filter_by_contractor_id(query, contractor_id) do
+    where(query, [co], co.contractor_id == ^contractor_id)
+  end
 
-      iex> get_contractor_opportunity!(456)
-      ** (Ecto.NoResultsError)
+  defp maybe_preload_opportunity(query, nil), do: query
 
-  """
-  def get_contractor_opportunity!(id), do: Repo.get!(ContractorOpportunity, id)
+  defp maybe_preload_opportunity(query, _) do
+    query
+    |> join(:left, [co], o in assoc(co, :opportunity), as: :opportunity)
+    |> preload([co, opportunity: o], opportunity: o)
+  end
 
-  @doc """
-  Creates a contractor_opportunity.
-
-  ## Examples
-
-      iex> create_contractor_opportunity(%{field: value})
-      {:ok, %ContractorOpportunity{}}
-
-      iex> create_contractor_opportunity(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_contractor_opportunity(attrs \\ %{}) do
     %ContractorOpportunity{}
     |> ContractorOpportunity.changeset(attrs)
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a contractor_opportunity.
-
-  ## Examples
-
-      iex> update_contractor_opportunity(contractor_opportunity, %{field: new_value})
-      {:ok, %ContractorOpportunity{}}
-
-      iex> update_contractor_opportunity(contractor_opportunity, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def update_contractor_opportunity(%ContractorOpportunity{} = contractor_opportunity, attrs) do
     contractor_opportunity
     |> ContractorOpportunity.changeset(attrs)
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a contractor_opportunity.
-
-  ## Examples
-
-      iex> delete_contractor_opportunity(contractor_opportunity)
-      {:ok, %ContractorOpportunity{}}
-
-      iex> delete_contractor_opportunity(contractor_opportunity)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_contractor_opportunity(%ContractorOpportunity{} = contractor_opportunity) do
     Repo.delete(contractor_opportunity)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking contractor_opportunity changes.
-
-  ## Examples
-
-      iex> change_contractor_opportunity(contractor_opportunity)
-      %Ecto.Changeset{data: %ContractorOpportunity{}}
-
-  """
-  def change_contractor_opportunity(%ContractorOpportunity{} = contractor_opportunity, attrs \\ %{}) do
+  def change_contractor_opportunity(
+        %ContractorOpportunity{} = contractor_opportunity,
+        attrs \\ %{}
+      ) do
     ContractorOpportunity.changeset(contractor_opportunity, attrs)
   end
 end

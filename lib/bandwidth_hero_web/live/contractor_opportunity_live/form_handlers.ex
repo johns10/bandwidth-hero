@@ -1,10 +1,9 @@
 defmodule BandwidthHeroWeb.ContractorOpportunityLive.FormHandlers do
-  use BandwidthHeroWeb, :live_component
+  import Phoenix.Component
+  import Phoenix.LiveView
 
   alias BandwidthHero.ContractorOpportunities
-  alias BandwidthHero.ContractorOpportunities.ContractorOpportunity
 
-  @impl true
   def update_socket(%{contractor_opportunity: contractor_opportunity} = assigns, socket) do
     changeset = ContractorOpportunities.change_contractor_opportunity(contractor_opportunity)
 
@@ -14,7 +13,6 @@ defmodule BandwidthHeroWeb.ContractorOpportunityLive.FormHandlers do
      |> assign(:changeset, changeset)}
   end
 
-  @impl true
   def validate(params, socket) do
     changeset =
       socket.assigns.contractor_opportunity
@@ -25,7 +23,10 @@ defmodule BandwidthHeroWeb.ContractorOpportunityLive.FormHandlers do
   end
 
   def save_redirect(socket, :edit, contractor_opportunity_params) do
-    case ContractorOpportunities.update_contractor_opportunity(socket.assigns.contractor_opportunity, contractor_opportunity_params) do
+    case ContractorOpportunities.update_contractor_opportunity(
+           socket.assigns.contractor_opportunity,
+           contractor_opportunity_params
+         ) do
       {:ok, _contractor_opportunity} ->
         {:noreply,
          socket
@@ -51,7 +52,10 @@ defmodule BandwidthHeroWeb.ContractorOpportunityLive.FormHandlers do
   end
 
   def save_no_redirect(socket, :edit, contractor_opportunity_params) do
-    case ContractorOpportunities.update_contractor_opportunity(socket.assigns.contractor_opportunity, contractor_opportunity_params) do
+    case ContractorOpportunities.update_contractor_opportunity(
+           socket.assigns.contractor_opportunity,
+           contractor_opportunity_params
+         ) do
       {:ok, _contractor_opportunity} ->
         {:noreply,
          socket
@@ -65,7 +69,11 @@ defmodule BandwidthHeroWeb.ContractorOpportunityLive.FormHandlers do
   def save_no_redirect(socket, :new, contractor_opportunity_params) do
     case ContractorOpportunities.create_contractor_opportunity(contractor_opportunity_params) do
       {:ok, _contractor_opportunity} ->
-        changeset = ContractorOpportunities.change_contractor_opportunity(%BandwidthHero.ContractorOpportunities.ContractorOpportunity{})
+        changeset =
+          ContractorOpportunities.change_contractor_opportunity(
+            %BandwidthHero.ContractorOpportunities.ContractorOpportunity{}
+          )
+
         {:noreply,
          socket
          |> put_flash(:info, "Contractor opportunity created successfully")

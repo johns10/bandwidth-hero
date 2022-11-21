@@ -2,7 +2,6 @@ defmodule BandwidthHero.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias BandwidthHero.Contractors.Contractor
-  alias BandwidthHero.Sourcers.Sourcer
   alias BandwidthHero.SourcerUsers.SourcerUser
 
   schema "users" do
