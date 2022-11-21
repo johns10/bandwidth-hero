@@ -13,5 +13,6 @@ defmodule BandwidthHero.Repo.Migrations.CreateContractorErpTag do
 
     create index(:contractor_erp_tags, [:contractor_id])
     create index(:contractor_erp_tags, [:erp_tag_id])
+    create unique_index(:contractor_erp_tags, [:contractor_id, :erp_tag_id])
   end
 end

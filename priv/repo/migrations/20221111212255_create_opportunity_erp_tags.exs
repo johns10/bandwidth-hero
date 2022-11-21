@@ -13,5 +13,6 @@ defmodule BandwidthHero.Repo.Migrations.CreateOpportunityErpTags do
 
     create index(:opportunity_erp_tags, [:opportunity_id])
     create index(:opportunity_erp_tags, [:erp_tag_id])
+    create unique_index(:opportunity_erp_tags, [:opportunity_id, :erp_tag_id])
   end
 end
