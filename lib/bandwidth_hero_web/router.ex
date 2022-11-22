@@ -33,6 +33,39 @@ defmodule BandwidthHeroWeb.Router do
     live "/profile", ProfileLive.Show, :show
     live "/profile/new_contractor", ProfileLive.Show, :new_contractor
     live "/profile/new_sourcer", ProfileLive.Show, :new_sourcer
+
+    live "/contractor/:id", ContractorLive.Show, :show
+    live "/contractor/:id/show/edit", ContractorLive.Show, :edit
+
+    live "/contractor/:id/erp_tag/new", ContractorLive.Show, :new_erp_tag
+    live "/contractor/:id/erp_tag/:erp_tag_id/edit", ContractorLive.Show, :edit_erp_tag
+
+    live "/contractor/:id/availability/new", ContractorLive.Show, :new_availability
+
+    live "/contractor/:id/availability/:availability_id/edit",
+         ContractorLive.Show,
+         :edit_availability
+
+    live "/contractor/:contractor_id/opportunities",
+         ContractorOpportunityLive.ContractorIndex,
+         :index
+
+    live "/sourcers/:id", SourcerLive.Show, :show
+    live "/sourcers/:id/show/edit", SourcerLive.Show, :edit
+
+    live "/sourcers/:id/show/new_opportunity", SourcerLive.Show, :new_opportunity
+    live "/sourcers/:id/show/:opportunity_id/edit", SourcerLive.Show, :edit_opportunity
+
+    live "/opportunities/:id", OpportunityLive.Show, :show
+    live "/opportunities/:id/show/edit", OpportunityLive.Show, :edit
+
+    live "/opportunities/:id/contractor_opportunities/new",
+         OpportunityLive.Show,
+         :new_contractor_opportunity
+
+    live "/opportunities/:id/contractor_opportunities/edit/:contractor_opportunity_id",
+         OpportunityLive.Show,
+         :edit_contractor_opportunity
   end
 
   # Other scopes may use custom stacks.
@@ -82,22 +115,6 @@ defmodule BandwidthHeroWeb.Router do
       live "/contractor/new", ContractorLive.Index, :new
       live "/contractor/:id/edit", ContractorLive.Index, :edit
 
-      live "/contractor/:id", ContractorLive.Show, :show
-      live "/contractor/:id/show/edit", ContractorLive.Show, :edit
-
-      live "/contractor/:id/erp_tag/new", ContractorLive.Show, :new_erp_tag
-      live "/contractor/:id/erp_tag/:erp_tag_id/edit", ContractorLive.Show, :edit_erp_tag
-
-      live "/contractor/:id/availability/new", ContractorLive.Show, :new_availability
-
-      live "/contractor/:id/availability/:availability_id/edit",
-           ContractorLive.Show,
-           :edit_availability
-
-      live "/contractor/:contractor_id/opportunities",
-           ContractorOpportunityLive.ContractorIndex,
-           :index
-
       live "/contractor_erp_tag", ContractorErpTagLive.Index, :index
       live "/contractor_erp_tag/new", ContractorErpTagLive.Index, :new
       live "/contractor_erp_tag/:id/edit", ContractorErpTagLive.Index, :edit
@@ -116,12 +133,6 @@ defmodule BandwidthHeroWeb.Router do
       live "/sourcers/new", SourcerLive.Index, :new
       live "/sourcers/:id/edit", SourcerLive.Index, :edit
 
-      live "/sourcers/:id", SourcerLive.Show, :show
-      live "/sourcers/:id/show/edit", SourcerLive.Show, :edit
-
-      live "/sourcers/:id/show/new_opportunity", SourcerLive.Show, :new_opportunity
-      live "/sourcers/:id/show/:opportunity_id/edit", SourcerLive.Show, :edit_opportunity
-
       live "/sourcer_users", SourcerUserLive.Index, :index
       live "/sourcer_users/new", SourcerUserLive.Index, :new
       live "/sourcer_users/:id/edit", SourcerUserLive.Index, :edit
@@ -132,17 +143,6 @@ defmodule BandwidthHeroWeb.Router do
       live "/opportunities", OpportunityLive.Index, :index
       live "/opportunities/new", OpportunityLive.Index, :new
       live "/opportunities/:id/edit", OpportunityLive.Index, :edit
-
-      live "/opportunities/:id", OpportunityLive.Show, :show
-      live "/opportunities/:id/show/edit", OpportunityLive.Show, :edit
-
-      live "/opportunities/:id/contractor_opportunities/new",
-           OpportunityLive.Show,
-           :new_contractor_opportunity
-
-      live "/opportunities/:id/contractor_opportunities/edit/:contractor_opportunity_id",
-           OpportunityLive.Show,
-           :edit_contractor_opportunity
 
       live "/opportunity_erp_tags", OpportunityErpTagLive.Index, :index
       live "/opportunity_erp_tags/new", OpportunityErpTagLive.Index, :new

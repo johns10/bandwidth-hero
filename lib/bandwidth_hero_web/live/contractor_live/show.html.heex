@@ -12,13 +12,6 @@
     />
   </.modal>
 <% end %>
-<.a
-  link_type="live_patch"
-  to={Routes.contractor_index_path(@socket, :index)}
-  class="flex items-center"
->
-  <Heroicons.arrow_left solid class="w-4 h-4 ml-1 mr-2" /> Back
-</.a>
 <div class="flex">
   <div class="w-1/2 flex-col">
     <.contractor_card contractor={@contractor} user={@current_user} class="m-4" />
