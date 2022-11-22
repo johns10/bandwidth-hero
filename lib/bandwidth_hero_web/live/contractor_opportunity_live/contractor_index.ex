@@ -12,7 +12,10 @@ defmodule BandwidthHeroWeb.ContractorOpportunityLive.ContractorIndex do
     {:ok,
      socket
      |> assign(:contractor_opportunities, contractor_opportunities)
-     |> assign(:return_to, Routes.contractor_opportunity_index_path(socket, :index))}
+     |> assign(
+       :return_to,
+       Routes.contractor_opportunity_contractor_index_path(socket, :index, contractor_id)
+     )}
   end
 
   @impl true

@@ -12,15 +12,27 @@
   </.modal>
 <% end %>
 
-<.contractor_contractor_opportunity_table
-  contractor_opportunities={@contractor_opportunities}
-  class="my-4"
-/>
+<.table>
+  <.tr>
+    <.th>Subject</.th>
+    <.th>Decision</.th>
 
-<.a
-  link_type="live_patch"
-  to={Routes.contractor_opportunity_index_path(@socket, :new)}
-  class="my-4"
->
-  <.button color="success" label="New Contractor opportunity" />
-</.a>
+    <.th></.th>
+  </.tr>
+  <%= for contractor_opportunity <- @contractor_opportunities do %>
+    <.tr id={"contractor_opportunity-#{contractor_opportunity.id}"}>
+      <.td><%= contractor_opportunity.subject %></.td>
+      <.td><%= contractor_opportunity.contractor_decision %></.td>
+
+      <.td>
+        <span>
+          <.a
+            link_type="live_redirect"
+            label="Show"
+            to={Routes.contractor_opportunity_show_path(Endpoint, :show, contractor_opportunity)}
+          />
+        </span>
+      </.td>
+    </.tr>
+  <% end %>
+</.table>
