@@ -60,12 +60,6 @@ defmodule BandwidthHero.MixProject do
     ]
   end
 
-  # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to install project dependencies and perform other setup tasks, run:
-  #
-  #     $ mix setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup", "tailwind.install", "esbuild.install"],
@@ -77,6 +71,15 @@ defmodule BandwidthHero.MixProject do
         "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
+      ]
+    ]
+  end
+
+  defp releases() do
+    [
+      bandwidth_hero: [
+        include_executables_for: [:unix],
+        cookie: "XlPKEYxpGkzSaPKEVG2zDY4s6EOgZa401HBGE8ik2WgDajfzh-1h6A=="
       ]
     ]
   end
