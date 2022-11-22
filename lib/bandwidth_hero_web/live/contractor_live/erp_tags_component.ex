@@ -15,7 +15,6 @@ defmodule BandwidthHeroWeb.ContractorLive.ErpTagsComponent do
 
     {:ok,
      socket
-     |> assign(:return_to, Routes.contractor_index_path(socket, :index))
      |> assign(:contractor, contractor)
      |> assign(:contractor_erp_tags, contractor_erp_tags)
      |> assign(:erp_tags, erp_tags)
