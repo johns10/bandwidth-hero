@@ -42,8 +42,3 @@
     </.card_content>
   </.card>
 </div>
-
-<span>
-  <%= live_patch("Edit", to: Routes.sourcer_show_path(@socket, :edit, @sourcer), class: "button") %>
-</span>
-| <span><%= live_redirect("Back", to: Routes.sourcer_index_path(@socket, :index)) %></span>
