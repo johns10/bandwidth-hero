@@ -8,19 +8,19 @@
     phx-submit="save"
   >
     <%= hidden_input(f, :opportunity_id, value: @opportunity_id) %>
-    <.form_field_error form={f} field={:opportunity_id} />
+    <.bh_form_field_error form={f} field={:opportunity_id} />
 
     <.form_label form={f} field={:erp_tag_id} />
     <.select form={f} field={:erp_tag_id} options={@select_options} />
-    <.form_field_error form={f} field={:erp_tag_id} />
+    <.bh_form_field_error form={f} field={:erp_tag_id} />
 
     <.form_label form={f} field={:years} />
     <.number_input form={f} field={:years} />
-    <.form_field_error form={f} field={:years} />
+    <.bh_form_field_error form={f} field={:years} />
 
     <.form_label form={f} field={:projects} />
     <.number_input form={f} field={:projects} />
-    <.form_field_error form={f} field={:projects} />
+    <.bh_form_field_error form={f} field={:projects} />
 
     <.button color="success" type="submit" class="flex-shrink" phx_disable_with="Saving...">
       Save
