@@ -11,7 +11,7 @@
     </div>
 
     <div class="flex justify-end gap-3 pr-4">
-      <%= if @contractor do %>
+      <%= if @user_contractor  do %>
         <.a
           class="inline-flex items-center gap-2 p-2 text-gray-500 rounded dark:text-gray-400 dark:hover:text-gray-500 hover:text-gray-400 group"
           link_type="live_redirect"
@@ -19,7 +19,7 @@
             Routes.contractor_opportunity_contractor_index_path(
               BandwidthHeroWeb.Endpoint,
               :index,
-              @contractor.id
+              @user_contractor.id
             )
           }
         >

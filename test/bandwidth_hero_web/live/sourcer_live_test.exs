@@ -104,7 +104,7 @@ defmodule BandwidthHeroWeb.SourcerLiveTest do
     test "updates sourcer within modal", %{conn: conn, sourcer: sourcer} do
       {:ok, show_live, _html} = live(conn, Routes.sourcer_show_path(conn, :show, sourcer))
 
-      assert show_live |> element("a", "Edit") |> render_click() =~
+      assert show_live |> element("#edit-sourcer") |> render_click() =~
                "Edit Sourcer"
 
       assert_patch(show_live, Routes.sourcer_show_path(conn, :edit, sourcer))

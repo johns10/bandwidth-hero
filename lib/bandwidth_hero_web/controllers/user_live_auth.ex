@@ -38,7 +38,7 @@ defmodule BandwidthHeroWeb.UserLiveAuth do
   end
 
   def put_contractor(%{assigns: %{current_user: %User{} = user}} = socket) do
-    assign(socket, :contractor, Contractors.get_contractor_by_user_id(user.id))
+    assign(socket, :user_contractor, Contractors.get_contractor_by_user_id(user.id))
   end
 
   def put_contractor(socket), do: socket

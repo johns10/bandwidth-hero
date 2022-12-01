@@ -3,7 +3,6 @@ defmodule BandwidthHeroWeb.ContractorOpportunityLive.ContractorIndex do
   on_mount BandwidthHeroWeb.UserLiveAuth
 
   alias BandwidthHero.ContractorOpportunities
-  import BandwidthHeroWeb.ContractorOpportunityLive.Components
 
   @impl true
   def mount(%{"contractor_id" => contractor_id}, _session, socket) do
@@ -35,6 +34,7 @@ defmodule BandwidthHeroWeb.ContractorOpportunityLive.ContractorIndex do
     |> assign(:contractor_opportunity, nil)
   end
 
+  @impl true
   def handle_event("close_modal", _, socket) do
     {:noreply, push_patch(socket, to: socket.assigns.return_to)}
   end

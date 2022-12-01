@@ -49,6 +49,13 @@ defmodule BandwidthHeroWeb.SourcerLive.Show do
   end
 
   @impl true
+  def handle_event("delete", %{"id" => id}, socket) do
+    sourcer = Sourcers.get_sourcer!(id)
+    {:ok, _} = Sourcers.delete_sourcer(sourcer)
+
+    {:noreply, push_redirect(socket, to: Routes.profile_show_path(socket, :show))}
+  end
+
   def handle_event("close_modal", _, socket) do
     {:noreply, push_patch(socket, to: socket.assigns.return_to)}
   end

@@ -44,28 +44,6 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
       assert html =~ contractor.name
     end
 
-    test "saves new contractor", %{conn: conn, contractor: contractor} do
-      # {:ok, index_live, _html} = live(conn, Routes.contractor_index_path(conn, :index))
-
-      # assert index_live |> element("a", "New Contractor") |> render_click() =~
-      #          "New Contractor"
-
-      # assert_patch(index_live, Routes.contractor_index_path(conn, :new))
-
-      # assert index_live
-      #        |> form("#contractor-form", contractor: @invalid_attrs)
-      #        |> render_change() =~ "can&#39;t be blank"
-
-      # {:ok, _, html} =
-      #   index_live
-      #   |> form("#contractor-form", contractor: @create_attrs)
-      #   |> render_submit()
-      #   |> follow_redirect(conn, Routes.contractor_index_path(conn, :index))
-
-      # assert html =~ "Contractor created successfully"
-      # assert html =~ "some name"
-    end
-
     test "updates contractor in listing", %{conn: conn, contractor: contractor} do
       {:ok, index_live, _html} = live(conn, Routes.contractor_index_path(conn, :index))
 
@@ -93,6 +71,32 @@ defmodule BandwidthHeroWeb.ContractorLiveTest do
 
       assert index_live |> element("#contractor-#{contractor.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#contractor-#{contractor.id}")
+    end
+  end
+
+  describe "Index without contractor" do
+    setup [:register_and_log_in_user]
+
+    test "saves new contractor", %{conn: conn} do
+      {:ok, index_live, _html} = live(conn, Routes.contractor_index_path(conn, :index))
+
+      assert index_live |> element("a", "New Contractor") |> render_click() =~
+               "New Contractor"
+
+      assert_patch(index_live, Routes.contractor_index_path(conn, :new))
+
+      assert index_live
+             |> form("#contractor-form", contractor: @invalid_attrs)
+             |> render_change() =~ "can&#39;t be blank"
+
+      {:ok, _, html} =
+        index_live
+        |> form("#contractor-form", contractor: @create_attrs)
+        |> render_submit()
+        |> follow_redirect(conn, Routes.contractor_index_path(conn, :index))
+
+      assert html =~ "Contractor created successfully"
+      assert html =~ "some name"
     end
   end
 

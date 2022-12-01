@@ -52,7 +52,6 @@ defmodule BandwidthHero.SourcerUsersTest do
     test "update_sourcer_user/2 with valid data updates the sourcer_user", context do
       %{user: user, sourcer: sourcer} = context
       sourcer_user = sourcer_user_fixture(%{user_id: user.id, sourcer_id: sourcer.id})
-      valid_attrs = %{position: "some position", user_id: user.id, sourcer_id: sourcer.id}
       update_attrs = %{position: "some updated position"}
 
       assert {:ok, %SourcerUser{} = sourcer_user} =

@@ -26,63 +26,7 @@ defmodule BandwidthHeroWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", BandwidthHeroWeb do
-    pipe_through :browser
-
-    live "/", ProfileLive.Show, :show
-    live "/profile", ProfileLive.Show, :show
-    live "/profile/new_contractor", ProfileLive.Show, :new_contractor
-    live "/profile/new_sourcer", ProfileLive.Show, :new_sourcer
-
-    live "/contractor/:id", ContractorLive.Show, :show
-    live "/contractor/:id/show/edit", ContractorLive.Show, :edit
-
-    live "/contractor/:id/erp_tag/new", ContractorLive.Show, :new_erp_tag
-    live "/contractor/:id/erp_tag/:erp_tag_id/edit", ContractorLive.Show, :edit_erp_tag
-
-    live "/contractor/:id/availability/new", ContractorLive.Show, :new_availability
-
-    live "/contractor/:id/availability/:availability_id/edit",
-         ContractorLive.Show,
-         :edit_availability
-
-    live "/contractor/:contractor_id/opportunities",
-         ContractorOpportunityLive.ContractorIndex,
-         :index
-
-    live "/sourcers/:id", SourcerLive.Show, :show
-    live "/sourcers/:id/show/edit", SourcerLive.Show, :edit
-
-    live "/sourcers/:id/show/new_opportunity", SourcerLive.Show, :new_opportunity
-    live "/sourcers/:id/show/:opportunity_id/edit", SourcerLive.Show, :edit_opportunity
-
-    live "/opportunities/:id", OpportunityLive.Show, :show
-    live "/opportunities/:id/show/edit", OpportunityLive.Show, :edit
-
-    live "/opportunities/:id/contractor_opportunities/new",
-         OpportunityLive.Show,
-         :new_contractor_opportunity
-
-    live "/opportunities/:id/contractor_opportunities/edit/:contractor_opportunity_id",
-         OpportunityLive.Show,
-         :edit_contractor_opportunity
-  end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", BandwidthHeroWeb do
-  #   pipe_through :api
-  # end
-
-  # Enables LiveDashboard only for development
-  #
-  # If you want to use the LiveDashboard in production, you should put
-  # it behind authentication and allow only admins to access it.
-  # If your application does not have an admins-only section yet,
-  # you can use Plug.BasicAuth to set up some basic authentication
-  # as long as you are also using SSL (which you should anyway).
   if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
-
     scope "/", BandwidthHeroWeb do
       pipe_through :browser
       live "/live", PageLive, :index
@@ -130,7 +74,6 @@ defmodule BandwidthHeroWeb.Router do
       live "/availability/:id/show/edit", AvailabilityLive.Show, :edit
 
       live "/sourcers", SourcerLive.Index, :index
-      live "/sourcers/new", SourcerLive.Index, :new
       live "/sourcers/:id/edit", SourcerLive.Index, :edit
 
       live "/sourcer_users", SourcerUserLive.Index, :index
@@ -159,22 +102,55 @@ defmodule BandwidthHeroWeb.Router do
       live "/contractor_opportunities/:id/show/edit", ContractorOpportunityLive.Show, :edit
     end
 
-    scope "/" do
-      pipe_through :browser
-      live_dashboard "/dashboard", metrics: BandwidthHeroWeb.Telemetry
-    end
-  end
-
-  # Enables the Swoosh mailbox preview in development.
-  #
-  # Note that preview only shows emails that were sent by the same
-  # node running the Phoenix server.
-  if Mix.env() == :dev do
     scope "/dev" do
       pipe_through :browser
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  scope "/", BandwidthHeroWeb do
+    pipe_through :browser
+
+    live "/", ProfileLive.Show, :show
+    live "/profile", ProfileLive.Show, :show
+    live "/profile/new_contractor", ProfileLive.Show, :new_contractor
+    live "/profile/new_sourcer", ProfileLive.Show, :new_sourcer
+
+    live "/contractor/:id", ContractorLive.Show, :show
+    live "/contractor/:id/show/edit", ContractorLive.Show, :edit
+
+    live "/contractor/:id/erp_tag/new", ContractorLive.Show, :new_erp_tag
+    live "/contractor/:id/erp_tag/:erp_tag_id/edit", ContractorLive.Show, :edit_erp_tag
+
+    live "/contractor/:id/availability/new", ContractorLive.Show, :new_availability
+
+    live "/contractor/:id/availability/:availability_id/edit",
+         ContractorLive.Show,
+         :edit_availability
+
+    live "/contractor/:contractor_id/opportunities",
+         ContractorOpportunityLive.ContractorIndex,
+         :index
+
+    live "/sourcers/new", SourcerLive.Index, :new
+    live "/sourcers/:id", SourcerLive.Show, :show
+    live "/sourcers/:id/show/edit", SourcerLive.Show, :edit
+
+    live "/sourcers/:id/show/new_opportunity", SourcerLive.Show, :new_opportunity
+    live "/sourcers/:id/show/:opportunity_id/edit", SourcerLive.Show, :edit_opportunity
+
+    live "/opportunities/new", OpportunityLive.Index, :new
+    live "/opportunities/:id", OpportunityLive.Show, :show
+    live "/opportunities/:id/show/edit", OpportunityLive.Show, :edit
+
+    live "/opportunities/:id/contractor_opportunities/new",
+         OpportunityLive.Show,
+         :new_contractor_opportunity
+
+    live "/opportunities/:id/contractor_opportunities/edit/:contractor_opportunity_id",
+         OpportunityLive.Show,
+         :edit_contractor_opportunity
   end
 
   ## Authentication routes

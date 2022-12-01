@@ -39,27 +39,6 @@ defmodule BandwidthHeroWeb.ContractorErpTagLiveTest do
       assert html =~ "Listing Contractor erp tag"
     end
 
-    test "saves new contractor_erp_tag", %{conn: conn} = context do
-      {:ok, index_live, _html} = live(conn, Routes.contractor_erp_tag_index_path(conn, :index))
-
-      assert index_live |> element("a", "New Contractor Erp Tag") |> render_click() =~
-               "New Contractor Erp Tag"
-
-      assert_patch(index_live, Routes.contractor_erp_tag_index_path(conn, :new))
-
-      assert index_live
-             |> form("#contractor_erp_tag-form", contractor_erp_tag: @invalid_attrs)
-             |> render_change() =~ "can&#39;t be blank"
-
-      {:ok, _, html} =
-        index_live
-        |> form("#contractor_erp_tag-form", contractor_erp_tag: create_attrs(context))
-        |> render_submit(%{contractor_erp_tag: %{"contractor_id" => context.contractor.id}})
-        |> follow_redirect(conn, Routes.contractor_erp_tag_index_path(conn, :index))
-
-      assert html =~ "Contractor erp tag created successfully"
-    end
-
     test "updates contractor_erp_tag in listing",
          %{conn: conn, contractor_erp_tag: contractor_erp_tag} = context do
       {:ok, index_live, _html} = live(conn, Routes.contractor_erp_tag_index_path(conn, :index))
@@ -86,18 +65,34 @@ defmodule BandwidthHeroWeb.ContractorErpTagLiveTest do
 
       assert html =~ "Contractor erp tag updated successfully"
     end
+  end
 
-    test "deletes contractor_erp_tag in listing", %{
-      conn: conn,
-      contractor_erp_tag: contractor_erp_tag
-    } do
+  describe "Index with no contractor erp tag" do
+    setup [
+      :register_and_log_in_user,
+      :create_contractor,
+      :create_erp_tag
+    ]
+
+    test "saves new contractor_erp_tag", %{conn: conn} = context do
       {:ok, index_live, _html} = live(conn, Routes.contractor_erp_tag_index_path(conn, :index))
 
-      assert index_live
-             |> element("#contractor_erp_tag-#{contractor_erp_tag.id} a", "Delete")
-             |> render_click()
+      assert index_live |> element("a", "New Contractor Erp Tag") |> render_click() =~
+               "New Contractor Erp Tag"
 
-      refute has_element?(index_live, "#contractor_erp_tag-#{contractor_erp_tag.id}")
+      assert_patch(index_live, Routes.contractor_erp_tag_index_path(conn, :new))
+
+      assert index_live
+             |> form("#contractor_erp_tag-form", contractor_erp_tag: @invalid_attrs)
+             |> render_change() =~ "can&#39;t be blank"
+
+      {:ok, _, html} =
+        index_live
+        |> form("#contractor_erp_tag-form", contractor_erp_tag: create_attrs(context))
+        |> render_submit(%{contractor_erp_tag: %{"contractor_id" => context.contractor.id}})
+        |> follow_redirect(conn, Routes.contractor_erp_tag_index_path(conn, :index))
+
+      assert html =~ "Contractor erp tag created successfully"
     end
   end
 
